@@ -1,0 +1,157 @@
+.chat-btn {
+	cursor: pointer;
+	border: none;
+	position: fixed;
+	bottom: 25px;
+	right: 25px;
+	background: #20A4DC;
+	border-radius: .5rem;
+	padding: .75rem 1rem;
+	color: #fff;
+	box-shadow: 0 0rem 1rem rgba(0, 0, 0, 0.075);
+	font-family: "Jenius Sans", "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+	transition: all 0.2s ease-in-out;
+	font-size: .9rem;
+	z-index: 100; }
+	.chat-btn i {
+		color: #fff;
+		margin-right: .25rem; }
+	.chat-btn:hover, .chat-btn:focus, .chat-btn:active {
+		color: #fff;
+		box-shadow: 0 0.5rem 2rem rgba(32, 164, 220, 0.3); }
+
+.m-popup-help {
+	width: 300px;
+	position: fixed;
+	background: #f2f2f2;
+	z-index: 100;
+	right: .5rem;
+	bottom: -2000px;
+	overflow: hidden;
+	border-radius: 4px;
+	box-shadow: 0 0rem 1rem rgba(0, 0, 0, 0.075); }
+	.m-popup-help .close-help {
+		position: absolute;
+		width: 24px;
+		height: 24px;
+		right: 3px;
+		top: 5px;
+		z-index: 999;
+		border-radius: 10px;
+		text-align: center;
+		line-height: 24px; }
+		.m-popup-help .close-help i {
+			color: #fff; }
+	.m-popup-help .section-top {
+		width: 100%;
+		background: #20A4DC;
+		position: relative; }
+		.m-popup-help .section-top .text p {
+			font-size: 1rem;
+			font-family: "Jenius Sans", "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+			color: #fff;
+			text-align: center;
+			padding-top: 10px; }
+		.m-popup-help .section-top .img {
+			text-align: center; }
+			.m-popup-help .section-top .img img {
+				width: 170px;
+				margin: 0 auto; }
+	.m-popup-help .section-bot ul {
+		padding: .25rem;
+		margin-bottom: 0; }
+		.m-popup-help .section-bot ul li {
+			background: #fff;
+			list-style: none;
+			margin-bottom: .25rem;
+			padding: .5rem;
+			border-radius: 4px; }
+			.m-popup-help .section-bot ul li a {
+				color: #20A4DC;
+				display: block;
+				padding: .5rem .25rem; }
+				.m-popup-help .section-bot ul li a i {
+					float: left;
+					height: 36px;
+					width: 24px;
+					text-align: center;
+					line-height: 24px;
+					margin-right: .5rem; }
+				.m-popup-help .section-bot ul li a span {
+					font-size: .9rem; }
+	.m-popup-help .section-bot .help-connect {
+		padding: 1rem 0; }
+		.m-popup-help .section-bot .help-connect h3 {
+			text-align: center;
+			font-size: 1rem;
+			margin-bottom: 1rem; }
+		.m-popup-help .section-bot .help-connect .help-connect-social {
+			display: flex;
+			justify-content: center; }
+			.m-popup-help .section-bot .help-connect .help-connect-social a {
+				color: #999999;
+				font-size: 1.2rem;
+				display: inline-block;
+				width: 30px;
+				height: 30px;
+				margin: 0 .25rem; }
+				.m-popup-help .section-bot .help-connect .help-connect-social a:focus, .m-popup-help .section-bot .help-connect .help-connect-social a:hover, .m-popup-help .section-bot .help-connect .help-connect-social a:active {
+					color: #20A4DC; }
+
+					a {
+						transition: all 0.2s ease-in-out;
+						color: #20A4DC;
+						text-decoration: none;
+						background-color: transparent;
+						-webkit-text-decoration-skip: objects;
+				}
+
+
+
+.chat-notif {
+	border-radius: 50%;
+		width: 30px;
+		height: 30px;
+		line-height: 15px !important;
+		padding: 5px;
+		background: rgba(199, 0, 57,0.8);
+		border: 2px solid #666;
+		color: #fff;
+		text-align: center;
+		font: 9px Arial, sans-serif;
+		z-index: 999999;
+	display: none;
+	position: fixed;
+}
+
+.notif-loc-btn {
+	bottom: 50px;
+	right: 15px;
+}
+
+.notif-loc-chat-now {
+	bottom: 142px;
+	right: 150px;
+}
+
+#snackbar {
+	display: none;
+	height: 40px;
+	min-width: 300px;
+	background-color: #ebb868;
+	color: rgb(255, 255, 255);
+	text-align: center;
+	border-radius: 10px;
+	padding: 8px;
+	position: absolute;
+	z-index: 1;
+	font-size: 17px;
+	top: 5px;
+	left: 10px;
+}
+
+#snackbar.show {
+	display: block;
+	-webkit-animation: fadein 1.5s;
+	animation: fadein 1.5s;
+}

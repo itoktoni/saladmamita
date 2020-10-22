@@ -1,0 +1,973 @@
+/* ==========================================================================
+   Reboot.scss Overrider
+   ========================================================================== */
+
+// Common reboot
+a {@include transition($transition-base);}
+button:focus {outline: 0;}
+
+
+/* ==========================================================================
+   Animation.css Overrider
+   ========================================================================== */
+
+// FadeInUp / Right / Down / Left Fixes
+@-webkit-keyframes fadeInUp {0% {opacity: 0; -webkit-transform: translateY(6px); transform: translateY(6px); } 100% {opacity: 1; -webkit-transform: translateY(0); transform: translateY(0); } } @keyframes fadeInUp {0% {opacity: 0; -webkit-transform: translateY(6px); -ms-transform: translateY(6px); transform: translateY(6px); } 100% {opacity: 1; -webkit-transform: translateY(0); -ms-transform: translateY(0); transform: translateY(0); } }
+@-webkit-keyframes fadeInRight {0% {opacity: 0; -webkit-transform: translateX(6px); transform: translateX(6px); } 100% {opacity: 1; -webkit-transform: translateX(0); transform: translateX(0); } } @keyframes fadeInRight {0% {opacity: 0; -webkit-transform: translateX(6px); -ms-transform: translateX(6px); transform: translateX(6px); } 100% {opacity: 1; -webkit-transform: translateX(0); -ms-transform: translateX(0); transform: translateX(0); } }
+@-webkit-keyframes fadeInDown {0% {opacity: 0; -webkit-transform: translateY(-6px); transform: translateY(-6px); } 100% {opacity: 1; -webkit-transform: translateY(0); transform: translateY(0); } } @keyframes fadeInDown {0% {opacity: 0; -webkit-transform: translateY(-6px); -ms-transform: translateY(-6px); transform: translateY(-6px); } 100% {opacity: 1; -webkit-transform: translateY(0); -ms-transform: translateY(0); transform: translateY(0); } }
+@-webkit-keyframes fadeInLeft {0% {opacity: 0; -webkit-transform: translateX(-6px); transform: translateX(-6px); } 100% {opacity: 1; -webkit-transform: translateX(0); transform: translateX(0); } } @keyframes fadeInLeft {0% {opacity: 0; -webkit-transform: translateX(-6px); -ms-transform: translateX(-6px); transform: translateX(-6px); } 100% {opacity: 1; -webkit-transform: translateX(0); -ms-transform: translateX(0); transform: translateX(0); } }
+
+// Delays
+$class-delay: delayp;
+@for $i from 1 through 20 { 
+  .#{$class-delay}#{$i} {
+    animation-delay: 0s + $i*0.1;
+    -moz-animation-delay: 0s + $i*0.1; 
+    -webkit-animation-delay: 0s + $i*0.1; 
+    -o-animation-delay: 0s + $i*0.1; 
+    transition-delay: 0s + $i*0.1; 
+  }
+}
+
+// Viewport animation
+.vp-fadein, .vp-fadeinup, .vp-fadeinright, .vp-fadeindown, .vp-fadeinleft, 
+.vp-slideinup, .vp-slideinright, .vp-slideindown, .vp-slideinleft,
+.vp-rotatein, .vp-rorateinupright, .vp-rotateinupleft, .vp-rotateindownright, .vp-rotateindownleft, 
+.vp-zoomin, .vp-zoominup, .vp-zoominright, .vp-zoomindown, .vp-zoominleft, 
+.vp-jackinthebox, .vp-rollin, .vp-rollout {
+  opacity: 0;
+}
+
+// Make viewport animation works
+.animated {opacity: 1;}
+
+// Add opacity 1 on top up visibility: visible for animation
+.visible {opacity: 1;}
+
+
+/* ========================================================================================================================================
+   jQuery UI 1.12.1 Overriders (Author's Version of Normalization)
+   ========================================================================================================================================= */
+
+/* Image Path
+-------------------------------------------------- */
+.ui-icon {width: 16px; height: 16px; }
+.ui-icon, .ui-widget-content .ui-icon {background-image: url("../../assets/img/jquery-ui/ui-icons_444444_256x240.png"); }
+.ui-widget-header .ui-icon {background-image: url("../../assets/img/jquery-ui/ui-icons_444444_256x240.png"); }
+.ui-state-hover .ui-icon, .ui-state-focus .ui-icon, .ui-button:hover .ui-icon, .ui-button:focus .ui-icon {background-image: url("../../assets/img/jquery-ui/ui-icons_555555_256x240.png"); }
+.ui-state-active .ui-icon, .ui-button:active .ui-icon {background-image: url("../../assets/img/jquery-ui/ui-icons_ffffff_256x240.png"); }
+.ui-state-highlight .ui-icon, .ui-button .ui-state-highlight.ui-icon {background-image: url("../../assets/img/jquery-ui/ui-icons_777620_256x240.png"); }
+.ui-state-error .ui-icon, .ui-state-error-text .ui-icon {background-image: url("../../assets/img/jquery-ui/ui-icons_cc0000_256x240.png"); }
+.ui-button .ui-icon {background-image: url("../../assets/img/jquery-ui/ui-icons_777777_256x240.png"); }
+
+/* Font
+-------------------------------------------------- */
+.ui-widget {
+  font-family: $font-family-sans-serif;
+}
+
+/* Datepicker
+-------------------------------------------------- */
+.ui-state-default {
+  border: 1px solid #eee;
+  border-radius: .25rem;
+  background: #f6f6f6;
+  font-weight: normal;
+  color: $black;
+  text-align: center;
+}
+.ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default, .ui-button, html .ui-button.ui-state-disabled:hover, html .ui-button.ui-state-disabled:active {
+  @extend .ui-state-default;
+}
+.ui-state-hightlight {
+  border: 1px solid #dad55e;
+  background: $white;
+  color: #777620;
+}
+.ui-widget-content .ui-state-highlight, .ui-widget-header .ui-state-highlight {
+  @extend .ui-state-hightlight;
+}
+.ui-state-active {
+  border: 1px solid $black;
+  background: $black;
+  font-weight: normal;
+  color: $white;
+}
+.ui-widget-content .ui-state-active, .ui-widget-header .ui-state-active, a.ui-button:active, .ui-button:active, .ui-button.ui-state-active:hover {
+  @extend .ui-state-active;
+}
+
+
+/* ==========================================================================
+   Select2 Overrider
+   ========================================================================== */
+
+/* Single
+-------------------------------------------------- */
+.select2-container--default .select2-selection--single {
+  background: $input-bg;
+  // border-radius: $input-border-radius;
+  border-radius: 0;
+  border: $input-border-width solid $input-border-color;
+  padding: $input-padding-y $input-padding-x;
+  line-height: $input-line-height;
+  height: auto;
+  &:focus {
+    outline: none;
+  }
+}
+.select2-container--default.select2-container--open.select2-container--above .select2-selection--single {
+  border-color: $component-active-bg;
+}
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+  line-height: $input-line-height;
+  padding-left: 0;
+}
+.select2-container--default .select2-selection--single .select2-selection__arrow {
+  top: 50%;
+  margin-top: -13px;
+  right: 6px;
+}
+
+/* Multiple
+-------------------------------------------------- */
+.select2-container--default .select2-selection--multiple {
+  background: $input-bg;
+  // border-radius: $input-border-radius;
+  border-radius: 0;
+  border: $input-border-width solid $input-border-color;
+  padding: $input-padding-y $input-padding-x;
+  line-height: $input-line-height;
+  height: 42px;
+  &:focus {outline: none;}
+}
+.select2-container--default.select2-container--focus .select2-selection--multiple {
+  border-color: $component-active-bg;
+}
+.select2-container--default .select2-selection--multiple .select2-selection__rendered {
+  padding: 0;
+  height: 24px;
+}
+.select2-container--default .select2-selection--multiple .select2-selection__choice {
+  height: 24px;
+  font-size: .9rem;
+}
+.select2-container--default .select2-selection--multiple .select2-selection__choice__remove {
+  margin-right: 4px;
+}
+
+/* Open / Option
+-------------------------------------------------- */
+.select2-container--open .select2-dropdown--above {
+  // border-bottom-left-radius: $input-border-radius;
+  // border-bottom-right-radius: $input-border-radius;
+  border-radius: 0;
+}
+.select2-container--default .select2-search--dropdown .select2-search__field {
+  border: $input-border-width solid $input-border-color;
+  &:focus {outline: none;}
+}
+.select2-results__option {
+  padding-left: $input-padding-x;
+  padding-right: $input-padding-x;
+}
+.select2-container--default .select2-results__option--highlighted[aria-selected] {
+  background-color: $component-active-bg;
+}
+
+/* ==========================================================================
+   Loader
+   ========================================================================== */
+
+// Loader basic styling
+.loader-wrapper {
+  @include position(fixed, 0, 0, 0, 0);
+  z-index: 99999999999;
+  height: 100%;
+  overflow: hidden;
+}
+.loader {
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear;
+  animation-iteration-count: infinite;
+  margin: -15px;
+  @include position(absolute, 50%, 50%, 50%, 50%);
+}
+.loader-light {
+  background: $white;
+  .loader {
+    border: 2px solid $gray-100;
+    border-top: 2px solid $gray-400;
+  }
+}
+.loader-dark {
+  background: $black;
+  .loader {
+    border: 2px solid $gray-800;
+    border-top: 2px solid $white;
+  }
+}
+@-webkit-keyframes spin {0% { -webkit-transform: rotate(0deg); } 100% { -webkit-transform: rotate(360deg); } }
+@keyframes spin {0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+
+/* ==========================================================================
+   Scroll Hint
+   ========================================================================== */
+
+.scroll-hint {
+  position: absolute;
+  display: block;
+  height: 75px;
+  width: 200px;
+  margin: 0 auto;
+  left: 0;
+  right: 0;
+  img {
+    position: absolute;
+    width: 50px;
+    margin-left: -25px;
+    left: 50%;
+    bottom: 0;
+    display: inline-block;
+    animation: arrow_move 1s linear;
+    animation-iteration-count: infinite;
+  }
+  &.bottom-0 {bottom: 0;}
+  &.bottom-25px {bottom: 25px;}
+  &.scroll-hint-w-text {
+    p {
+      text-align: center;
+      display: block;
+      font-size: $small-font-size;
+      color: rgba(255,255,255,.5);
+      font-weight: 200;
+      margin-top: 55px;
+      margin-bottom: 0;
+      @include transition($transition-base);
+    }
+    &:hover {
+      p {color: rgba(255,255,255,.75);}
+    }
+  }
+}
+@-webkit-keyframes arrow_move {0% {opacity: 1; bottom: 100px; } 50% {opacity: 0; bottom: 96px; } 90% {opacity: 0; bottom: 100px; } 100% {opacity: 1; bottom: 100px; } }
+@-moz-keyframes arrow_move {0% {opacity: 1; bottom: 48px; } 50% {opacity: 0; bottom: 24px; } 90% {opacity: 0; bottom: 48px; } 100% {opacity: 1; bottom: 48px; } }
+@-o-keyframes arrow_move {0% {opacity: 1; bottom: 48px; } 50% {opacity: 0; bottom: 24px; } 90% {opacity: 0; bottom: 48px; } 100% {opacity: 1; bottom: 48px; } }
+@keyframes arrow_move {0% {opacity: 1; bottom: 48px; } 50% {opacity: 0; bottom: 24px; } 90% {opacity: 0; bottom: 48px; } 100% {opacity: 1; bottom: 48px; } }
+
+
+/* ==========================================================================
+   Links
+   ========================================================================== */
+
+// Reduce opacity on link while on hover
+.link-opacity {
+  display: block;
+  @include transition($transition-base);
+  &:hover {
+    opacity: .75;
+  }
+}
+
+// Add box shadow effect while on hover
+.link-box-shadow {
+  display: block;
+  box-shadow: $box-shadow-sm;
+  transition: all 0.2s ease-in-out; }
+  @media screen and (prefers-reduced-motion: reduce) {
+    .link-box-shadow {
+      transition: none; } }
+  .link-box-shadow:hover {
+    box-shadow: $box-shadow; }
+
+// Add underline while on hover
+.link-underline {
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+/* --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- */
+
+/* ==========================================================================
+   Grid
+   ========================================================================== */
+
+// Default row overrider
+.row {
+  margin-right: -10px; /* Originally 15 */
+  margin-left: -10px; /* Originally 15 */
+}
+.row > [class^="col"] {
+  padding-right: 10px; /* Originally 15 */
+  padding-left: 10px; /* Originally 15 */
+}
+
+// Row / col variations
+.row-0 {margin-right: 0px; margin-left: 0px; & > [class^="col"] {padding-right: 0px; padding-left: 0px; } }
+
+.row-10px {margin-right: -5px; margin-left: -5px; & > [class^="col"] {padding-right: 5px; padding-left: 5px; } }
+.row-20px {margin-right: -10px; margin-left: -10px; & > [class^="col"] {padding-right: 10px; padding-left: 10px; } }
+.row-30px {margin-right: -15px; margin-left: -15px; & > [class^="col"] {padding-right: 15px; padding-left: 15px; } }
+.row-40px {margin-right: -20px; margin-left: -20px; & > [class^="col"] {padding-right: 20px; padding-left: 20px; } }
+.row-50px {margin-right: -25px; margin-left: -25px; & > [class^="col"] {padding-right: 25px; padding-left: 25px; } }
+.row-60px {margin-right: -30px; margin-left: -30px; & > [class^="col"] {padding-right: 30px; padding-left: 30px; } }
+
+.row-1 {margin-right: -($spacer * .25); margin-left: -($spacer * .25); & > [class^="col"] {padding-right: ($spacer * .25); padding-left: ($spacer * .25); } }
+.row-2 {margin-right: -($spacer * .5); margin-left: -($spacer * .5); & > [class^="col"] {padding-right: ($spacer * .5); padding-left: ($spacer * .5); } }
+.row-3 {margin-right: -($spacer * 1); margin-left: -($spacer * 1); & > [class^="col"] {padding-right: ($spacer * 1); padding-left: ($spacer * 1); } }
+.row-4 {margin-right: -($spacer * 2); margin-left: -($spacer * 2); & > [class^="col"] {padding-right: ($spacer * 2); padding-left: ($spacer * 2); } }
+.row-5 {margin-right: -($spacer * 3); margin-left: -($spacer * 3); & > [class^="col"] {padding-right: ($spacer * 3); padding-left: ($spacer * 3); } }
+
+
+/* ==========================================================================
+   Background
+   ========================================================================== */
+
+/* Enter style here
+
+
+/* ==========================================================================
+   Position
+   ========================================================================== */
+
+// Background feature position
+.bg-feature {
+  height: 200px;
+  @include media-breakpoint-up(md) {
+    position: absolute; 
+    height: 100%;
+    width: 50%; 
+  }
+  &-left {left: 0%;}
+  &-right {left: 50%;}
+}
+
+// Vertically & Horizontally center. Note: parent must have position: relative
+.center-both {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  @include prefix(transform, translate(-50%, -50%), 'webkit' 'ms');
+}
+.center-md-both {
+  @include media-breakpoint-up(md) {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    @include prefix(transform, translate(-50%, -50%), 'webkit' 'ms');
+  }
+}
+.center-sm-down-both {
+  @include media-breakpoint-down(sm) {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    @include prefix(transform, translate(-50%, -50%), 'webkit' 'ms');
+  }
+}
+
+
+/* ==========================================================================
+   Box Shadow
+   ========================================================================== */
+
+// Box shadow main
+.box-shadow {box-shadow: $box-shadow-sm;
+  &:hover {box-shadow: $box-shadow;}
+}
+
+
+/* ==========================================================================
+   Sizing
+   ========================================================================== */
+
+// Custom height, with option to be applied only on MD
+@include media-breakpoint-up(md) {
+  .h-md-50px { height: 50px; }
+  .h-md-100px { height: 100px; }
+  .h-md-150px { height: 150px; }
+  .h-md-200px { height: 200px; }
+}
+
+
+/* ==========================================================================
+   Spacing
+   ========================================================================== */
+
+// Padding main, commonly used for sections
+.py-main,
+.section-main {
+  padding-top: ($spacer * 2.5);
+  padding-bottom: ($spacer * 2.5);
+  @include media-breakpoint-up(md) {
+    padding-top: ($spacer * 5);
+    padding-bottom: ($spacer * 5);
+  }
+}
+
+// Padding box, commonly used for box layout
+.p-box {
+  padding: ($spacer * 1);
+  @include media-breakpoint-up(md) {
+    padding: ($spacer * 2);
+  }
+}
+
+// Margin bottom with media query for sm-down
+@include media-breakpoint-down(sm) {
+  .mt-sm-down-1 {margin-top: ($spacer * .25);} 
+  .mt-sm-down-2 {margin-top: ($spacer * .5);}
+  .mt-sm-down-3 {margin-top: ($spacer * 1);}
+  .mt-sm-down-4 {margin-top: ($spacer * 2);}
+  .mt-sm-down-5 {margin-top: ($spacer * 3);}
+  .mb-sm-down-1 {margin-bottom: ($spacer * .25);} 
+  .mb-sm-down-2 {margin-bottom: ($spacer * .5);}
+  .mb-sm-down-3 {margin-bottom: ($spacer * 1);}
+  .mb-sm-down-4 {margin-bottom: ($spacer * 2);}
+  .mb-sm-down-5 {margin-bottom: ($spacer * 3);}
+  .px-sm-down-0 {padding-left: 0px !important; padding-right: 0px !important;}
+  .py-sm-down-0 {padding-top: 0px !important; padding-bottom: 0px !important;}
+}
+
+
+/* ==========================================================================
+   Visibility
+   ========================================================================== */
+
+// Fallback method for [hidden]
+.hidden {
+  display: none !important;
+}
+
+
+/* ==========================================================================
+   Icons
+   ========================================================================== */
+
+// Make angle right size appear normal on button
+a > .fa-angle-right {
+  margin-left: .25rem;
+  height: .9em;
+}
+
+
+/* ==========================================================================
+   Text
+   ========================================================================== */
+
+// Add custom small size from 70% - 90%
+.font-size-xs {font-size: 70%;}
+.font-size-sm {font-size: 80%;} // Thhis one is the same as small / .small
+.font-size-md {font-size: 90%;}
+
+// Add custom small size from 110% - 120%
+.font-size-lg {font-size: 110%;}
+.font-size-xl {font-size: 120%;}
+
+// Custom text style
+.text-uppercase-custom {
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+.text-underline {
+  text-decoration: underline;
+}
+
+// Text truncation
+.text-truncate-multiline {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical; 
+}
+.text-truncate-twoline {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical; 
+}
+
+/* ==========================================================================
+   Examples & Codes
+   ========================================================================== */
+
+.at-heading {
+  padding-top: 2.5rem;
+  @include media-breakpoint-up(md) {
+    padding-top: 5rem;
+  }
+}
+.at-subheading {
+  margin-bottom: .75rem;
+  @include media-breakpoint-up(md) {
+    margin-bottom: 1.5rem;
+  }
+}
+.at-section {
+  padding: 1.5rem 0;
+  @include media-breakpoint-up(md) {
+    padding: 3rem 0;
+  }
+}
+.at-example {
+  position: relative;
+  padding: 10px 0;
+  border: solid $gray-20;
+  @include media-breakpoint-up(md) {
+    padding: 1.5rem;
+    margin-right: 0;
+    margin-left: 0;
+    border-width: .2rem;
+  }
+  .container-fluid {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+}
+.at-code {
+  background-color: $gray-20;
+  padding: 1rem 0;
+  color: $black;
+  pre {margin-bottom: 0;}
+  code {color: $black;}
+  .nt {color: #2f6f9f; white-space: pre;}
+  .na {color: #4f9fcf; white-space: pre;}
+  .n {color: #d44950; white-space: pre;}
+}
+
+/* --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- */
+
+
+/* ==========================================================================
+   Body & Layout
+   ========================================================================== */
+
+// Prevent extra space on the right side of the viewport
+html {
+  overflow-x: hidden !important; 
+}
+body {
+  overflow-x: hidden !important;
+}
+
+// Custom container width
+.container-xs {
+  @include media-breakpoint-up(sm) {
+    max-width: 540px;
+  }
+}
+.container-sm {
+  @include media-breakpoint-up(md) {
+    max-width: 720px;
+  }
+}
+.container-md {
+  @include media-breakpoint-up(lg) {
+    max-width: 960px;
+  }
+}
+
+
+/* ==========================================================================
+   Forms
+   ========================================================================== */
+
+/* Label
+-------------------------------------------------- */
+label {font-size: .9rem;}
+
+/* Custom Forms
+-------------------------------------------------- */
+.custom-select {
+  transition: $input-transition;
+  -webkit-appearance: none;
+}
+
+.custom-file-input {transition: $input-transition;}
+
+// Override success validation color (initially "success" color)
+.was-validated .custom-control-input:invalid ~ .custom-control-label, .custom-control-input.is-invalid ~ .custom-control-label {
+  color: $body-color;
+}
+.was-validated .custom-control-input:valid ~ .custom-control-label::before, .custom-control-input.is-valid ~ .custom-control-label::before {
+  background: $custom-control-indicator-bg;
+}
+.was-validated .custom-control-input:valid:checked ~ .custom-control-label::before, .custom-control-input.is-valid:checked ~ .custom-control-label::before {
+  background: $component-active-bg;
+}
+.was-validated .form-control:valid, .form-control.is-valid, .was-validated .custom-select:valid, .custom-select.is-valid {
+  border-color: $input-border-color;
+}
+.was-validated .form-control:valid:focus, .form-control.is-valid:focus, .was-validated .custom-select:valid:focus, .custom-select.is-valid:focus {
+  border-color: $input-focus-border-color;
+  box-shadow: 0 0 0 $input-btn-focus-width $input-btn-focus-color;
+}
+
+// Custom styling for form control
+.form-control-line {
+  border-radius: 0;
+  border-top: 0;
+  border-right: 0;
+  border-left: 0;
+  padding-left: 0;
+}
+
+// Checkbox (Box Style)
+.checkbox-box {
+  display: inline-block;
+  padding-left: 0;
+  width: 2.5rem;
+  min-height: 2rem;
+  position: relative;
+  .custom-control-label {
+    line-height: 2rem;
+    text-align: center;
+    width: 100%;
+  }
+  .custom-control-label::before {
+    top: 0;
+    width: 2.5rem;
+    height: 2rem;
+    z-index: -1;
+  }
+  .custom-control-label::after {display: none;}
+}
+
+
+/* ==========================================================================
+   Alert
+   ========================================================================== */
+
+// Alert fixed top styling
+.alert {
+  border: none;
+  .close {
+    color: $white;
+    @include transition($transition-base);
+  }
+}
+.alert-fixed-top {
+  padding: ($spacer * 1.5) 0;
+  margin-bottom: 0;
+  border-radius: 0;
+  position: fixed;
+  top: 0;
+  text-align: left;
+  z-index: 1040;
+  width: 100%;
+  padding-right: 3rem;
+  @include media-breakpoint-up(md) {
+    text-align: center;
+    padding-right: 0;
+  }
+  .close {
+    position: absolute;
+    top: 1.5rem;
+    right: 1rem;
+    @include media-breakpoint-up(md) {
+      right: 1.5rem;
+    }
+  }
+}
+.alert-success {
+  background: $green;
+  color: $white;
+}
+.alert-danger {
+  background: $red;
+  color: $white;
+}
+.alert-warning {
+  background: $yellow;
+  color: $white;
+}
+
+
+/* ==========================================================================
+   Card
+   ========================================================================== */
+
+// Custom border color and box shadow
+.card {
+  border-color: $gray-20;
+  border: none;
+  box-shadow: $box-shadow-sm;
+}
+
+// Give .card boxless effect
+.card-boxless {
+  background: transparent;
+  border-color: transparent;
+  box-shadow: none;
+  .card-body {
+    padding: 0;
+  }
+  img + .card-body {
+    padding-top: $card-spacer-x;
+  }
+}
+
+
+/* ==========================================================================
+   Modal
+   ========================================================================== */
+
+.modal-dialog {
+  // When fading in the modal, animate it without sliding
+  .modal.fade & {@include transition($modal-transition); transform: translate(0, 0%); }
+  .modal.show & {transform: translate(0, 0); }
+
+  // When fading in the modal, animate it to slide up
+  .modal.fade.fadeinup & {@include transition($modal-transition); transform: translate(0, 25%); }
+  .modal.show.fadeinup & {transform: translate(0, 0); }
+
+  // When fading in the modal, animate it to slide down
+  .modal.fade.fadeindown & {@include transition($modal-transition); transform: translate(0, -25%); }
+  .modal.show.fadeindown & {transform: translate(0, 0); }
+
+  // When fading in the modal, animate it to slide up (on SM down)
+  @include media-breakpoint-down(sm) {
+    .modal.fade.fadeinup-sm-down & {@include transition($modal-transition); transform: translate(0, 25%); }
+    .modal.show.fadeinup-sm-down & {transform: translate(0, 0); } }
+
+  // When fading in the modal, animate it to slide down (on SM down)
+  @include media-breakpoint-down(sm) {
+    .modal.fade.fadeindown-sm-down & {@include transition($modal-transition); transform: translate(0, -25%); }
+    .modal.show.fadeindown-sm-down & {transform: translate(0, 0); }
+  }
+
+  // General modal overrider for box shadow
+  .modal-content {
+    border: none;
+    box-shadow: $box-shadow-sm;
+  }
+
+  // General modal overrider for close
+  .close {
+    position: absolute;
+    right: 1rem;
+    top: .8rem;
+    @include transition($transition-base);
+    &:focus {
+      outline: none !important;
+    }
+  }
+}
+
+// Modal take up full screen on mobile
+.modal-full {
+  @include media-breakpoint-down(sm) {
+    .modal-dialog {margin: 0 auto;}
+    .modal-content {height: 100vh;}
+  }
+}
+
+
+/* ==========================================================================
+   Cover
+   ========================================================================== */
+
+// Cover basic styling
+.cover {
+  position: relative;
+  height: 500px; // Change this value as needed
+  @include media-breakpoint-up(md) {
+    height: 500px; // Change this value as needed
+  }
+  .container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    height: 100%;
+  }
+  .cover-content {
+    width: 100%;
+    @include media-breakpoint-up(md) {max-width: 500px;}
+  }
+  .cover-title {
+    font-size: $display4-size;
+    color: $white;
+  }
+  .cover-text {
+    color: $white;
+    opacity: .75;
+  }
+}
+
+// Cover with full screen height
+.cover.cover-full {
+  height: 100vh;
+  @include media-breakpoint-up(md) {height: 100vh;}
+}
+
+// Make .cover works for carousel
+.cover-carousel {
+  .carousel, .carousel-inner, .carousel-item {height: 100%;}
+}
+
+// Carousel with thumbnail
+.carousel-indicators-thumb {
+  position: relative;
+  margin: 0;
+  align-items: center;
+  bottom: 0;
+  z-index: 1;
+  display: inherit;
+  li {
+    margin: 0 0 1rem;
+    width: 100%;
+    height: auto;
+    cursor: pointer;
+    @include transition($transition-base);
+    &:hover, &.active {
+      opacity: .5;
+    }
+  }
+}
+
+// Carousel circle
+.carousel-indicators-circle {
+  li {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: rgba(0,0,0,.25);
+    &.active {background: $black;}
+  }
+}
+
+
+/* ==========================================================================
+   Navbar
+   ========================================================================== */
+
+/* Navbar General
+-------------------------------------------------- */
+// To make the content after navbar fixed top placed right after the navbar
+.navbar.fixed-top {
+  & + * {
+    margin-top: 63px;
+    @include media-breakpoint-up(md) {margin-top: 63px;}
+  }
+  & + .cover-full {margin-top: 0;}
+}
+
+// To make navbar static on the top on top of an object / cover
+.navbar.absolute-top {
+  position: absolute;
+  right: 0;
+  left: 0;
+  z-index: 1030;
+}
+
+/* Navbar Brand
+-------------------------------------------------- */
+.navbar-brand {
+  padding: .5rem 0;
+  margin-right: 0;
+  @include media-breakpoint-up(md) {
+    margin-right: $navbar-padding-x;
+  }
+  img {height: 30px;}
+}
+
+/* Navbar Centered
+-------------------------------------------------- */
+// Make navbar brand to be positioned center
+.navbar-brand-center {
+  transform: translate(-50%, 0);
+  left: 50%;
+  margin-right: 0;
+  position: relative;
+  @include media-breakpoint-up(md) {
+    transform: translate(-50%,-50%);
+    top: 50%;
+    position: absolute;
+  }
+}
+@include media-breakpoint-up(md) {
+  // Update this to align the menu on the side
+  .navbar-nav-left {margin-right: 75px;}
+  .navbar-nav-right {margin-left: 75px;}
+}
+
+// Only use if ordering doesn't work, especially when navbar brand is centered
+.navbar-toggler-absolute {
+  position: absolute;
+  top: 1.1rem;
+  &.left {left: $navbar-padding-x;}
+  &.right {right: $navbar-padding-x;}
+}
+
+.navbar-toggler {
+  .icon-bar {
+    display: block;
+    width: 22px;
+    height: 1px;
+    background-color: rgba(255,255,255,.8);
+    border-radius: 1px;
+    & + .icon-bar {
+      margin-top: 6px;
+    }
+  }
+}
+
+/* Navbar Two Rows
+-------------------------------------------------- */
+.navbar-two-rows {
+  flex-direction: column;
+}
+
+/* Navbar Collapse
+-------------------------------------------------- */
+// Make .navbar-collapse has absolute position on mobile
+.navbar-collapse-absolute {
+  @include media-breakpoint-down(xs) {
+    .nav-link {padding: $navbar-padding-y $navbar-padding-x;}
+  }
+  @include media-breakpoint-down(sm) {
+    z-index: 2;
+    margin-top: 0;
+    position: absolute;
+    width: 100%;
+    left: 0;
+    top: 63px; // Set this with navbar height on mobile
+    background: $black; // Set this with background on mobile
+    .navbar-nav {
+      margin: auto;
+      max-width: 540px;
+      .nav-link {text-align: center;}
+    }
+  }
+}
+
+/* Navbar Full
+-------------------------------------------------- */
+// Navbar full (on mobile)
+// @include media-breakpoint-down(sm) {
+//   .navbar-full {
+//     position: absolute;
+//     top: 0;
+//     height: 100vh;
+//     width: 100%;
+//     padding: ($spacer * 1.5);
+//     background: $black;
+//   }
+// }
+
+/* Dropdown
+-------------------------------------------------- */
+.dropdown-menu {animation-duration: .25s;}
+// Make the :active state of .dropdown-item consistent with :focus state
+.dropdown-item {
+  &.active,
+  &:active {
+    color: $dropdown-link-hover-color;
+    @include gradient-bg($dropdown-link-hover-bg);
+  }
+}
+

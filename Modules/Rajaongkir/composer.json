@@ -1,0 +1,23 @@
+{
+    "name": "itoktoni/rajaongkir",
+    "description": "for creating rajaongkir",
+    "authors": [{
+        "name": "Itok toni laksono",
+        "email": "itok.toni@gmail.com"
+    }],
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Modules\\Rajaongkir\\Providers\\ModuleServiceProvider"
+            ],
+            "aliases": {
+
+            }
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Modules\\Rajaongkir\\": ""
+        }
+    }
+}
