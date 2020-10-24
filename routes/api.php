@@ -21,6 +21,7 @@ use Modules\Crm\Dao\Facades\CustomerFacades;
 use Modules\Crm\Dao\Repositories\CustomerRepository;
 use Modules\Finance\Dao\Repositories\TaxRepository;
 use Modules\Item\Dao\Repositories\ProductRepository;
+use Modules\Item\Dao\Repositories\VariantRepository;
 use Modules\Marketing\Dao\Repositories\PromoRepository;
 use Modules\Rajaongkir\Dao\Repositories\PriceRepository;
 
@@ -196,62 +197,6 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:api');
 
 Route::post('/stock', 'PublicController@stock')->name('stock');
-
-
-Route::match(
-    [
-        'GET',
-        'POST'
-    ],
-    'po',
-    function () {
-        $po = request()->get('po');
-        $product = request()->get('product');
-        $qty = request()->get('qty');
-        $loc = request()->get('loc');
-        $save = false;
-
-        $product = DB::table('view_stock')->where('item_product_id', $product)->first();
-        dd($product);
-        $data = DB::table('procurement_purchase_detail')
-            ->where('purchase_detail_purchase_id', $po)
-            ->where('purchase_detail_option', $product)->first();
-        if ($data) {
-            $save = DB::table('procurement_purchase_detail')->where([
-                'purchase_detail_purchase_id' => $po,
-                'purchase_detail_option' => $product,
-            ])->update([
-                'purchase_detail_qty_receive' => $qty,
-                'purchase_detail_location_id' => $loc
-            ]);
-
-            $stock = new StockRepository();
-            $batch = Helper::autoNumber($stock->getTable(), 'item_stock_batch', 'G' . date('Ymd'), config('website.autonumber'));
-
-            for ($i = 0; $i < $qty; $i++) {
-                $item = [
-                    'item_stock_qty' => 1,
-                    'item_stock_product' => $product,
-                    'item_stock_size' => $product,
-                    'item_stock_color' => $product,
-                    'item_stock_location' => $product,
-                    'item_stock_qty' => $product,
-                    'item_stock_option' => $product,
-                    'item_stock_batch' => $batch,
-                ];
-                $check_stock = $stock->saveRepository($item);
-            }
-
-            $data['purchase_detail_barcode'] = $batch;
-
-            $check = DB::table($this->detail_table)->updateOrInsert($where, $data);
-            return Notes::create($check);
-        }
-
-        return response()->json($save);
-    }
-)->name('purchase_api');
-
 Route::post('team_testing', 'TeamController@data')->middleware('jwt');
 Route::post('team_testing2', 'TeamController@data')->middleware('auth:airlock');
 
@@ -268,14 +213,55 @@ Route::match(
     function () {
         $input = request()->get('id');
         $product = new ProductRepository();
+        $data = new VariantRepository();
         $query = false;
         if ($input) {
             $query = $product->dataRepository()->where($product->getKeyName(), $input);
-            return $query->first()->toArray();
+            $variant = $data->dataRepository()->where('item_variant_item_product_id', $input);
+            return [
+                'product' => $query->first()->toArray(),
+                'variant' => $variant->get()->toArray()
+            ];
         }
         return $query;
     }
 )->name('product_api');
+
+Route::match(
+    [
+        'GET',
+        'POST'
+    ],
+    'product_variant_api',
+    function () {
+        $input = request()->get('id');
+        $data = new VariantRepository();
+        $query = false;
+        if ($input) {
+            $query = $data->dataRepository()->where('item_variant_item_product_id', $input);
+            return $query->get()->toArray();
+        }
+        return $query;
+    }
+)->name('product_variant_api');
+
+Route::match(
+    [
+        'GET',
+        'POST'
+    ],
+    'variant_api',
+    function () {
+        $input = request()->get('id');
+        $data = new VariantRepository();
+        $query = false;
+        if ($input) {
+            $query = $data->dataRepository()->where($data->getKeyName(), $input);
+            return $query->first()->toArray();
+        }
+        return $query;
+    }
+)->name('variant_api');
 
 
 Route::match(

@@ -16,12 +16,6 @@
                     value="{{ $item['temp_id'] ?? $item->sales_order_detail_item_product_id }}">
                 <input type="hidden" name="detail[{{$loop->index}}][temp_desc]"
                     value="{{ $item['temp_desc'] ?? $item->sales_order_detail_item_product_description }}">
-                <input type="hidden" name="detail[{{$loop->index}}][temp_dname]"
-                    value="{{ $item['temp_dname'] ?? $item->sales_order_detail_discount_name }}">
-                <input type="hidden" name="detail[{{$loop->index}}][temp_dpercent]"
-                    value="{{ $item['temp_dpercent'] ?? $item->sales_order_detail_discount_percent }}">
-                <input type="hidden" name="detail[{{$loop->index}}][temp_dvalue]"
-                    value="{{ $item['temp_dvalue'] ?? $item->sales_order_detail_discount_value }}">
                 <input type="hidden" name="detail[{{$loop->index}}][temp_price]"
                     value="{{ $item['temp_price'] ?? $item->sales_order_detail_price }}">
                 <input type="hidden" name="detail[{{$loop->index}}][temp_total]"
@@ -34,16 +28,10 @@
                 <input type="text" readonly class="form-control input-sm"
                     value="{{ $item['temp_product'] ?? $item->product->item_product_name }}"
                     name="detail[{{ $loop->index }}][temp_product]">
-
-                <textarea placeholder="notes" tabindex="{{ $loop->iteration }}5" class="form-control temp_notes"
-                    rows="4"
-                    name="detail[{{ $loop->index }}][temp_notes]">{{ $item['temp_notes'] ?? $item->sales_order_detail_item_product_description }}</textarea>
-
-
             </td>
             <td data-title="Description">
                 <textarea placeholder="notes" tabindex="{{ $loop->iteration }}5" class="form-control temp_notes"
-                    rows="7"
+                    rows="3"
                     name="detail[{{ $loop->index }}][temp_notes]">{{ $item['temp_notes'] ?? '' }}</textarea>
 
             </td>

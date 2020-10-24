@@ -76,11 +76,13 @@
                                 'Visible',
                                 'Homepage',
                                 'Total',
+                                'Price',
                                 ];
                                 $sort = [
                                 'Sort',
                                 'Qty',
                                 'Size',
+                                'Stock',
                                 ];
                                 @endphp
                                 @foreach($fields as $item => $value)<th {!! strpos($value, 'Description' ) !==false

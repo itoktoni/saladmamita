@@ -76,6 +76,7 @@
                                 'Visible',
                                 'Homepage',
                                 'Total',
+                                'Stock',
                                 ];
                                 $sort = [
                                 'Sort',

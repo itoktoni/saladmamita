@@ -1,21 +1,21 @@
-<x-area :selector="['from_area', 'to_area']"/>
-<x-date :array="['date']"/>
-<x-mask :array="['number', 'money']"/>
-<x-editor/>
+<x-area :selector="['from_area', 'to_area']" />
+<x-date :array="['date']" />
+<x-mask :array="['number', 'money']" />
+<x-editor />
 
 @push('javascript')
 namespace Modules\Sales\Resources\views\page\order;
 <script>
 $(document).ready(function() {
 
-    function calculate(){
+    function calculate() {
 
         var qty = $('#qty').val();
         var price = $('#price').val();
         var disc = $('#disc').val();
         var total = numeral(qty).value() * numeral(price).value();
 
-        if(disc != ''){
+        if (disc != '') {
             total = total - (total * numeral(disc).value() / 100);
         }
 
@@ -39,7 +39,7 @@ $(document).ready(function() {
         var disc = $('#grand_discount_value');
         var price = sum * numeral(disc.val()).value() / 100;
         var mask_price_discount = numeral(price).format('0,0');
-        
+
         var total_discount = sum - price;
         var mask_total_discount = numeral(total_discount).format('0,0');
         sum = total_discount;
@@ -53,7 +53,7 @@ $(document).ready(function() {
 
             var price_tax = sum * numeral(tax_value.val()).value() / 100;
             var mask_price_tax = numeral(price_tax).format('0,0');
-            
+
             var total_tax = sum + price_tax;
             var mask_total_tax = numeral(total_tax).format('0,0');
 
@@ -66,23 +66,24 @@ $(document).ready(function() {
         total_product.val(numeral(sum).format('0,0'));
         total_payment.text(numeral(sum).format('0,0'));
         before_discount.val(numeral(sum + price).format('0,0'));
-        
+
         $('#grand_discount_price').val(mask_price_discount);
         $('#grand_discount_total').val(mask_total_discount);
-        
+
         $('#grand_tax_price').val(mask_price_tax);
         $('#grand_tax_total').val(mask_total_tax);
-        
+
         var tax = numeral(tax_value).value($('#grand_tax_total').val());
         $('#grand_total').val(numeral(sum + tax).format('0,0'));
     }
 
     function addDetail(e) {
         var input_product = $('#product option:selected');
+        var input_variant = $('#variant option:selected');
         var input_qty = $('#qty');
         var input_price = $('#price');
-        var input_disc = $('#disc');
-        var input_desc = $('#desc');
+        // var input_disc = $('#disc');
+        // var input_desc = $('#desc');
         var input_notes = $('#notes');
         var input_sub_total = $('#sub_total');
 
@@ -102,16 +103,16 @@ $(document).ready(function() {
         var product_qty = input_qty.val();
         var product_price = input_price.val();
         var product_notes = input_notes.val();
-        var product_disc = input_disc.val();
-        var product_desc = input_desc.val();
+        // var product_disc = input_disc.val();
+        // var product_desc = input_desc.val();
 
         var product_total = numeral(product_qty).value() * numeral(product_price).value();
 
-        var product_potongan = 0;
-        if(product_disc != ''){
-            product_potongan = (product_total * numeral(product_disc).value() / 100);
-            product_total = product_total - product_potongan;
-        }
+        // var product_potongan = 0;
+        // if(product_disc != ''){
+        //     product_potongan = (product_total * numeral(product_disc).value() / 100);
+        //     product_total = product_total - product_potongan;
+        // }
 
         var mask_total = numeral(product_total).format('0,0');
         var real_price = numeral(product_price).value();
@@ -138,25 +139,37 @@ $(document).ready(function() {
                     }
                 }
                 var total = numeral(product_price).value() * numeral(product_qty).value();
-                var markup = "<tr>"+
-                    "<td data-title='ID' class='col-lg-1'><button id='delete' value='" + product_id + "' type='button' class='btn btn-danger btn-xs btn-block'>"+product_id+"</button></td>"+
-                    "<td data-title='Product'>"+
-                    "<input class='form-control input-sm text-left' readonly name='detail[" + counter + "][temp_product]' value='" + product_name + "'>"+
-                    "<div class='input-group input-group-sm'>"+
-                    "<input tabindex='"+counter+"3' type='text' name='detail[" + counter + "][temp_desc]' value='" + product_desc + "' class='form-control text-left'>"+
-                    "<span class='input-group-btn'>"+
-                    "<button class='btn btn-default' type='button'>Disc</button></span></div>"+
-                    "<textarea rows='4' name='detail[" + counter + "][temp_notes]' class='form-control text-left simple' placeholder='notes'>"+product_notes+"</textarea>"+
-                    "</td>"+
-                    "<td data-title='Qty/Disc' class='text-right col-lg-1'>"+
-                    "<input tabindex='"+counter+"1' class='form-control input-sm text-right number temp_qty' name='detail[" + counter + "][temp_qty]' value='" + product_qty +"'>"+
-                    "<input tabindex='"+counter+"4' class='form-control input-sm text-right number temp_disc' name='detail[" + counter + "][temp_disc]' value='" + product_disc + "'></td>"+
-                    "<td data-title='Price' class='text-right col-lg-1'>"+
-                    "<input tabindex='"+counter+"2' name='detail[" + counter + "][temp_price]' class='form-control input-sm text-right number temp_price' value='" + numeral(product_price).format('0,0') +"'>"+
-                    "<input name='detail[" + counter + "][temp_potongan]' readonly class='form-control input-sm text-right number temp_potongan' value='" + numeral(product_potongan).format('0,0') +"'></td>"+
-                    "<td data-title='Total' class='text-right col-lg-1'><input type='text' name='detail[" + counter + "][temp_total]' readonly class='form-control input-sm text-right money temp_total' value='" + mask_total + "'></td>"+
-                    "<input type='hidden' value='" + product_id +"' name='detail[" + counter + "][temp_id]'><input type='hidden' value='"+product_id+"' name='temp_id[]'>"+
-                    "'"+
+                var markup = "<tr>" +
+                    "<td data-title='ID' class='col-lg-1'><button id='delete' value='" + product_id +
+                    "' type='button' class='btn btn-danger btn-xs btn-block'>" + product_id + "</button></td>" +
+                    "<td data-title='Product'>" +
+                    "<input class='form-control input-sm text-left' readonly name='detail[" + counter +
+                    "][temp_product]' value='" + product_name + "'>" +
+                    // "<div class='input-group input-group-sm'>"+
+                    // "<input tabindex='"+counter+"3' type='text' name='detail[" + counter + "][temp_desc]' value='" + product_desc + "' class='form-control text-left'>"+
+                    // "<span class='input-group-btn'>"+
+                    // "<button class='btn btn-default' type='button'>Disc</button></span></div>"+
+                    "<textarea rows='5' name='detail[" + counter +
+                    "][temp_notes]' class='form-control text-left simple' placeholder='notes'>" +
+                    product_notes + "</textarea>" +
+                    "</td>" +
+                    "<td data-title='Qty' class='text-right col-lg-1'>" +
+                    "<input tabindex='" + counter +
+                    "1' class='form-control input-sm text-right number temp_qty' name='detail[" + counter +
+                    "][temp_qty]' value='" + product_qty + "'>" +
+                    // "<input tabindex='"+counter+"4' class='form-control input-sm text-right number temp_disc' name='detail[" + counter + "][temp_disc]' value='" + product_disc + "'></td>"+
+                    "<td data-title='Price' class='text-right col-lg-1'>" +
+                    "<input tabindex='" + counter + "2' name='detail[" + counter +
+                    "][temp_price]' class='form-control input-sm text-right number temp_price' value='" +
+                    numeral(product_price).format('0,0') + "'>" +
+                    // "<input name='detail[" + counter + "][temp_potongan]' readonly class='form-control input-sm text-right number temp_potongan' value='" + numeral(product_potongan).format('0,0') +"'></td>"+
+                    "<td data-title='Total' class='text-right col-lg-1'><input type='text' name='detail[" +
+                    counter +
+                    "][temp_total]' readonly class='form-control input-sm text-right money temp_total' value='" +
+                    mask_total + "'></td>" +
+                    "<input type='hidden' value='" + product_id + "' name='detail[" + counter +
+                    "][temp_id]'><input type='hidden' value='" + product_id + "' name='temp_id[]'>" +
+                    "'" +
                     "</tr>";
                 $("#transaction .markup").append(markup);
                 sumTotal();
@@ -168,6 +181,9 @@ $(document).ready(function() {
 
                 $('#price').attr("placeholder", "").blur();
                 $('#qty').attr("placeholder", "").blur();
+
+                $('#product').val(0);
+                $('#product').trigger("chosen:updated");
 
                 return false;
             } else {
@@ -207,7 +223,8 @@ $(document).ready(function() {
 
                     var from_area = $('#from_area');
                     from_area.empty();
-                    from_area.append('<option value="' + result.company_contact_rajaongkir_area_id +
+                    from_area.append('<option value="' + result
+                        .company_contact_rajaongkir_area_id +
                         '">' + result.rajaongkir_area_province_name + ' - ' + result
                         .rajaongkir_area_type + ' ' + result.rajaongkir_area_city_name +
                         ' - ' + result.rajaongkir_area_name + '</option>');
@@ -234,10 +251,11 @@ $(document).ready(function() {
                     $('#to_phone').val(result.crm_customer_contact_phone);
                     $('#to_email').val(result.crm_customer_contact_email);
                     $('#to_address').val(result.crm_customer_contact_address);
-                    
+
                     var to_area = $('#to_area');
                     to_area.empty();
-                    to_area.append('<option value="' + result.crm_customer_contact_rajaongkir_area_id +
+                    to_area.append('<option value="' + result
+                        .crm_customer_contact_rajaongkir_area_id +
                         '">' + result.rajaongkir_area_province_name + ' - ' + result
                         .rajaongkir_area_type + ' ' + result.rajaongkir_area_city_name +
                         ' - ' + result.rajaongkir_area_name + '</option>');
@@ -260,20 +278,28 @@ $(document).ready(function() {
             },
             success: function(result) {
                 if (result) {
-                    var mask_price = number_format(result.item_product_sell.toString());
+
+                    console.log(result);
+                    var value_qty = numeral(result.product.item_product_min_order).value();
+
+                    var value_price = numeral(result.product.item_product_sell).value();
+                    var mask_price = number_format(value_price);
+
                     var price = $('#price').val(mask_price);
-                    var sub_total = $('#sub_total').val(mask_price);
-                    $('#notes').val(result.item_product_description.toString());
+                    var total = value_qty * value_price;
+
+                    var sub_total = $('#sub_total').val(number_format(total));
+                    // $('#notes').val(result.item_product_description.toString());
                     setTimeout(function() {
                         $('#qty').focus();
-                        $('#qty').val(1);
+                        $('#qty').val(value_qty);
                     });
                 }
             }
         });
     });
 
-    $('#grand_tax_id').change(function(){
+    $('#grand_tax_id').change(function() {
         var id = $("#grand_tax_id option:selected").val();
         $.ajaxSetup({
             headers: {
@@ -311,15 +337,15 @@ $(document).ready(function() {
         });
     });
 
-    $("#detail").on('input', '#qty', function(){
+    $("#detail").on('input', '#qty', function() {
         calculate();
     });
 
-    $("#detail").on('input', '#price', function(){
+    $("#detail").on('input', '#price', function() {
         calculate();
     });
 
-    $("#detail").on('input', '#disc', function(){
+    $("#detail").on('input', '#disc', function() {
         calculate();
     });
 
@@ -331,12 +357,12 @@ $(document).ready(function() {
         var value_total = numeral(qty).value() * numeral(price.val()).value();
         var potongan = $(this).closest('tr').find('.temp_potongan');
         var disc = $(this).closest('tr').find('.temp_disc');
-        if(disc != ''){
+        if (disc != '') {
             var discount = (value_total * numeral(disc.val()).value()) / 100;
             potongan.val(numeral(discount).format('0,0'));
             value_total = value_total - discount;
         }
-        
+
         total.val(numeral(value_total).format('0,0'));
         sumTotal();
     });
@@ -347,10 +373,10 @@ $(document).ready(function() {
         var total = $(this).closest('tr').find('.temp_total');
 
         var value_total = numeral(qty.val()).value() * numeral(price).value();
-        
+
         var potongan = $(this).closest('tr').find('.temp_potongan');
         var disc = $(this).closest('tr').find('.temp_disc');
-        if(disc != ''){
+        if (disc != '') {
             var discount = value_total * numeral(disc.val()).value() / 100;
             potongan.val(numeral(discount).format('0,0'));
             value_total = value_total - discount;
@@ -364,12 +390,12 @@ $(document).ready(function() {
         var price = $(this).closest('tr').find('.temp_price');
         var qty = $(this).closest('tr').find('.temp_qty');
         var total = $(this).closest('tr').find('.temp_total');
-        
+
         var value_total = numeral(qty.val()).value() * numeral(price.val()).value();
-        
+
         var potongan = $(this).closest('tr').find('.temp_potongan');
         var disc = $(this).val();
-        if(disc != ''){
+        if (disc != '') {
             var discount = value_total * numeral(disc).value() / 100;
             potongan.val(numeral(discount).format('0,0'));
             value_total = value_total - discount;

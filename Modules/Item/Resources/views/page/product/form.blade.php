@@ -1,3 +1,4 @@
+<x-editor />
 
 <div class="form-group">
     {!! Form::label('name', 'Product Name', ['class' => 'col-md-2 control-label']) !!}
@@ -15,28 +16,26 @@
 
 <div class="form-group">
 
-    {!! Form::label('name', 'SKU', ['class' => 'col-md-2 control-label']) !!}
-    <div class="col-md-4 {{ $errors->has($form.'sku') ? 'has-error' : ''}}">
-        {!! Form::text($form.'sku', null, ['class' => 'form-control']) !!}
-        {!! $errors->first($form.'sku', '<p class="help-block">:message</p>') !!}
+    {!! Form::label('name', 'Brand', ['class' => 'col-md-2 control-label']) !!}
+    <div class="col-md-4 {{ $errors->has($form.'item_brand_id') ? 'has-error' : ''}}">
+        {{ Form::select($form.'item_brand_id', $brand, null, ['class'=> 'form-control', 'data-plugin-selectTwo']) }}
+        {!! $errors->first($form.'item_brand_id', '<p class="help-block">:message</p>') !!}
     </div>
-
-    {!! Form::label('name', 'Group Product', ['class' => 'col-md-2 control-label']) !!}
-    <div class="col-md-4 {{ $errors->has($form.'group') ? 'has-error' : ''}}">
-        {{ Form::select($form.'group', $product, null, ['class'=> 'form-control ']) }}
-        {!! $errors->first($form.'group', '<p class="help-block">:message</p>') !!}
-    </div>
-</div>
-
-
-<div class="form-group">
 
     {!! Form::label('name', 'Category', ['class' => 'col-md-2 control-label']) !!}
     <div class="col-md-4 {{ $errors->has($form.'item_category_id') ? 'has-error' : ''}}">
         {{ Form::select($form.'item_category_id', $category, null, ['class'=> 'form-control ', 'data-plugin-selectTwo']) }}
         {!! $errors->first($form.'item_category_id', '<p class="help-block">:message</p>') !!}
     </div>
+</div>
 
+<div class="form-group">
+
+    {!! Form::label('name', 'SKU', ['class' => 'col-md-2 control-label']) !!}
+    <div class="col-md-4 {{ $errors->has($form.'sku') ? 'has-error' : ''}}">
+        {!! Form::text($form.'sku', null, ['class' => 'form-control']) !!}
+        {!! $errors->first($form.'sku', '<p class="help-block">:message</p>') !!}
+    </div>
 
     {!! Form::label('name', 'Main Image', ['class' => 'col-md-2 control-label']) !!}
     <div class="col-md-4 {{ $errors->has($form.'image') ? 'has-error' : ''}}">
@@ -70,7 +69,6 @@
     </div>
 </div>
 <div class="form-group">
-
     {!! Form::label('name', 'Description', ['class' => 'col-md-2 control-label']) !!}
     <div class="col-md-{{ isset($model->item_product_image) && !empty($model->item_product_image) ? '8' : '10' }}">
         {!! Form::textarea($form.'description', null, ['class' => 'form-control editor', 'id' => '', 'rows' => '5']) !!}
@@ -86,54 +84,30 @@
 
 <hr>
 <div class="form-group">
-    {!! Form::label('name', 'Buying Price', ['class' => 'col-md-2 control-label']) !!}
-    <div class="col-md-4 {{ $errors->has($form.'buy') ? 'has-error' : ''}}">
-        {!! Form::number($form.'buy', null, ['class' => 'form-control']) !!}
-        {!! $errors->first($form.'buy', '<p class="help-block">:message</p>') !!}
-    </div>
-
-    {!! Form::label('name', 'Selling Price', ['class' => 'col-md-2 control-label']) !!}
+    {!! Form::label('name', 'Default Price', ['class' => 'col-md-2 control-label']) !!}
     <div class="col-md-4 {{ $errors->has($form.'sell') ? 'has-error' : ''}}">
         {!! Form::number($form.'sell', null, ['class' => 'form-control']) !!}
         {!! $errors->first($form.'sell', '<p class="help-block">:message</p>') !!}
-    </div>
-</div>
-
-<div class="form-group">
-    {!! Form::label('name', 'Minimal', ['class' => 'col-md-2 control-label']) !!}
-    <div class="col-md-4 {{ $errors->has($form.'min') ? 'has-error' : ''}}">
-        {!! Form::number($form.'min', null, ['class' => 'form-control']) !!}
-        {!! $errors->first($form.'min', '<p class="help-block">:message</p>') !!}
-    </div>
-
-    {!! Form::label('name', 'Maximal', ['class' => 'col-md-2 control-label']) !!}
-    <div class="col-md-4 {{ $errors->has($form.'max') ? 'has-error' : ''}}">
-        {!! Form::number($form.'max', null, ['class' => 'form-control']) !!}
-        {!! $errors->first($form.'max', '<p class="help-block">:message</p>') !!}
-    </div>
-</div>
-
-<div class="form-group">
-
-    {!! Form::label('name', 'Brand', ['class' => 'col-md-2 control-label']) !!}
-    <div class="col-md-4 {{ $errors->has($form.'item_brand_id') ? 'has-error' : ''}}">
-        {{ Form::select($form.'item_brand_id', $brand, null, ['class'=> 'form-control', 'data-plugin-selectTwo']) }}
-        {!! $errors->first($form.'item_brand_id', '<p class="help-block">:message</p>') !!}
-    </div>
-</div>
-
-<div class="form-group">
-
-    {!! Form::label('name', 'Calculate Stock', ['class' => 'col-md-2 control-label']) !!}
-     <div class="col-md-4 {{ $errors->has($form.'stock') ? 'has-error' : ''}}">
-        {{ Form::select($form.'stock', ['1' => 'Yes', '0' => 'No'], null, ['class'=> 'form-control']) }}
-        {!! $errors->first($form.'stock', '<p class="help-block">:message</p>') !!}
     </div>
 
     {!! Form::label('name', 'Weight / Gram', ['class' => 'col-md-2 control-label']) !!}
     <div class="col-md-4 {{ $errors->has($form.'gram') ? 'has-error' : ''}}">
         {!! Form::number($form.'gram', null, ['class' => 'form-control']) !!}
         {!! $errors->first($form.'gram', '<p class="help-block">:message</p>') !!}
+    </div>
+</div>
+
+<div class="form-group">
+    {!! Form::label('name', 'Minimum Order', ['class' => 'col-md-2 control-label']) !!}
+    <div class="col-md-4 {{ $errors->has($form.'min_order') ? 'has-error' : ''}}">
+        {!! Form::number($form.'min_order', null, ['class' => 'form-control']) !!}
+        {!! $errors->first($form.'min_order', '<p class="help-block">:message</p>') !!}
+    </div>
+
+    {!! Form::label('name', 'Minimum Stock', ['class' => 'col-md-2 control-label']) !!}
+    <div class="col-md-4 {{ $errors->has($form.'min_stock') ? 'has-error' : ''}}">
+        {!! Form::number($form.'min_stock', null, ['class' => 'form-control']) !!}
+        {!! $errors->first($form.'min_stock', '<p class="help-block">:message</p>') !!}
     </div>
 
 </div>

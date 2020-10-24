@@ -10,6 +10,7 @@ use Modules\Item\Dao\Models\Brand;
 use Modules\Item\Dao\Models\Product;
 use Modules\Item\Dao\Models\Category;
 use App\Dao\Interfaces\MasterInterface;
+use Illuminate\Database\QueryException;
 use Modules\Production\Dao\Models\Vendor;
 
 class ProductRepository extends Product implements MasterInterface
@@ -79,7 +80,7 @@ class ProductRepository extends Product implements MasterInterface
         try {
             $activity = $this->findOrFail($id)->update($request);
             return Notes::update($activity);
-        } catch (QueryExceptionAlias $ex) {
+        } catch (QueryException $ex) {
             return Notes::error($ex->getMessage());
         }
     }

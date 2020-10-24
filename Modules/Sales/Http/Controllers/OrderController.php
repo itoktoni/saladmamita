@@ -21,6 +21,7 @@ use Modules\Finance\Dao\Repositories\TopRepository;
 use Modules\Sales\Dao\Repositories\OrderRepository;
 use Modules\Crm\Dao\Repositories\CustomerRepository;
 use Modules\Item\Dao\Repositories\ProductRepository;
+use Modules\Item\Dao\Repositories\VariantRepository;
 use Modules\Sales\Dao\Repositories\DeliveryRepository;
 use Modules\Finance\Dao\Repositories\PaymentRepository;
 use Modules\Marketing\Dao\Repositories\PromoRepository;
@@ -51,6 +52,7 @@ class OrderController extends Controller
     {
         $tops = Helper::shareOption((new TopRepository()));
         $product = Helper::shareOption((new ProductRepository()));
+        $variant = Helper::shareOption((new VariantRepository()));
         $tax = Helper::shareOption((new TaxRepository()));
         $promo = Helper::shareOption((new PromoRepository()));
         $company = Helper::shareOption((new CompanyRepository()));
@@ -65,6 +67,7 @@ class OrderController extends Controller
             'tax' => $tax,
             'tops' => $tops,
             'product' => $product,
+            'variant' => $variant,
             'status' => $status,
             'promo' => $promo,
             'from' => $from,

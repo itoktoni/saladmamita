@@ -1,4 +1,4 @@
-<div class="form-group">
+<!-- <div class="form-group">
 
     {!! Form::label('name', 'Quotation', ['class' => 'col-md-2 control-label']) !!}
     <div class="col-md-4 {{ $errors->has('sales_order_code_quotation') ? 'has-error' : ''}}">
@@ -70,7 +70,7 @@
 
 </div>
 
-<hr>
+<hr> -->
 
 <div class="form-group">
 
@@ -80,7 +80,7 @@
         {!! $errors->first('sales_order_to_id', '<p class="help-block">:message</p>') !!}
     </div>
 
-    {!! Form::label('name', 'Nama', ['class' => 'col-md-2 control-label']) !!}
+    {!! Form::label('name', 'Name', ['class' => 'col-md-2 control-label']) !!}
     <div class="col-md-4 {{ $errors->has('sales_order_to_name') ? 'has-error' : ''}}">
         {!! Form::text('sales_order_to_name', null, ['class' => 'form-control', 'id' => 'to_name']) !!}
         {!! $errors->first('sales_order_to_name', '<p class="help-block">:message</p>') !!}
@@ -137,7 +137,7 @@
         {!! $errors->first('sales_order_status', '<p class="help-block">:message</p>') !!}
     </div>
 
-    {!! Form::label('name', 'Date', ['class' => 'col-md-2 control-label']) !!}
+    {!! Form::label('name', 'Delivery Date', ['class' => 'col-md-2 control-label']) !!}
     <div class="col-md-4 {{ $errors->has('sales_order_date_order') ? 'has-error' : ''}}">
         {!! Form::text('sales_order_date_order', $model->sales_order_date_order ?? date('Y-m-d'), ['class' =>
         'form-control date']) !!}
@@ -149,20 +149,22 @@
 <div class="form-group">
 
     {!! Form::label('name', 'Catatan Internal', ['class' => 'col-md-2 control-label']) !!}
-    <div class="col-md-10 {{ $errors->has('sales_order_notes_internal') ? 'has-error' : ''}}">
-        {!! Form::textarea('sales_order_notes_internal', null, ['class' => 'form-control', 'rows' => 2]) !!}
+    <div class="col-md-4 {{ $errors->has('sales_order_notes_internal') ? 'has-error' : ''}}">
+        {!! Form::textarea('sales_order_notes_internal', null, ['class' => 'form-control', 'rows' => 3]) !!}
         {!! $errors->first('sales_order_notes_internal', '<p class="help-block">:message</p>') !!}
+    </div>
+
+    
+    {!! Form::label('name', 'Catatan Customer', ['class' => 'col-md-2 control-label']) !!}
+    <div class="col-md-4 {{ $errors->has('sales_order_notes_external') ? 'has-error' : ''}}">
+        {!! Form::textarea('sales_order_notes_external', null, ['class' => 'form-control', 'rows' => 3]) !!}
+        {!! $errors->first('sales_order_notes_external', '<p class="help-block">:message</p>') !!}
     </div>
 
 </div>
 
 <div class="form-group">
 
-    {!! Form::label('name', 'Deskripsi Penarawan', ['class' => 'col-md-2 control-label']) !!}
-    <div class="col-md-10 {{ $errors->has('sales_order_notes_external') ? 'has-error' : ''}}">
-        {!! Form::textarea('sales_order_notes_external', null, ['class' => 'form-control editor', 'rows' => 2]) !!}
-        {!! $errors->first('sales_order_notes_external', '<p class="help-block">:message</p>') !!}
-    </div>
 
 </div>
 
@@ -175,24 +177,14 @@
         {!! $errors->first('sales_order_term_top', '<p class="help-block">:message</p>') !!}
     </div>
 
-    {!! Form::label('name', 'Berlaku Sampai', ['class' => 'col-md-2 control-label']) !!}
-    <div class="col-md-4 {{ $errors->has('sales_order_term_valid') ? 'has-error' : ''}}">
+    {!! Form::label('name', 'Code Contract', ['class' => 'col-md-2 control-label']) !!}
+    <div class="col-md-4 {{ $errors->has('sales_order_code_reference') ? 'has-error' : ''}}">
         <div class="input-group">
-            {!! Form::text('sales_order_term_valid', null, ['class' => 'form-control', 'placeholder' => 'Masukan Hari'])
+            {!! Form::text('sales_order_code_reference', null, ['class' => 'form-control'])
             !!}
-            <span class="input-group-addon" id="basic-addon2">Hari</span>
+            <a class="input-group-addon" target="_blank" href="http://">Link</a>
         </div>
-        {!! $errors->first('sales_order_term_valid', '<p class="help-block">:message</p>') !!}
-    </div>
-
-</div>
-
-<div class="form-group">
-
-    {!! Form::label('name', 'Term and Condition', ['class' => 'col-md-2 control-label']) !!}
-    <div class="col-md-10 {{ $errors->has('sales_order_term_product') ? 'has-error' : ''}}">
-        {!! Form::textarea('sales_order_term_product', null, ['class' => 'form-control simple']) !!}
-        {!! $errors->first('sales_order_term_product', '<p class="help-block">:message</p>') !!}
+        {!! $errors->first('sales_order_code_reference', '<p class="help-block">:message</p>') !!}
     </div>
 
 </div>

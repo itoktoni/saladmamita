@@ -25,51 +25,56 @@
             </div>
         </div>
         <div class="panel-body line">
-            <div class="">
-                <div class="form-group {{ $errors->has('detail') ? 'has-error' : ''}}">
-                    <label class="col-md-1 control-label" for="inputDefault">Product</label>
-                    <div class="col-md-5 {{ $errors->has('product') ? 'has-error' : ''}}">
+            <div class="{{ $errors->has('detail') ? 'has-error' : ''}}">
+                <div class="form-group">
+                    <label class="col-md-2 control-label" for="inputDefault">Product</label>
+                    <div class="col-md-4 {{ $errors->has('product') ? 'has-error' : ''}}">
                         {{ Form::select('', $product, null, ['class'=> 'form-control', 'id' => 'product']) }}
                     </div>
 
-                    <label class="col-md-1 control-label" for="inputDefault">Qty</label>
-                    <div class="col-md-2">
-                        {!! Form::text('', null, ['id' => 'qty', 'class' => 'number form-control']) !!}
+                    <label class="col-md-2 control-label" for="inputDefault">Qty</label>
+                    <div class="col-md-4">
+                        {!! Form::text('', null, ['id' => 'qty', 'class' => 'number form-control', 'placeholder' =>
+                        'QTY']) !!}
                     </div>
+                </div>
 
-                    <label class="col-md-1 control-label" for="inputDefault">Price</label>
-                    <div class="col-md-2">
+                <div class="form-group">
+                    <label class="col-md-2 control-label" for="inputDefault">Price</label>
+                    <div class="col-md-4">
                         {!! Form::text('', null, ['id' => 'price', 'class' => 'money form-control']) !!}
                     </div>
 
-                    <hr>
+                    <label class="col-md-2 control-label" for="inputDefault">Total</label>
+                    <div class="col-md-4">
+                        {!! Form::text('', null, ['id' => 'sub_total', 'readonly', 'class' => 'number form-control'])
+                        !!}
+                    </div>
+                </div>
 
-                    <label class="col-md-1 control-label" for="inputDefault">Discount</label>
-                    <div class="col-md-2">
+                <!-- <div class="form-group">
+
+                    <label class="col-md-2 control-label" for="inputDefault">Discount</label>
+                    <div class="col-md-4">
                         {!! Form::text('', null, ['id' => 'disc', 'placeholder' => 'Hitungan Dlm %' , 'class' => 'number
                         form-control']) !!}
                     </div>
 
-                    <label class="col-md-1 control-label" for="inputDefault">Notes</label>
-                    <div class="col-md-5">
+                    <label class="col-md-2 control-label" for="inputDefault">Notes</label>
+                    <div class="col-md-4">
                         {!! Form::textarea('', null, ['id' => 'desc', 'class' => 'form-control', 'rows' => 1]) !!}
                     </div>
-                    <label class="col-md-1 control-label" for="inputDefault">Total</label>
-                    <div class="col-md-2">
-                        {!! Form::text('', null, ['id' => 'sub_total', 'readonly', 'class' => 'number form-control'])
-                        !!}
-                    </div>
 
-                </div>
+                </div> -->
 
                 <div class="form-group">
 
-                    <label class="col-md-1 control-label" for="inputDefault">Notes</label>
-                    <div class="col-md-11">
-                        {!! Form::textarea('', null, ['id' => 'notes', 'rows' => 4, 'class' => 'form-control']) !!}
+                    <label class="col-md-2 control-label" for="inputDefault">Notes</label>
+                    <div class="col-md-10">
+                        {!! Form::textarea('', null, ['id' => 'notes', 'rows' => 3, 'class' => 'form-control']) !!}
                     </div>
-
                 </div>
+
             </div>
         </div>
 

@@ -8,7 +8,7 @@ return [
         'favicon' => 'core_favicon.png',
         'error' => 'error.png',
         'backend' => 'porto',
-        'frontend' => '',
+        'frontend' => 'amado',
         'seo' => 'seo',
         'description' => 'description',
         'owner' => 'Alexandro',

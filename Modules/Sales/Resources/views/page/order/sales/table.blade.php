@@ -1,9 +1,9 @@
 <table id="transaction" class="table table-no-more table-bordered table-striped">
     <thead>
         <tr>
-            <th class="text-left col-md-1">ID</th>
+            <th class="text-left col-md-1">Product ID</th>
             <th class="text-left col-md-4">Product Name and Description</th>
-            <th class="text-right col-md-1">Qty / Disc</th>
+            <th class="text-right col-md-1">Qty</th>
             <th class="text-right col-md-2">Price</th>
             <th class="text-right col-md-2">Total</th>
         </tr>
@@ -30,31 +30,17 @@
                 <input type="text" readonly class="form-control input-sm"
                     value="{{ $item['temp_product'] ?? $item->product->item_product_name }}" name="detail[{{ $loop->index }}][temp_product]">
 
-                <div class="input-group input-group-sm">
-                    <input type="text" tabindex="{{ $loop->iteration }}3" name="detail[{{ $loop->index }}][temp_desc]" value="{{ $item['temp_desc'] ?? $item->sales_order_detail_discount_name }}" class="form-control">
-                    <span class="input-group-btn">
-                        <button class="btn btn-default" type="button">disc</button>
-                    </span>
-                </div>
-
-                <textarea rows="4" placeholder="notes" tabindex="{{ $loop->iteration }}5" class="form-control temp_notes simple" name="detail[{{ $loop->index }}][temp_notes]">{{ $item['temp_notes'] ?? $item->sales_order_detail_item_product_description }}</textarea>
+                <textarea rows="5" placeholder="notes" tabindex="{{ $loop->iteration }}5" class="form-control temp_notes" name="detail[{{ $loop->index }}][temp_notes]">{{ $item['temp_notes'] ?? $item->sales_order_detail_item_product_description }}</textarea>
             </td>
             <td data-title="Qty" class="text-right col-lg-1">
                 <input type="text" tabindex="{{ $loop->iteration }}1" name="detail[{{ $loop->index }}][temp_qty]"
                     class="form-control input-sm text-right number temp_qty"
                     value="{{ $item['temp_qty'] ?? $item->sales_order_detail_qty }}">
-
-                <input type="text" tabindex="{{ $loop->iteration }}4" name="detail[{{ $loop->index }}][temp_disc]" class="form-control input-sm text-right number temp_disc"
-                    value="{{ $item['temp_disc'] ?? $item->sales_order_detail_discount_percent }}">
             </td>
             <td data-title="Price" class="text-right col-lg-1">
                 <input type="text" tabindex="{{ $loop->iteration }}2"  name="detail[{{ $loop->index }}][temp_price]"
                     class="form-control input-sm text-right money temp_price"
                     value="{{ $item['temp_price'] ?? $item->sales_order_detail_price }}">
-
-                <input type="text" name="detail[{{ $loop->index }}][temp_potongan]"
-                    class="form-control input-sm text-right number temp_potongan"
-                    value="{{ $item['temp_potongan'] ?? $item->sales_order_detail_discount_value }}">
             </td>
             <td data-title="Total" class="text-right col-lg-1">
                 <input type="text" readonly name="detail[{{ $loop->index }}][temp_total]"
@@ -97,29 +83,9 @@
                 'readonly', 'class' => 'number form-control text-right']) !!}
             </td>
         </tr>
-        <tr style="margin-bottom: 20px;">
-            <td data-title="" class="text-left col-md-1 hide-xs">
-                <button value="Tax" type="button" class="btn btn-xs btn-primary btn-block">Tax</button>
-            </td>
-            <td data-title="Description" class="text-left col-md-4">
-                {{ Form::select('sales_order_tax_id', $tax, null, ['class'=> 'form-control', 'id' => 'grand_tax_id', 'tabindex' => 503]) }}
-            </td>
-            <td data-title="Value" class="text-right col-md-1">
-                {!! Form::text('sales_order_tax_percent', null, ['id' => 'grand_tax_value', 'placeholder' => 'Dalam %'
-                ,'class' => 'number form-control text-right', 'tabindex' => 504]) !!}
-            </td>
-            <td data-title="Price" class="text-right col-md-1">
-                {!! Form::text('sales_order_tax_value', null, ['id' => 'grand_tax_price',
-                'readonly', 'class' => 'number form-control text-right']) !!}
-            </td>
-            <td data-title="Total" class="text-right col-md-1">
-                {!! Form::text('sales_order_sum_tax', null, ['id' => 'grand_tax_total',
-                'readonly', 'class' => 'number form-control text-right']) !!}
-            </td>
-        </tr>
         <tr>
             <td data-title="GRAND TOTAL" colspan="4" class="text-right">
-                <strong>Total Setelah Discount + Tax</strong>
+                <strong>Total Setelah Discount</strong>
             </td>
             <td data-title="" class="text-right">
                 {!! Form::text('sales_order_sum_total', null, ['id' => 'grand_total',

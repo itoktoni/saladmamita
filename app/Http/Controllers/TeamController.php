@@ -11,6 +11,8 @@ use App\Dao\Repositories\TeamRepository;
 use App\Http\Requests\TeamCreateRequest;
 use App\Http\Requests\TeamUpdateRequest;
 use Illuminate\Support\Facades\Validator;
+use App\Dao\Repositories\BranchRepository;
+use App\Dao\Repositories\CompanyRepository;
 use App\Dao\Repositories\GroupUserRepository;
 
 class TeamController extends Controller
@@ -35,6 +37,9 @@ class TeamController extends Controller
     {
         $status = Helper::shareStatus(self::$model->status)->prepend('- Select Status -', '');
         $group = Helper::shareOption((new GroupUserRepository()));
+        $company = Helper::shareOption((new CompanyRepository()));
+        $branch = Helper::shareOption((new BranchRepository()));
+
         $view = [
             'key'      => self::$model->getKeyName(),
             'template' => $this->template,
