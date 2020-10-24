@@ -82,9 +82,10 @@ class Order extends Model
     public $datatable = [
         'sales_order_id' => [true => 'Code'],
         'sales_order_date_order' => [true => 'Delivery Date'],
-        'company_contact_name' => [false => 'Company'],
-        'crm_customer_name' => [true => 'Customer'],
+        'crm_customer_name' => [false => 'Customer'],
+        'sales_order_from_name' => [true => 'Pickup'],
         'sales_order_to_name' => [true => 'Contact'],
+        'sales_order_to_phone' => [true => 'Phone'],
         'sales_order_status' => [true => 'Status'],
     ];
 

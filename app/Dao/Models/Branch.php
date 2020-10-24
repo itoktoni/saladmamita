@@ -14,6 +14,10 @@ class Branch extends Model
         'branch_company_id',
         'branch_description',
         'branch_rajaongkir_area_id',
+        'branch_address',
+        'branch_email',
+        'branch_phone',
+        'branch_person',
     ];
 
     public $timestamps = false;
@@ -29,10 +33,15 @@ class Branch extends Model
 
     public $datatable = [
         'branch_name'           => [true    => 'Name'],
+        'branch_address'           => [false    => 'Name'],
+        'branch_email'           => [false    => 'Name'],
+        'branch_phone'           => [false    => 'Name'],
+        'branch_rajaongkir_area_id'           => [true    => 'Name'],
         'company_contact_name'           => [true    => 'Company'],
         'rajaongkir_area_province_name'           => [true    => 'Province'],
         'rajaongkir_area_city_name'           => [true    => 'City'],
         'rajaongkir_area_name'           => [true    => 'Area'],
+        'rajaongkir_area_type'           => [false    => 'Type'],
         'branch_description'     => [false    => 'Notes Area'],
     ];
 

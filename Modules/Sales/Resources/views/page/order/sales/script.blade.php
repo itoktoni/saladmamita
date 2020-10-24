@@ -208,7 +208,7 @@ $(document).ready(function() {
     $('#from_id').change(function(e) {
         var id = $("#from_id option:selected").val();
         $.ajax({
-            url: '{{ route("company_api") }}',
+            url: '{{ route("branch_api") }}',
             method: 'POST',
             data: {
                 id: id,
@@ -216,20 +216,20 @@ $(document).ready(function() {
             },
             success: function(result) {
                 if (result) {
-                    $('#from_name').val(result.company_contact_person);
-                    $('#from_phone').val(result.company_contact_phone);
-                    $('#from_email').val(result.company_contact_email);
-                    $('#from_address').val(result.company_contact_address);
+                    $('#from_name').val(result.branch_name);
+                    $('#from_phone').val(result.branch_phone);
+                    $('#from_email').val(result.branch_email);
+                    $('#from_address').val(result.branch_address);
 
                     var from_area = $('#from_area');
                     from_area.empty();
                     from_area.append('<option value="' + result
-                        .company_contact_rajaongkir_area_id +
+                        .branch_rajaongkir_area_id +
                         '">' + result.rajaongkir_area_province_name + ' - ' + result
                         .rajaongkir_area_type + ' ' + result.rajaongkir_area_city_name +
                         ' - ' + result.rajaongkir_area_name + '</option>');
 
-                    from_area.val(result.company_contact_rajaongkir_area_id);
+                    from_area.val(result.branch_rajaongkir_area_id);
                     from_area.trigger("chosen:updated");
                 }
             }

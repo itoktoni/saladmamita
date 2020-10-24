@@ -356,7 +356,7 @@
         position: absolute;
         top: 90px;
         right: 0px;
-        width: 280px;
+        width: 330px;
         font-size: 10px;
     }
 
@@ -598,7 +598,7 @@
     <div id='page'>
         <div>
             <img id="logo"
-                src="{{ $master->company->company_logo ? Helper::print('company/').$master->company->company_logo : Helper::print('logo/').config('website.logo') }}">
+                src="{{ Helper::print('logo/').config('website.logo') }}">
             <div id="box">
                 <h1>
                     <span>
@@ -667,10 +667,9 @@
                         <p>
                             @php
 
-                            $total_delivery = intval($detail->sum('total'));
+                            $total_delivery = intval($detail->sum('sales_order_detail_total'));
                             $total_discount = $master->sales_order_discount_percent * $total_delivery / 100;
-                            $total_tax = $total_delivery * $master->sales_order_tax_percent / 100;
-                            $grand_total = intval($total_delivery - $total_discount) + intval($total_tax);
+                            $grand_total = intval($total_delivery - $total_discount);
                             @endphp
 
                             <strong style="font-size: 12px;">
@@ -704,31 +703,17 @@
                     </td>
                     <td class="product" colspan="4">
                         <h1>
-                            {{ $item->item_product_name ?? '' }}
+                            {{ $item->product->item_product_name ?? '' }}
                         </h1>
-                        <h2>
-                            Cat. No. {{ $item->item_product_sku ?? '' }}
-                        </h2>
-                        <p>
-                            <strong>Spec : </strong>{!! $item->sales_delivery_detail_item_product_description ?? '' !!}
-                        </p>
                     </td>
                     <td class="price">
-                        {{ Helper::createRupiah($item->sales_delivery_detail_price) ?? '' }}
+                        {{ Helper::createRupiah($item->sales_order_detail_price) ?? '' }}
                     </td>
                     <td class="qty">
-                        {{ $item->qty ?? '' }}
+                        {{ $item->sales_order_detail_qty ?? '' }}
                     </td>
                     <td class="total">
-                        @if($item->sales_delivery_detail_discount_percent)
-                        <span>
-                            Disc : {{ $item->sales_delivery_detail_discount_percent }}%
-                        </span>
-                        <span>
-                            - {{ Helper::createRupiah($item->discount) }}
-                        </span>
-                        @endif
-                        {{ Helper::createRupiah($item->total) ?? '' }}
+                        {{ Helper::createRupiah($item->sales_order_detail_total) ?? '' }}
                     </td>
                 </tr>
                 @endforeach
@@ -738,7 +723,7 @@
                         Total Product
                     </td>
                     <td class="qty">
-                        {{ $detail->sum('qty') ?? '' }}
+                        {{ $detail->sum('sales_order_detail_qty') ?? '' }}
                     </td>
                     <td class="total">
                         {{ Helper::createRupiah($total_delivery) ?? '' }}
@@ -748,7 +733,7 @@
                 @if (!empty($master->sales_order_discount_percent))
                 <tr class="total_discount">
                     <td class="product" colspan="6">
-                        {{ $master->sales_order_discount_name ?? '' }}
+                        {{ ucfirst($master->sales_order_discount_name) ?? '' }} : =
                         Total Discount
                     </td>
                     <td class="qty">
@@ -783,46 +768,7 @@
 
             </table>
         </div>
-        <br>
-        <strong>The payment should be done to our bank account : </strong>
-        <br>
-        @foreach($banks as $bank)
-        {{ $bank->finance_bank_name }} branch {{ $bank->finance_bank_branch }} with account number : <strong>{{ $bank->finance_bank_account_number }}</strong> / beneficiary <strong>{{ $bank->finance_bank_account_name }}</strong>
-        <br>
-        @endforeach 
        
-        <table width="100%" border="0" style="margin-top:10px;width:100% !important;font-size:10px;margin-bottom:-50px">
-            <tr>
-                <td align="center">{{ $master->customer->crm_customer_name ?? '' }}</td>
-                <td align="center">{{ $master->company->company_invoice_name ?? '' }}</td>
-            </tr>
-            <tr>
-                <td style="width: 50%;">
-
-                </td>
-                <td>
-                    <br>
-                    <br>
-                    <br>
-                    <br>
-                    <br>
-                    <br>
-                    <br>
-                    <br>
-                    <br>
-                    <br>
-                    <br>
-                    <br>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                </td>
-                <td align="center">
-                    {{ $master->company->company_invoice_person ?? '' }}
-                </td>
-            </tr>
-        </table>
 </body>
 
 </html>

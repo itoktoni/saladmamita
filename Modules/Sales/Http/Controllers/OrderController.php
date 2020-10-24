@@ -9,6 +9,7 @@ use Barryvdh\DomPDF\Facade;
 use Barryvdh\DomPDF\PdfFacade;
 use App\Http\Controllers\Controller;
 use App\Http\Services\MasterService;
+use App\Dao\Repositories\BranchRepository;
 use App\Dao\Repositories\CompanyRepository;
 use Modules\Sales\Dao\Models\OrderDelivery;
 use Modules\Finance\Dao\Facades\BankFacades;
@@ -55,7 +56,7 @@ class OrderController extends Controller
         $variant = Helper::shareOption((new VariantRepository()));
         $tax = Helper::shareOption((new TaxRepository()));
         $promo = Helper::shareOption((new PromoRepository()));
-        $company = Helper::shareOption((new CompanyRepository()));
+        $branch = Helper::shareOption((new BranchRepository()));
         $customers = Helper::shareOption((new CustomerRepository()));
         $status = Helper::shareStatus(self::$model->status);
 
@@ -72,7 +73,7 @@ class OrderController extends Controller
             'promo' => $promo,
             'from' => $from,
             'to' => $to,
-            'company' => $company,
+            'branch' => $branch,
             'customers' => $customers,
         ];
 
@@ -181,17 +182,17 @@ class OrderController extends Controller
     public function print_order(MasterService $service)
     {
         if (request()->has('code')) {
-            $data = $service->show(self::$model, ['delivery', 'company']);
+            $data = $service->show(self::$model, ['detail', 'company']);
             $id = request()->get('code');
             // dd($data->deliveryRepository($id)->get());
             $pasing = [
                 'master' => $data,
-                'detail' => $data->deliveryRepository($id)->get(),
+                'detail' => $data->detail,
                 'banks'   => BankFacades::dataRepository()->get(),
             ];
             $pdf = PdfFacade::loadView(Helper::setViewPrint(__FUNCTION__, $this->folder), $pasing);
-            return $pdf->download();
-            // return $pdf->stream();
+            // return $pdf->download();
+            return $pdf->stream();
         }
     }
 }

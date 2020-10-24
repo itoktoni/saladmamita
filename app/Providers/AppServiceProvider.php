@@ -49,6 +49,9 @@ class AppServiceProvider extends ServiceProvider {
         $this->app->bind('company_facades', function () {
             return new \App\Dao\Repositories\CompanyRepository();
         });
+        $this->app->bind('branch_facades', function () {
+            return new \App\Dao\Repositories\BranchRepository();
+        });
 
         // $app = app()->loadEnvironmentFrom('production.env');
         // dd(env('APP_NAME'));

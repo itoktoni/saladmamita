@@ -38,17 +38,13 @@ class BranchController extends Controller
         $group = Helper::shareOption((new GroupUserRepository()));
         $company = Helper::shareOption((new CompanyRepository()));
 
-        $area = Helper::shareOption((new AreaRepository()), false, true, false);
-        $data_area = $area->mapWithKeys(function ($item) {
-            return [$item['rajaongkir_area_id'] => $item['rajaongkir_area_province_name'].' - '.$item['rajaongkir_area_city_name'].' - '.$item['rajaongkir_area_name'].' - '.$item['rajaongkir_area_postcode']];
-        })->prepend('- Pilih Salah Satu -', '');
-
+        $area = ['Please Choose Area'];
         $view = [
             'key'      => self::$model->getKeyName(),
             'template' => $this->template,
             'status' => $status,
             'group' => $group,
-            'area' => $data_area,
+            'area' => $area,
             'company' => $company,
         ];
 
@@ -74,6 +70,7 @@ class BranchController extends Controller
         $data = $service->show(self::$model,['area']);
         return view(Helper::setViewUpdate())->with($this->share([
             'model'        => $data,
+            'area'  => Helper::getSingleArea($data->branch_rajaongkir_area_id),
         ]));
     }
 

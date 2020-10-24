@@ -1,5 +1,6 @@
 <?php
 
+use App\Dao\Facades\BranchFacades;
 use App\Dao\Facades\CompanyFacades;
 use App\User;
 use Plugin\Helper;
@@ -280,6 +281,23 @@ Route::match(
         return $query;
     }
 )->name('company_api');
+
+Route::match(
+    [
+        'GET',
+        'POST'
+    ],
+    'branch_api',
+    function () {
+        $input = request()->get('id');
+        $query = false;
+        if ($input) {
+            $query = BranchFacades::dataRepository()->where(BranchFacades::getKeyName(),$input)->first();
+            return $query->toArray() ?? false ;
+        }
+        return $query;
+    }
+)->name('branch_api');
 
 Route::match(
     [
