@@ -15,7 +15,7 @@ class OrderDetail extends Model
     protected $table = 'sales_order_detail';
     protected $primaryKey = 'sales_order_detail_id';
     protected $foreignKey = 'sales_order_detail_item_product_id';
-    protected $with = ['product', 'product.variant', 'variant'];
+    protected $with = ['product'];
     protected $fillable = [
         'sales_order_detail_id',
         'sales_order_detail_order_id',

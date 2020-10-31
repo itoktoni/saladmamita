@@ -2,11 +2,8 @@
 
 namespace Modules\Sales\Http\Requests;
 
-use App\Dao\Facades\CompanyFacades;
 use App\Http\Services\MasterService;
 use Illuminate\Foundation\Http\FormRequest;
-use Modules\Crm\Dao\Facades\CustomerFacades;
-use Modules\Crm\Dao\Repositories\CustomerRepository;
 use Modules\Item\Dao\Repositories\ProductRepository;
 use Modules\Sales\Dao\Repositories\OrderRepository;
 use Plugin\Helper;
@@ -34,7 +31,7 @@ class OrderRequest extends FormRequest
         if (!empty($this->code) && config('module') == 'sales_order') {
             $autonumber = $this->code;
         }
-        
+
         $map = collect($this->detail)->map(function ($item) use ($autonumber) {
             $product = new ProductRepository();
             $data_product = $product->showRepository($item['temp_id'])->first();
@@ -54,13 +51,16 @@ class OrderRequest extends FormRequest
             // $data['sales_order_detail_discount_percent'] = Helper::filterInput($item['temp_disc']) ?? 0;
             // $data['sales_order_detail_discount_value'] = $discount_total ?? 0;
 
-            foreach($data_product->variant as $variants){
-                $variant[] = [
-                    'sales_order_detail_variant_order_id' => $autonumber,
-                    'sales_order_detail_variant_item_product_id' => $item['temp_id'],
-                    'sales_order_detail_variant_item_variant_id' => $variants->item_variant_id,
-                    'sales_order_detail_variant_qty' => 0,
-                ];
+            if ($data_product->variant()->count() > 0) {
+
+                foreach ($data_product->variant() as $variants) {
+                    $variant[] = [
+                        'sales_order_detail_variant_order_id' => $autonumber,
+                        'sales_order_detail_variant_item_product_id' => $item['temp_id'],
+                        'sales_order_detail_variant_item_variant_id' => $variants->item_variant_id,
+                        'sales_order_detail_variant_qty' => 0,
+                    ];
+                }
             }
 
             return [

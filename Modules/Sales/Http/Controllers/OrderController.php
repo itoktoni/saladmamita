@@ -116,7 +116,6 @@ class OrderController extends Controller
             $data = $request->all();
             return Response::redirectBack($data);
         }
-
         $data = $service->show(self::$model);
         $from = Helper::getSingleArea($data->sales_order_from_area);
         $to = Helper::getSingleArea($data->sales_order_to_area);
@@ -200,7 +199,7 @@ class OrderController extends Controller
     public function print_order(MasterService $service)
     {
         if (request()->has('code')) {
-            $data = $service->show(self::$model, ['detail','detail.variant', 'company']);
+            $data = $service->show(self::$model, ['detail','detail', 'company']);
             $data->sales_order_print_counter++;
             $data->save();
             $id = request()->get('code');
