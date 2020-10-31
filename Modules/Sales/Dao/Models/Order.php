@@ -64,6 +64,15 @@ class Order extends Model
         'sales_order_sum_tax',
         'sales_order_sum_ongkir',
         'sales_order_sum_total',
+        'sales_order_payment_date',
+        'sales_order_payment_bank_from',
+        'sales_order_payment_bank_to_id',
+        'sales_order_payment_person',
+        'sales_order_payment_file',
+        'sales_order_payment_notes',
+        'sales_order_delivery_type',
+        'sales_order_delivery_name',
+        'sales_order_print_counter'
     ];
 
     public $timestamps = true;
@@ -96,7 +105,7 @@ class Order extends Model
 
     protected $casts = [
         'sales_order_date_order' => 'datetime:Y-m-d',
-        'sales_order_date_quotation' => 'datetime:Y-m-d',
+        'sales_order_payment_date' => 'datetime:Y-m-d',
     ];
 
     public $status = [
@@ -194,12 +203,11 @@ class Order extends Model
     {
         parent::boot();
         parent::creating(function ($model) {
-            $model->sales_order_created_by = auth()->user()->username;
+            $model->sales_order_created_by = auth()->user()->username ?? '';
         });
 
         parent::saving(function ($model) {
             $model->sales_order_date_order = $model->sales_order_date_order->format('Y-m-d H:i:s');
-            $model->sales_order_date_quotation = $model->sales_order_date_order->addDays($model->sales_order_term_valid)->format('Y-m-d H:i:s');
         });
     }
 }

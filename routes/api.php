@@ -24,6 +24,7 @@ use Modules\Finance\Dao\Repositories\TaxRepository;
 use Modules\Item\Dao\Repositories\ProductRepository;
 use Modules\Item\Dao\Repositories\VariantRepository;
 use Modules\Marketing\Dao\Repositories\PromoRepository;
+use Modules\Rajaongkir\Dao\Facades\AreaFacades;
 use Modules\Rajaongkir\Dao\Repositories\PriceRepository;
 
 // use Helper;
@@ -71,10 +72,29 @@ Route::match(
         'GET',
         'POST'
     ],
+    'location',
+    function () {
+        $input = request()->get('q');
+        $city = request()->get('city');
+
+        $query = DB::table('rajaongkir_areas');
+        if ($city) {
+            $query->where('rajaongkir_area_city_id', $city);
+        }
+
+        return $query->get();
+    }
+)->name('location');
+
+Route::match(
+    [
+        'GET',
+        'POST'
+    ],
     'area',
     function () {
         $input = request()->get('search');
-        $query = Area::where('rajaongkir_area_name', 'like', '%'.$input.'%');
+        $query = AreaFacades::where('rajaongkir_area_name', 'like', '%'.$input.'%');
         $query->orWhere('rajaongkir_area_province_name', 'like', '%'.$input.'%');
         $get = $query->orWhere('rajaongkir_area_city_name', 'like', '%'.$input.'%')->get();
         $data = false;
@@ -214,15 +234,10 @@ Route::match(
     function () {
         $input = request()->get('id');
         $product = new ProductRepository();
-        $data = new VariantRepository();
         $query = false;
         if ($input) {
-            $query = $product->dataRepository()->where($product->getKeyName(), $input);
-            $variant = $data->dataRepository()->where('item_variant_item_product_id', $input);
-            return [
-                'product' => $query->first()->toArray(),
-                'variant' => $variant->get()->toArray()
-            ];
+            $query = $product->dataRepository()->where($product->getKeyName(), $input)->first();
+            return $query->toArray();
         }
         return $query;
     }

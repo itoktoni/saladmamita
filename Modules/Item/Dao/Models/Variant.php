@@ -8,6 +8,7 @@ use Modules\Item\Dao\Models\Product;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Database\Eloquent\Model;
 use Modules\Item\Dao\Facades\ProductFacades;
+use Modules\Item\Dao\Facades\CategoryFacades;
 
 class Variant extends Model
 {
@@ -16,15 +17,14 @@ class Variant extends Model
     protected $fillable = [
         'item_variant_id',
         'item_variant_name',
-        'item_variant_price',
         'item_variant_description',
         'item_variant_created_at',
         'item_variant_created_by',
         'item_variant_image',
-        'item_variant_item_product_id',
+        'item_variant_item_category_id',
     ];
 
-    public $with = ['product'];
+    public $with = ['category'];
 
     public $timestamps = true;
     public $incrementing = true;
@@ -37,10 +37,9 @@ class Variant extends Model
 
     public $searching = 'item_variant_name';
     public $datatable = [
-        'item_product_name' => [true => 'Product'],
+        'item_category_name' => [true => 'Category'],
         'item_variant_name' => [true => 'Variant'],
-        'item_variant_item_product_id' => [false => 'Product'],
-        'item_variant_price' => [true => 'Price'],
+        'item_variant_item_category_id' => [false => 'Variant'],
         'item_variant_description' => [false => 'Description'],
         'item_variant_image' => [true => 'Images'],
         'item_variant_created_at' => [false => 'Created At'],
@@ -52,9 +51,9 @@ class Variant extends Model
         '0' => ['Not Active', 'danger'],
     ];
 
-    public function product()
+    public function category()
     {
-        return $this->hasOne(Product::class, ProductFacades::getKeyName(), 'item_variant_item_product_id');
+        return $this->hasOne(Category::class, CategoryFacades::getKeyName(), 'item_variant_item_category_id');
     }
 
     public static function boot()

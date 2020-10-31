@@ -2,6 +2,7 @@
 
 use Plugin\Helper;
 use App\Dao\Models\Action;
+use Darryldecode\Cart\Facades\CartFacade as Cart;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
@@ -101,8 +102,8 @@ Route::get('language/{locale}', function ($locale) {
 Route::get('/', 'PublicController@index')->name('beranda');
 Route::get('/slider/{slider}', 'PublicController@index')->name('single_slider');
 
-Route::match(['get', 'post'], 'shop', 'PublicController@shop')->name('shop');
-Route::get('/shop/{type}/{slug}', 'PublicController@shop')->name('filters');
+Route::match(['get', 'post'], 'product', 'PublicController@shop')->name('shop');
+Route::get('/product/{type}/{slug}', 'PublicController@shop')->name('filters');
 
 Route::get('/brand/{brand}', 'PublicController@shop')->name('filter_brand');
 Route::get('/track/{code}', 'PublicController@track')->name('track');
@@ -110,6 +111,7 @@ Route::get('/track/{code}', 'PublicController@track')->name('track');
 Route::match(['get', 'post'], 'cart', 'PublicController@cart')->name('cart');
 Route::match(['get', 'post'], 'checkout', 'PublicController@checkout')->name('checkout');
 Route::match(['get', 'post'], 'userprofile', 'PublicController@userprofile')->name('userprofile');
+Route::match(['get', 'post'], 'branch', 'PublicController@branch')->name('branch');
 Route::match(['get', 'post'], 'myaccount', 'PublicController@myaccount')->name('myaccount');
 Route::match(['get', 'post'], 'confirmation', 'PublicController@confirmation')->name('confirmation');
 
@@ -122,12 +124,75 @@ Route::get('/promo', 'PublicController@promo')->name('promo');
 Route::get('/promo/{slug}', 'PublicController@promo')->name('single_promo');
 Route::get('/page/{slug}', 'PublicController@page')->name('page');
 
-Route::match(['get', 'post'], '/product/{slug}', 'PublicController@product')->name('single_product');
+// Route::match(['get', 'post'], '/product/{slug}', 'PublicController@product')->name('single_product');
 
 Route::get('/about', 'PublicController@about')->name('about');
-Route::get('/jual/{slug}', 'PublicController@product')->name('product');
+Route::match(['get', 'post'],'/jual/{slug}', 'PublicController@product')->name('product');
 
 Route::match(['get', 'post'], 'contact', 'PublicController@contact')->name('contact');
+
+Route::post('/dropzone','PublicController@dropzone')->name('dropzone');
+
+
+Route::post('/update_cart', function () {
+    $index = 0;
+    $request = request()->all();
+    $validate = Validator::make(
+        $request,
+        [
+            'qty' => 'numeric|min:1',
+            'product' => 'required',
+        ],
+        [],
+        [
+            'qty' => 'Input must correct',
+        ]
+    );
+
+    if ($validate->fails()) {
+
+        return [
+            'status' => false,
+            'error' => $validate->errors()->getMessages(),
+            'number' => $request['qty']
+        ];
+    } else {
+        $stock = DB::table('view_stock_product')->where('id', $request['product'])->first();
+        $input_qty = floatval($request['qty']);
+        $data_qty = $stock->qty;
+        $data_product = $stock->id;
+
+        if ($input_qty > $data_qty) {
+
+            Cart::session(Cart::getSessionKey())->update($data_product, array(
+                'quantity' => [
+                    'relative' => false,
+                    'value' => $data_qty
+                ], // so if the current product has a quantity of 4, another 2 will be added so this will result to 6
+            ));
+
+            return [
+                'status' => false,
+                'error' => 'Stock Tidak Cukup',
+                'number' => $data_qty
+            ];
+        }
+
+        Cart::session(Cart::getSessionKey())->update($data_product, array(
+            'quantity' => [
+                'relative' => false,
+                'value' => $input_qty
+            ], // so if the current product has a quantity of 4, another 2 will be added so this will result to 6
+        ));
+
+        return [
+            'status' => true,
+            'error' => '',
+            'number' => $input_qty
+        ];
+    }
+})->name('update_cart');
+
 
 /*
 auth mechanizme

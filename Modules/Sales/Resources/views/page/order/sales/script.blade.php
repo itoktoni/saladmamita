@@ -45,19 +45,15 @@ $(document).ready(function() {
         sum = total_discount;
         $('#grand_total').val(mask_total_discount);
 
-        var grand_tax_id = $("#grand_tax_id option:selected").val();
-        var grand_tax_name = $("#grand_tax_id option:selected").text();
-        var tax_value = $('#grand_tax_value');
+        var ongkir = $('#ongkirs');
+        var total_ongkir = 0;
+        if (ongkir.val() != '') {
 
-        if (tax_value.val() != '') {
+            var value_ongkir = numeral(ongkir.val()).value();
+            var total_ongkir = sum + value_ongkir;
+            var mask_total_ongkir = numeral(total_ongkir).format('0,0');
 
-            var price_tax = sum * numeral(tax_value.val()).value() / 100;
-            var mask_price_tax = numeral(price_tax).format('0,0');
-
-            var total_tax = sum + price_tax;
-            var mask_total_tax = numeral(total_tax).format('0,0');
-
-            sum = total_tax;
+            sum = total_ongkir;
         }
 
         total_name.text('Total');
@@ -70,11 +66,8 @@ $(document).ready(function() {
         $('#grand_discount_price').val(mask_price_discount);
         $('#grand_discount_total').val(mask_total_discount);
 
-        $('#grand_tax_price').val(mask_price_tax);
-        $('#grand_tax_total').val(mask_total_tax);
-
-        var tax = numeral(tax_value).value($('#grand_tax_total').val());
-        $('#grand_total').val(numeral(sum + tax).format('0,0'));
+        // $('#ongkirs').val(mask_total_ongkir);
+        $('#grand_total').val(numeral(sum).format('0,0'));
     }
 
     function addDetail(e) {
@@ -149,7 +142,7 @@ $(document).ready(function() {
                     // "<input tabindex='"+counter+"3' type='text' name='detail[" + counter + "][temp_desc]' value='" + product_desc + "' class='form-control text-left'>"+
                     // "<span class='input-group-btn'>"+
                     // "<button class='btn btn-default' type='button'>Disc</button></span></div>"+
-                    "<textarea rows='5' name='detail[" + counter +
+                    "<textarea rows='2' name='detail[" + counter +
                     "][temp_notes]' class='form-control text-left simple' placeholder='notes'>" +
                     product_notes + "</textarea>" +
                     "</td>" +
@@ -267,6 +260,8 @@ $(document).ready(function() {
         });
     });
 
+    var markup_variant = '';
+
     $('#product').change(function(e) {
         var id = $("#product option:selected").val();
         $.ajax({
@@ -280,9 +275,9 @@ $(document).ready(function() {
                 if (result) {
 
                     console.log(result);
-                    var value_qty = numeral(result.product.item_product_min_order).value();
+                    var value_qty = numeral(result.item_product_min_order).value();
 
-                    var value_price = numeral(result.product.item_product_sell).value();
+                    var value_price = numeral(result.item_product_sell).value();
                     var mask_price = number_format(value_price);
 
                     var price = $('#price').val(mask_price);
@@ -290,6 +285,7 @@ $(document).ready(function() {
 
                     var sub_total = $('#sub_total').val(number_format(total));
                     // $('#notes').val(result.item_product_description.toString());
+
                     setTimeout(function() {
                         $('#qty').focus();
                         $('#qty').val(value_qty);
@@ -406,6 +402,10 @@ $(document).ready(function() {
     });
 
     $("#transaction").on('input', '#grand_discount_value', function() {
+        sumTotal();
+    });
+
+    $("#transaction").on('input', '#ongkirs', function() {
         sumTotal();
     });
 

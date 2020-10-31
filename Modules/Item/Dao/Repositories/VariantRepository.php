@@ -7,14 +7,14 @@ use Plugin\Helper;
 use Modules\Item\Dao\Models\Variant;
 use App\Dao\Interfaces\MasterInterface;
 use Illuminate\Database\QueryException;
-use Modules\Item\Dao\Facades\ProductFacades;
+use Modules\Item\Dao\Facades\CategoryFacades;
 
 class VariantRepository extends Variant implements MasterInterface
 {
     public function dataRepository()
     {
         $list = Helper::dataColumn($this->datatable, $this->getKeyName());
-        return $this->select($list)->join(ProductFacades::getTable(), ProductFacades::getKeyName(), 'item_variant_item_product_id');
+        return $this->select($list)->leftJoin(CategoryFacades::getTable(), CategoryFacades::getKeyName(), 'item_variant_item_category_id');
     }
 
     public function saveRepository($request)

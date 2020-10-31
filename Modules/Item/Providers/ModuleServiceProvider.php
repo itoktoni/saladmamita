@@ -4,6 +4,7 @@ namespace Modules\Item\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Database\Eloquent\Factory;
+use Modules\Item\Dao\Repositories\VariantRepository;
 
 class ModuleServiceProvider extends ServiceProvider
 {
@@ -29,8 +30,18 @@ class ModuleServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->register(RouteServiceProvider::class);
+        
         $this->app->bind('product_facades', function () {
             return new \Modules\Item\Dao\Repositories\ProductRepository();
+        });
+        $this->app->bind('variant_facades', function () {
+            return new \Modules\Item\Dao\Repositories\VariantRepository();
+        });
+        $this->app->bind('category_facades', function () {
+            return new \Modules\Item\Dao\Repositories\CategoryRepository();
+        });
+        $this->app->bind('brand_facades', function () {
+            return new \Modules\Item\Dao\Repositories\BrandRepository();
         });
     }
 

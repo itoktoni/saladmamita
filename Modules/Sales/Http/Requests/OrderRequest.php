@@ -34,67 +34,7 @@ class OrderRequest extends FormRequest
         if (!empty($this->code) && config('module') == 'sales_order') {
             $autonumber = $this->code;
         }
-
-        if(!request()->has('sales_order_from_id')){
-
-            $company = CompanyFacades::find(auth()->user()->company);
-            $from['sales_order_from_id'] = $company->company_id ?? null;
-            $from['sales_order_from_name'] = $company->company_contact_person ?? null;
-            $from['sales_order_from_phone'] = $company->company_contact_phone ?? null;
-            $from['sales_order_from_email'] = $company->company_contact_email ?? null;
-            $from['sales_order_from_address'] = $company->company_contact_address ?? null;
-            $from['sales_order_from_area'] = $company->company_contact_rajaongkir_area_id ?? null;
-
-            $this->merge($from);
-        }
-
-        if (empty(request()->get('sales_order_from_id'))) {
-
-            $name = request()->get('sales_order_to_name');
-            $address = request()->get('sales_order_to_address');
-            $email = request()->get('sales_order_to_email');
-            $phone = request()->get('sales_order_to_phone');
-            $area = request()->get('sales_order_to_area');
-
-            if($customer = CustomerFacades::where('crm_customer_contact_person', $name)->where('crm_customer_contact_phone', $phone)->first()){
-                $to = $customer;
-            }
-            else{
-                $customer = self::$service->save(new CustomerRepository(), [
-                    'crm_customer_name' => $name,
-                    'crm_customer_contact_description' => $name,
-                    'crm_customer_contact_address' => $address,
-                    'crm_customer_contact_email' => $email,
-                    'crm_customer_contact_phone' => $phone,
-                    'crm_customer_contact_person' => $name,
-                    'crm_customer_contact_rajaongkir_area_id' => $area,
-                    'crm_customer_delivery_name' => $name,
-                    'crm_customer_delivery_address' => $address,
-                    'crm_customer_delivery_email' => $email,
-                    'crm_customer_delivery_phone' => $phone,
-                    'crm_customer_delivery_person' => $name,
-                    'crm_customer_delivery_rajaongkir_area_id' => $area,
-                    'crm_customer_invoice_name' => $name,
-                    'crm_customer_invoice_address' => $address,
-                    'crm_customer_invoice_email' => $email,
-                    'crm_customer_invoice_phone' => $phone,
-                    'crm_customer_invoice_person' => $name,
-                    'crm_customer_invoice_rajaongkir_area_id' => $area,
-                ]);
-
-                $to = $customer['data'];
-            }
-
-            $cust['sales_order_to_id'] = $to->crm_customer_id;
-            $cust['sales_order_to_name'] = $to->crm_customer_name;
-            $cust['sales_order_to_phone'] = $to->crm_customer_contact_phone;
-            $cust['sales_order_to_email'] = $to->crm_customer_contact_email;
-            $cust['sales_order_to_address'] = $to->crm_customer_contact_address;
-            $cust['sales_order_to_area'] = $to->crm_customer_contact_rajaongkir_area_id;
-
-            $this->merge($cust);
-        }
-
+        
         $map = collect($this->detail)->map(function ($item) use ($autonumber) {
             $product = new ProductRepository();
             $data_product = $product->showRepository($item['temp_id'])->first();
@@ -113,7 +53,20 @@ class OrderRequest extends FormRequest
             // $data['sales_order_detail_discount_name'] = $item['temp_desc'];
             // $data['sales_order_detail_discount_percent'] = Helper::filterInput($item['temp_disc']) ?? 0;
             // $data['sales_order_detail_discount_value'] = $discount_total ?? 0;
-            return $data;
+
+            foreach($data_product->variant as $variants){
+                $variant[] = [
+                    'sales_order_detail_variant_order_id' => $autonumber,
+                    'sales_order_detail_variant_item_product_id' => $item['temp_id'],
+                    'sales_order_detail_variant_item_variant_id' => $variants->item_variant_id,
+                    'sales_order_detail_variant_qty' => 0,
+                ];
+            }
+
+            return [
+                'detail' => $data,
+                'variant' => $variant,
+            ];
         });
 
         $this->merge([
@@ -124,7 +77,7 @@ class OrderRequest extends FormRequest
             'sales_order_sum_discount' => Helper::filterInput($this->sales_order_sum_discount) ?? 0,
             // 'sales_order_sum_tax' => Helper::filterInput($this->sales_order_sum_tax) ?? 0,
             'sales_order_sum_total' => Helper::filterInput($this->sales_order_sum_total) ?? 0,
-            'detail' => array_values($map->toArray()),
+            'detail' => $map->toArray(),
         ]);
     }
 
@@ -134,10 +87,7 @@ class OrderRequest extends FormRequest
             return [
                 'sales_order_from_id' => 'required',
                 'sales_order_from_name' => 'required',
-                'sales_order_to_id' => 'required',
                 'sales_order_to_name' => 'required',
-                // 'sales_order_term_top' => 'required',
-                // 'sales_order_term_valid' => 'required|numeric',
                 'detail' => 'required',
             ];
         }
@@ -147,7 +97,9 @@ class OrderRequest extends FormRequest
     public function attributes()
     {
         return [
-            'sales_order_from_id' => 'Company',
+            'sales_order_to_name' => 'Customer',
+            'sales_order_from_name' => 'Branch',
+            'sales_order_from_id' => 'Location',
         ];
     }
 

@@ -53,11 +53,11 @@ class Promo extends Model
   public $datatable = [
     'marketing_promo_id'          => [false => 'ID'],
     'marketing_promo_name'        => [true => 'Name'],
-    'marketing_promo_default'        => [true => 'Default'],
+    'marketing_promo_default'        => [false => 'Default'],
     'marketing_promo_slug'        => [false => 'Slug'],
     'marketing_promo_description' => [true => 'Description'],
     'marketing_promo_image'        => [true => 'Images'],
-    'marketing_promo_status'        => [true => 'Status'],
+    'marketing_promo_status'        => [false => 'Status'],
     'marketing_promo_created_by'  => [false => 'Updated At'],
   ];
 

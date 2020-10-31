@@ -2,10 +2,10 @@
 
 namespace App\Dao\Repositories;
 
-use App\User;
 use Plugin\Alert;
 use Plugin\Notes;
 use Plugin\Helper;
+use App\Dao\Models\User;
 use Illuminate\Support\Facades\DB;
 use App\Dao\Interfaces\MasterInterface;
 use Illuminate\Database\QueryException;

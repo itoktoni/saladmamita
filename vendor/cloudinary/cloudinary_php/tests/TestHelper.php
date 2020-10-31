@@ -3,12 +3,15 @@
 namespace Cloudinary {
 
     use PHPUnit\Framework\TestCase;
+    const LOGO_SIZE = 3381;
     const RAW_FILE = "tests/docx.docx";
     const TEST_IMG = "tests/logo.png";
+    const TEST_IMG_WIDTH = 241;
     const TEST_ICO = "tests/favicon.ico";
     const TEST_PRESET_NAME = 'test_preset';
-    const LOGO_SIZE = 3381;
     define("SUFFIX", getenv("TRAVIS_JOB_ID") ?: rand(11111, 99999));
+    define('TEST_EVAL_STR', 'if (resource_info["width"] < 450) { upload_options["tags"] = "a,b" }; ' .
+        'upload_options["context"] = "width=" + resource_info["width"]');
     define('TEST_TAG', 'cloudinary_php');
     define('UNIQUE_TEST_TAG', TEST_TAG . "_" . SUFFIX);
     define('UNIQUE_TEST_ID', UNIQUE_TEST_TAG);
@@ -302,5 +305,68 @@ END;
             Curl::$instance->fields(),
             empty($message) ? 'Should correctly encode JSON into the HTTP request' : $message
         );
+    }
+
+    /**
+     * Trait RetryTrait
+     * @package Cloudinary
+     */
+    trait RetryTrait
+    {
+        public function runBare()
+        {
+            $e = null;
+
+            $numberOfRetires = $this->getNumberOfRetries();
+            if (false === is_numeric($numberOfRetires)) {
+                throw new \LogicException(sprintf(
+                    'The $numberOfRetires must be a number but got "%s"',
+                    var_export($numberOfRetires, true)
+                ));
+            }
+            $numberOfRetires = (int)$numberOfRetires;
+            if ($numberOfRetires <= 0) {
+                throw new \LogicException(sprintf(
+                    'The $numberOfRetires must be a positive number greater than 0 but got "%s".',
+                    $numberOfRetires
+                ));
+            }
+
+            for ($i = 0; $i < $numberOfRetires; ++$i) {
+                try {
+                    parent::runBare();
+
+                    return;
+                } catch (\PHPUnit_Framework_IncompleteTestError $e) {
+                    throw $e;
+                } catch (\PHPUnit_Framework_SkippedTestError $e) {
+                    throw $e;
+                } catch (\Exception $e) {
+                    // last one thrown below
+                }
+            }
+
+            if ($e) {
+                throw $e;
+            }
+        }
+
+        /**
+         * @return int
+         */
+        private function getNumberOfRetries()
+        {
+            $annotations = $this->getAnnotations();
+
+            if (isset($annotations['method']['retry'][0])) {
+                return $annotations['method']['retry'][0];
+            }
+
+            if (isset($annotations['class']['retry'][0])) {
+                return $annotations['class']['retry'][0];
+            }
+
+            return 1;
+        }
     }
 }

@@ -31,10 +31,10 @@ class VariantController extends Controller
 
     private function share($data = [])
     {
-        $product = Helper::shareOption(new ProductRepository());
+        $category = Helper::shareOption(new CategoryRepository());
         $view = [
             'template' => $this->template,
-            'product' => $product,
+            'category' => $category,
         ];
 
         return array_merge($view, $data);

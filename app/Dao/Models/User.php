@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Dao\Models;
 
 use Helper;
 use Laravel\Sanctum\HasApiTokens;

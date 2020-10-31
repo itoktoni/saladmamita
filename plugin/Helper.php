@@ -822,11 +822,21 @@ class Helper
         return Str::snake($value);
     }
 
-    public static function getSingleArea($id, $single = false)
+    public static function getSingleArea($id, $single = false, $raw = false)
     {
         $array = [];
         $data = AreaFacades::find($id);
         if ($data) {
+            if ($raw) {
+                $location = $data->rajaongkir_area_name.' - '.$data->rajaongkir_area_type.' '.$data->rajaongkir_area_city_name.' - '.$data->rajaongkir_area_province_name;
+                return [
+                    'province' => [$data->rajaongkir_area_province_id => $data->rajaongkir_area_province_name],
+                    'city' => [$data->rajaongkir_area_city_id => $data->rajaongkir_area_city_name],
+                    'type' => [$data->rajaongkir_area_type => $data->rajaongkir_area_type],
+                    'area' => [$data->rajaongkir_area_id => $data->rajaongkir_area_name],
+                ];
+            }
+
             if ($single) {
                 $location = $data->rajaongkir_area_name.' - '.$data->rajaongkir_area_type.' '.$data->rajaongkir_area_city_name.' - '.$data->rajaongkir_area_province_name;
                 return $data ? $location : '';

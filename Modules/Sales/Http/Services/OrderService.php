@@ -2,12 +2,15 @@
 
 namespace Modules\Sales\Http\Services;
 
-use Plugin\Alert;
-use App\Http\Services\MasterService;
 use App\Dao\Interfaces\MasterInterface;
-use Modules\Sales\Dao\Facades\OrderDetailFacades;
+use App\Http\Services\MasterService;
+use Illuminate\Support\Facades\DB;
+use Modules\Crm\Dao\Facades\CustomerFacades;
 use Modules\Sales\Dao\Facades\DeliveryDetailFacades;
-use Modules\Sales\Dao\Facades\DeliveryFacades;
+use Modules\Sales\Dao\Facades\OrderDetailFacades;
+use Modules\Sales\Dao\Facades\OrderDetailVariantFacades;
+use Modules\Sales\Dao\Facades\OrderFacades;
+use Plugin\Alert;
 
 class OrderService extends MasterService
 {
@@ -16,7 +19,64 @@ class OrderService extends MasterService
         $check = false;
         try {
             $check = $repository->saveRepository($request);
-            OrderDetailFacades::insert($request['detail']);
+            foreach ($request['detail'] as $array) {
+                $detail = OrderDetailFacades::saveRepository($array['detail']);
+                $detail_id = DB::getPdo()->lastInsertId();
+                if (!empty($array['variant'])) {
+                    foreach ($array['variant'] as $variants) {
+
+                        $variants['sales_order_detail_variant_order_detail_id'] = $detail_id;
+                        OrderDetailVariantFacades::insert($variants);
+                    }
+                }
+            }
+
+            
+            if ($check && empty(request()->get('sales_order_to_id'))) {
+
+                $name = request()->get('sales_order_to_name');
+                $address = request()->get('sales_order_to_address');
+                $email = request()->get('sales_order_to_email');
+                $phone = request()->get('sales_order_to_phone');
+                $area = request()->get('sales_order_to_area');
+
+                if ($customer = CustomerFacades::where('crm_customer_contact_person', $name)->where('crm_customer_contact_phone', $phone)->first()) {
+                    $customer_id = $customer->crm_customer_id;
+                } else {
+
+                    if (!empty($name)) {
+                        $customer = CustomerFacades::saveRepository([
+                            'crm_customer_name' => $name,
+                            'crm_customer_contact_description' => $name,
+                            'crm_customer_contact_address' => $address,
+                            'crm_customer_contact_email' => $email,
+                            'crm_customer_contact_phone' => $phone,
+                            'crm_customer_contact_person' => $name,
+                            'crm_customer_contact_rajaongkir_area_id' => $area,
+                            'crm_customer_delivery_name' => $name,
+                            'crm_customer_delivery_address' => $address,
+                            'crm_customer_delivery_email' => $email,
+                            'crm_customer_delivery_phone' => $phone,
+                            'crm_customer_delivery_person' => $name,
+                            'crm_customer_delivery_rajaongkir_area_id' => $area,
+                            'crm_customer_invoice_name' => $name,
+                            'crm_customer_invoice_address' => $address,
+                            'crm_customer_invoice_email' => $email,
+                            'crm_customer_invoice_phone' => $phone,
+                            'crm_customer_invoice_person' => $name,
+                            'crm_customer_invoice_rajaongkir_area_id' => $area,
+                        ]);
+                        $customer_id = DB::getPdo()->lastInsertId();
+                    } else {
+                        $customer_id = null;
+                    }
+
+                }
+                $order = OrderFacades::find($request['sales_order_id']);
+                $order->sales_order_to_id = $customer_id;
+                $order->save();
+            }
+
             Alert::create();
         } catch (\Throwable $th) {
             Alert::error($th->getMessage());
@@ -26,17 +86,25 @@ class OrderService extends MasterService
         return $check;
     }
 
-
     public function update(MasterInterface $repository, $request)
     {
         $id = request()->query('code');
         $check = $repository->updateRepository($id, $request);
-        foreach ($request['detail'] as $item) {
-            $where = [
-                OrderDetailFacades::getKeyName() => $item[OrderDetailFacades::getKeyName()],
-                OrderDetailFacades::getForeignKey() => $item[OrderDetailFacades::getForeignKey()],
-            ];
-            OrderDetailFacades::updateOrInsert($where, $item);
+        if (!empty($request['detail'])) {
+            foreach ($request['detail'] as $item) {
+                $where = [
+                    'sales_order_detail_order_id' => $item['sales_order_detail_order_id'],
+                    OrderDetailFacades::getForeignKey() => $item[OrderDetailFacades::getForeignKey()],
+                ];
+                OrderDetailFacades::updateOrInsert($where, $item);
+            }
+            foreach ($request['variant'] as $variant) {
+                foreach ($variant as $single) {
+                    $data = $single;
+                    unset($single['sales_order_detail_variant_qty']);
+                    OrderDetailVariantFacades::updateOrInsert($single, $data);
+                }
+            }
         }
 
         if ($check['status']) {
@@ -46,7 +114,7 @@ class OrderService extends MasterService
         }
     }
 
-   public function delivery(MasterInterface $repository, $request)
+    public function delivery(MasterInterface $repository, $request)
     {
         $check = false;
         try {
@@ -79,6 +147,5 @@ class OrderService extends MasterService
             Alert::error($check['data']);
         }
     }
-
 
 }

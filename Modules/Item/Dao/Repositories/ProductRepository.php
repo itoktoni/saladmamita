@@ -95,6 +95,11 @@ class ProductRepository extends Product implements MasterInterface
         }
     }
 
+    public function deleteProductVariant($id)
+    {
+        return DB::table('item_product_variant')->where('item_product_id', $id)->delete();
+    }
+
     public function deleteImageDetail($id)
     {
         return DB::table('item_product_image')->where('item_product_image_file', $id)->delete();
@@ -103,6 +108,19 @@ class ProductRepository extends Product implements MasterInterface
     public function getImageDetail($id)
     {
         return DB::table('item_product_image')->where('item_product_image_item_product_id', $id)->get();
+    }
+
+    public function getProductVariant($id)
+    {
+        return DB::table('item_product_variant')->join('item_product_variant', 'item_product_id', 'item_product_variant.item_product_id')->where('item_product_id', $id)->get();
+    }
+
+    public function saveProductVariant($id, $variant)
+    {
+        DB::table('item_product_variant')->insert([
+            'item_product_id' => $id,
+            'item_variant_id' => $variant,
+        ]);
     }
 
     public function saveImageDetail($id, $image)

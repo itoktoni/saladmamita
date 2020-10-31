@@ -46,7 +46,7 @@ namespace Cloudinary {
          * storage, bandwidth, requests, number of resources, and add-on usage.
          * Note that numbers are updated periodically.
          *
-         * @see https://cloudinary.com/documentation/admin_api#usage_report
+         * @see https://cloudinary.com/documentation/admin_api#get_account_usage_details
          *
          * @param array $options Additional options
          *
@@ -56,7 +56,9 @@ namespace Cloudinary {
          */
         public function usage($options = array())
         {
-            return $this->call_api("get", array("usage"), array(), $options);
+            $uri = array_filter(array("usage", \Cloudinary::encode_dates(\Cloudinary::option_get($options, 'date'))));
+
+            return $this->call_api("get", $uri, array(), $options);
         }
 
         /**
@@ -1518,7 +1520,7 @@ namespace Cloudinary {
         )
         {
             $uri = [$field_external_id, 'datasource_restore'];
-            $params['external_ids'] = $entries_external_ids;
+            $params = ['external_ids' => $entries_external_ids];
 
             return $this->call_metadata_api('post', $uri, $params, $options);
         }

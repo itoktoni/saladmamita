@@ -2,25 +2,25 @@
 
 namespace Modules\Sales\Http\Controllers;
 
-use PDF;
+use Carbon\Carbon;
 use Plugin\Helper;
 use Plugin\Response;
-use Barryvdh\DomPDF\Facade;
 use Barryvdh\DomPDF\PdfFacade;
+use Webklex\IMAP\Facades\Client;
 use App\Http\Controllers\Controller;
 use App\Http\Services\MasterService;
+use Symfony\Component\DomCrawler\Crawler;
 use App\Dao\Repositories\BranchRepository;
-use App\Dao\Repositories\CompanyRepository;
-use Modules\Sales\Dao\Models\OrderDelivery;
 use Modules\Finance\Dao\Facades\BankFacades;
 use Modules\Sales\Http\Requests\OrderRequest;
 use Modules\Sales\Http\Services\OrderService;
-use Modules\Sales\Dao\Facades\DeliveryFacades;
 use Modules\Sales\Http\Requests\DeliveryRequest;
 use Modules\Finance\Dao\Repositories\TaxRepository;
 use Modules\Finance\Dao\Repositories\TopRepository;
 use Modules\Sales\Dao\Repositories\OrderRepository;
+use Modules\Sales\Http\Requests\OrderRequestUpdate;
 use Modules\Crm\Dao\Repositories\CustomerRepository;
+use Modules\Finance\Dao\Repositories\BankRepository;
 use Modules\Item\Dao\Repositories\ProductRepository;
 use Modules\Item\Dao\Repositories\VariantRepository;
 use Modules\Sales\Dao\Repositories\DeliveryRepository;
@@ -40,7 +40,7 @@ class OrderController extends Controller
             self::$model = new OrderRepository();
             self::$delivery = new DeliveryRepository();
         }
-        $this->template  = Helper::getTemplate(__CLASS__);
+        $this->template = Helper::getTemplate(__CLASS__);
         $this->folder = 'sales';
     }
 
@@ -57,13 +57,14 @@ class OrderController extends Controller
         $tax = Helper::shareOption((new TaxRepository()));
         $promo = Helper::shareOption((new PromoRepository()));
         $branch = Helper::shareOption((new BranchRepository()));
+        $bank = Helper::shareOption((new BankRepository()));
         $customers = Helper::shareOption((new CustomerRepository()));
         $status = Helper::shareStatus(self::$model->status);
 
         $from = $to = ['Please Choose Area'];
-        
+
         $view = [
-            'key'      => self::$model->getKeyName(),
+            'key' => self::$model->getKeyName(),
             'template' => $this->template,
             'tax' => $tax,
             'tops' => $tops,
@@ -74,24 +75,38 @@ class OrderController extends Controller
             'from' => $from,
             'to' => $to,
             'branch' => $branch,
+            'bank' => $bank,
             'customers' => $customers,
         ];
 
         return array_merge($view, $data);
     }
 
+    private function parser($html, $selector, $node, $sub)
+    {
+        $crawler = new Crawler($html);
+        $header = $crawler->filter($selector)->eq($node)->html();
+        $crawler2 = new Crawler($header);
+        $parse = $crawler2->filter($sub)->each(function (Crawler $node, $i) {
+            return $node->text();
+        });
+        return $parse;
+    }
+
     public function create(OrderService $service, OrderRequest $request)
     {
         if (request()->isMethod('POST')) {
             $data = $service->save(self::$model, $request->all());
-            return Response::redirectBack($data);
+            if($data['status']){
+                return Response::redirectToRoute('sales_order_update', ['code' => $data['data']->{self::$model->getKeyName()}]);
+            }
         }
         return view(Helper::setViewSave($this->template, $this->folder))->with($this->share([
             'model' => self::$model,
         ]));
     }
 
-    public function update(OrderService $service, OrderRequest $request)
+    public function update(OrderService $service, OrderRequestUpdate $request)
     {
         if (request()->isMethod('POST')) {
             $data = $service->update(self::$model, $request->all());
@@ -104,9 +119,9 @@ class OrderController extends Controller
         $to = Helper::getSingleArea($data->sales_order_to_area);
 
         return view(Helper::setViewSave($this->template, $this->folder))->with($this->share([
-            'model'        => $data,
-            'from'        => $from,
-            'to'        => $to,
+            'model' => $data,
+            'from' => $from,
+            'to' => $to,
             'detail' => $data->detail,
         ]));
     }
@@ -123,9 +138,9 @@ class OrderController extends Controller
         $to = Helper::getSingleArea($data->customer->crm_customer_delivery_rajaongkir_area_id);
 
         return view(Helper::setViewForm($this->template, __FUNCTION__, $this->folder))->with($this->share([
-            'model'        => $data,
-            'from'        => $from,
-            'to'        => $to,
+            'model' => $data,
+            'from' => $from,
+            'to' => $to,
             'detail' => $data->detail,
         ]));
     }
@@ -148,7 +163,7 @@ class OrderController extends Controller
             $datatable = $service->setRaw(['sales_order_status'])->datatable(self::$model);
             $datatable->editColumn('sales_order_status', function ($select) {
                 return Helper::createStatus([
-                    'value'  => $select->sales_order_status,
+                    'value' => $select->sales_order_status,
                     'status' => self::$model->status,
                 ]);
             });
@@ -158,7 +173,7 @@ class OrderController extends Controller
         }
 
         return view(Helper::setViewData())->with([
-            'fields'   => Helper::listData(self::$model->datatable),
+            'fields' => Helper::listData(self::$model->datatable),
             'template' => $this->template,
         ]);
     }
@@ -173,22 +188,24 @@ class OrderController extends Controller
         $payment = PaymentRepository::where('finance_payment_sales_order_id', $data->sales_order_id)->get();
         return view(Helper::setViewShow())->with($this->share([
             'fields' => $field,
-            'payment'   => $payment,
-            'model'   => $data,
-            'key'   => self::$model->getKeyName()
+            'payment' => $payment,
+            'model' => $data,
+            'key' => self::$model->getKeyName(),
         ]));
     }
 
     public function print_order(MasterService $service)
     {
         if (request()->has('code')) {
-            $data = $service->show(self::$model, ['detail', 'company']);
+            $data = $service->show(self::$model, ['detail','detail.variant', 'company']);
+            $data->sales_order_print_counter++;
+            $data->save();
             $id = request()->get('code');
             // dd($data->deliveryRepository($id)->get());
             $pasing = [
                 'master' => $data,
                 'detail' => $data->detail,
-                'banks'   => BankFacades::dataRepository()->get(),
+                'banks' => BankFacades::dataRepository()->get(),
             ];
             $pdf = PdfFacade::loadView(Helper::setViewPrint(__FUNCTION__, $this->folder), $pasing);
             // return $pdf->download();

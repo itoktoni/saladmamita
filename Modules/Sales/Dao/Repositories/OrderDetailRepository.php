@@ -2,9 +2,9 @@
 
 namespace Modules\Sales\Dao\Repositories;
 
-use Plugin\Helper;
-use App\User;
 use Plugin\Notes;
+use Plugin\Helper;
+use App\Dao\Models\User;
 use Illuminate\Support\Facades\DB;
 use Modules\Sales\Dao\Models\Order;
 use Modules\Crm\Dao\Models\Customer;
@@ -17,15 +17,11 @@ class OrderDetailRepository extends OrderDetail implements MasterInterface
 {
     public $data;
     public static $customer;
-    public static $vendor;
 
     public function dataRepository()
     {
         if (self::$customer == null) {
             self::$customer = new User();
-        }
-        if (self::$vendor == null) {
-            self::$vendor = new Vendor();
         }
 
         $list = Helper::dataColumn($this->datatable, $this->getKeyName());

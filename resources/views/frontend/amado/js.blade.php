@@ -8,3 +8,6 @@
  <script src="{{ Helper::frontend('js/plugins.js') }}"></script>
  <!-- Active js -->
  <script src="{{ Helper::frontend('js/active.js') }}"></script>
+
+<script src="{{ Helper::backend('vendor/chosen/chosen.jquery.min.js') }}"></script>
+<script src="//cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>

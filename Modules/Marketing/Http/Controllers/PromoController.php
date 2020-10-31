@@ -2,9 +2,9 @@
 
 namespace Modules\Marketing\Http\Controllers;
 
-use App\User;
 use Plugin\Helper;
 use Plugin\Response;
+use App\Dao\Models\User;
 use App\Http\Controllers\Controller;
 use App\Http\Services\MasterService;
 use App\Http\Requests\GeneralRequest;

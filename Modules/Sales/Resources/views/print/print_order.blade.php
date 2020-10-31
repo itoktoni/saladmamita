@@ -597,8 +597,7 @@
 <body>
     <div id='page'>
         <div>
-            <img id="logo"
-                src="{{ Helper::print('logo/').config('website.logo') }}">
+            <img id="logo" src="{{ Helper::print('logo/').config('website.logo') }}">
             <div id="box">
                 <h1>
                     <span>
@@ -606,7 +605,7 @@
                     </span>
                 </h1>
                 <h2>
-                    Order Date : {{ $master->sales_order_date_order->format('d F Y') }}
+                    Delivery Date : {{ $master->sales_order_date_order->format('d F Y') }}
                 </h2>
                 <table>
                     <tr>
@@ -620,10 +619,10 @@
                     </tr>
                     <tr>
                         <td class="head">
-                            ATTN
+                            Print Counter
                         </td>
                         <td>
-                            {{ $master->customer->crm_customer_invoice_person ?? '' }}
+                            {{ $master->sales_order_print_counter ?? '' }}
                         </td>
                     </tr>
                 </table>
@@ -673,7 +672,8 @@
                             @endphp
 
                             <strong style="font-size: 12px;">
-                                Total Amount : Rp {{ Helper::createRupiah($grand_total) }} ( <span style="font-style: italic;">{{ Helper::terbilang($grand_total) }} rupiah. </span>)
+                                Total Amount : Rp {{ Helper::createRupiah($grand_total) }} ( <span
+                                    style="font-style: italic;">{{ Helper::terbilang($grand_total) }} rupiah. </span>)
                             </strong>
                         </p>
                     </td>
@@ -705,6 +705,11 @@
                         <h1>
                             {{ $item->product->item_product_name ?? '' }}
                         </h1>
+                        @foreach($item->variant->where('sales_order_detail_variant_qty','>', 0) as $variant)
+                        <p>
+                            - ({{ $variant->sales_order_detail_variant_qty }}) {{ $variant->variant->item_variant_name }}
+                        </p>
+                        @endforeach
                     </td>
                     <td class="price">
                         {{ Helper::createRupiah($item->sales_order_detail_price) ?? '' }}
@@ -717,7 +722,7 @@
                     </td>
                 </tr>
                 @endforeach
-               
+
                 <tr class="total_product">
                     <td class="product" colspan="6">
                         Total Product
@@ -729,7 +734,7 @@
                         {{ Helper::createRupiah($total_delivery) ?? '' }}
                     </td>
                 </tr>
-               
+
                 @if (!empty($master->sales_order_discount_percent))
                 <tr class="total_discount">
                     <td class="product" colspan="6">
@@ -768,7 +773,7 @@
 
             </table>
         </div>
-       
+
 </body>
 
 </html>

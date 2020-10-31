@@ -43,8 +43,6 @@ namespace Cloudinary {
         protected static $streaming_profile_1;
         protected static $streaming_profile_2;
 
-
-
         const URL_QUERY_REGEX = "\??(\w+=\w*&?)*";
 
         /** @var  \Cloudinary\Api $api */
@@ -85,7 +83,7 @@ namespace Cloudinary {
             self::$streaming_profile_2 = self::$api_test . "_streaming_profile_2";
         }
 
-        public function tearDown()
+        protected function tearDown()
         {
             Curl::$instance = new Curl();
         }
@@ -102,7 +100,6 @@ namespace Cloudinary {
             self::delete_transformations($api);
             self::delete_streaming_profiles($api);
         }
-
 
         /**
          * Delete all test related resources
@@ -811,14 +808,28 @@ namespace Cloudinary {
         }
 
         /**
-         * Should allow listing resource_types
+         * Should return account usage details
          *
          * @throws Api\GeneralError
          */
         public function test18_usage()
         {
             $result = $this->api->usage();
-            $this->assertNotEquals($result["last_updated"], null);
+            self::assertUsageResult($result);
+        }
+
+        /**
+         * Should return usage values for a specific date
+         *
+         * @throws Api\GeneralError
+         */
+        public function test_usage_by_date()
+        {
+            $result = $this->api->usage(array('date' => date('d-m-Y', strtotime("-1 days"))));
+            self::assertUsageResult($result);
+            //verify the the structure of the response is that of a single day.
+            $this->assertArrayNotHasKey('limit', $result['bandwidth']);
+            $this->assertArrayNotHasKey('used_percent', $result['bandwidth']);
         }
 
         /**
@@ -985,12 +996,20 @@ namespace Cloudinary {
         public function test28_create_upload_presets()
         {
             Curl::mockApi($this);
-            $this->api->create_upload_preset(array("name" => TEST_PRESET_NAME, "folder" => "folder", "live" => true));
+            $this->api->create_upload_preset(
+                array(
+                    "name" => TEST_PRESET_NAME,
+                    "folder" => "folder",
+                    "live" => true,
+                    "eval" => TEST_EVAL_STR
+                )
+            );
             assertUrl($this, "/upload_presets");
             assertPost($this);
             assertParam($this, "name", TEST_PRESET_NAME);
             assertParam($this, "folder", "folder");
             assertParam($this, "live", 1);
+            assertParam($this, "eval", TEST_EVAL_STR);
         }
 
         /**
@@ -1042,7 +1061,13 @@ namespace Cloudinary {
             Curl::mockApi($this);
             $this->api->update_upload_preset(
                 TEST_PRESET_NAME,
-                array("colors" => true, "unsigned" => true, "disallow_public_id" => true, "live" => true)
+                array(
+                    "colors" => true,
+                    "unsigned" => true,
+                    "disallow_public_id" => true,
+                    "live" => true,
+                    "eval" => TEST_EVAL_STR
+                )
             );
             assertPut($this);
             assertUrl($this, "/upload_presets/" . TEST_PRESET_NAME);
@@ -1050,6 +1075,7 @@ namespace Cloudinary {
             assertParam($this, "unsigned", 1);
             assertParam($this, "disallow_public_id", 1);
             assertParam($this, "live", 1);
+            assertParam($this, "eval", TEST_EVAL_STR);
         }
 
         /**
@@ -1421,6 +1447,60 @@ namespace Cloudinary {
             $resource = $this->api->resource(self::$api_test, ["accessibility_analysis" => true]);
 
             $this->assertArrayHasKey('accessibility_analysis', $resource);
+        }
+
+        /**
+         * Should allow the user to pass accessibility_analysis in the create_upload_preset function.
+         *
+         * @throws Api\GeneralError
+         */
+        public function test_create_upload_preset_with_accessibility_analysis()
+        {
+            Curl::mockApi($this);
+
+            $this->api->create_upload_preset(array('accessibility_analysis' => true));
+
+            assertParam($this, 'accessibility_analysis', 1);
+        }
+
+        /**
+         * Should allow the user to pass accessibility_analysis in the resource function.
+         *
+         * @throws Api\GeneralError
+         */
+        public function test_accessibility_analysis_resource()
+        {
+            Curl::mockApi($this);
+
+            $this->api->resource(self::$api_test, ['accessibility_analysis' => true]);
+
+            assertParam($this, 'accessibility_analysis', 1);
+        }
+
+        /**
+         * Asserts a valid usage api response.
+         *
+         * @param Api\Response $result returned from a usage api request.
+         */
+
+        private static function assertUsageResult($result)
+        {
+            self::assertNotEmpty($result);
+            $keys = array(
+                'plan',
+                'last_updated',
+                'transformations',
+                'objects',
+                'bandwidth',
+                'storage',
+                'requests',
+                'resources',
+                'derived_resources',
+                'media_limits'
+            );
+            foreach ($keys as $key) {
+                self::assertArrayHasKey($key, $result);
+            }
         }
     }
 }

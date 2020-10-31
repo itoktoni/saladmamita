@@ -1,10 +1,10 @@
 <x-mask :array="['number', 'money']" />
 <div class="form-group">
 
-    {!! Form::label('name', 'Product', ['class' => 'col-md-2 control-label']) !!}
-    <div class="col-md-4 {{ $errors->has($form.'item_product_id') ? 'has-error' : ''}}">
-        {{ Form::select($form.'item_product_id', $product, null, ['class'=> 'form-control ', 'data-plugin-selectTwo']) }}
-        {!! $errors->first($form.'item_product_id', '<p class="help-block">:message</p>') !!}
+    {!! Form::label('name', 'Category', ['class' => 'col-md-2 control-label']) !!}
+    <div class="col-md-4 {{ $errors->has($form.'item_category_id') ? 'has-error' : ''}}">
+        {{ Form::select($form.'item_category_id', $category, null, ['class'=> 'form-control ', 'data-plugin-selectTwo']) }}
+        {!! $errors->first($form.'item_category_id', '<p class="help-block">:message</p>') !!}
     </div>
 
     {!! Form::label('name', 'Name', ['class' => 'col-md-2 control-label']) !!}

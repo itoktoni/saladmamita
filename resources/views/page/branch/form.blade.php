@@ -61,6 +61,17 @@
 
 </div>
 
+<hr>
+
+<div class="form-group">
+
+    {!! Form::label('name', 'Maps Google', ['class' => 'col-md-2 control-label']) !!}
+    <div class="col-md-10">
+        {!! Form::textarea('branch_map', null, ['class' => 'form-control', 'rows' => '7']) !!}
+    </div>
+
+</div>
+
 <div class="modal fade" id="ModalArea" role="dialog">
     <div class="modal-dialog">
         <div id="popup" class="modal-content">

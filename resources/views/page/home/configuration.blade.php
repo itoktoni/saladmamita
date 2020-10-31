@@ -369,16 +369,16 @@
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label class="col-md-2 control-label">Header</label>
+                                            <label class="col-md-2 control-label">Checkout</label>
                                             <div class="col-md-10">
-                                                <textarea class="form-control editor" rows="3" name="header"
-                                                    cols="50">{{ html_entity_decode(config('website.header')) }}</textarea>
+                                                <textarea class="form-control editor" rows="7" name="header"
+                                                    cols="50"></textarea>
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <label class="col-md-2 control-label">Description</label>
                                             <div class="col-md-10" style="margin-bottom: 5px;">
-                                                <textarea class="form-control lite" rows="2"
+                                                <textarea class="form-control editor" rows="2"
                                                     name="description">{{ config('website.description') }}</textarea>
                                             </div>
                                         </div>

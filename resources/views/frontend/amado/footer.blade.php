@@ -1,5 +1,5 @@
 <!-- ##### Footer Area Start ##### -->
-<footer class="footer_area clearfix">
+<footer class="footer_area ">
     <div class="container">
         <div class="row align-items-center">
             <!-- Single Widget Area -->

@@ -45,12 +45,11 @@
     </div>
 
 </div>
-
 <div class="form-group">
 
     {!! Form::label('name', 'Tag', ['class' => 'col-md-2 control-label']) !!}
     <div class="col-md-10 {{ $errors->has($form.'item_tag_json') ? 'has-error' : ''}}">
-        {{ Form::select($form.'item_tag_json[]', $tag, json_decode($form.'item_tag_json'), ['class'=> 'form-control ', 'multiple']) }}
+        {{ Form::select($form.'item_tag_json[]', $tag, json_decode($model->item_product_item_tag_json), ['class'=> 'form-control ', 'multiple']) }}
         {!! $errors->first($form.'item_tag_json', '<p class="help-block">:message</p>') !!}
     </div>
 </div>
@@ -62,6 +61,7 @@
         {{ Form::select($form.'status', ['1' => 'Yes', '0' => 'No'], null, ['class'=> 'form-control ']) }}
         {!! $errors->first($form.'status', '<p class="help-block">:message</p>') !!}
     </div>
+
     {!! Form::label('name', 'Display Frontpage', ['class' => 'col-md-2 control-label']) !!}
     <div class="col-md-4 {{ $errors->has($form.'display') ? 'has-error' : ''}}">
         {{ Form::select($form.'display', ['1' => 'Yes', '0' => 'No'], null, ['class'=> 'form-control']) }}
@@ -110,4 +110,12 @@
         {!! $errors->first($form.'min_stock', '<p class="help-block">:message</p>') !!}
     </div>
 
+</div>
+
+<div class="form-group">
+    {!! Form::label('name', 'Variant Product', ['class' => 'col-md-2 control-label']) !!}
+    <div class="col-md-10 {{ $errors->has('variant') ? 'has-error' : ''}}">
+        {{ Form::select('variant[]', $variant, $data_variant ?? [], ['class'=> 'form-control ', 'multiple']) }}
+        {!! $errors->first('variant', '<p class="help-block">:message</p>') !!}
+    </div>
 </div>

@@ -2,11 +2,13 @@
 
 namespace Modules\Item\Dao\Models;
 
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Str;
 use Plugin\Helper;
+use Illuminate\Support\Str;
+use Illuminate\Database\Eloquent\Model;
+use Modules\Item\Dao\Facades\BrandFacades;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Modules\Item\Dao\Facades\CategoryFacades;
+use Modules\Item\Dao\Facades\ProductFacades;
 
 class Product extends Model
 {
@@ -56,7 +58,7 @@ class Product extends Model
         'item_product_sell' => 'required',
     ];
 
-    // public $with = [''];
+    public $with = ['category', 'brand', 'variant'];
 
     const CREATED_AT = 'item_product_created_at';
     const UPDATED_AT = 'item_product_updated_at';
@@ -65,6 +67,7 @@ class Product extends Model
     public $searching = 'item_product_name';
     public $datatable = [
         'item_product_id' => [false => 'ID'],
+        'item_category_id' => [false => 'Category'],
         'item_category_name' => [false => 'Category'],
         'item_category_slug' => [false => 'Category'],
         'item_product_name' => [true => 'Product Name'],
@@ -120,9 +123,15 @@ class Product extends Model
                 $model->item_product_image = $name;
             }
 
-            if($model->item_product_min_order <= 0){
+            if ($model->item_product_min_order <= 0) {
                 $model->item_product_min_order = 1;
             }
+
+            // $id = $model->item_product_id;
+            // ProductFacades::deleteProductVariant($id);
+            // foreach(request()->get('variant') as $variant){
+            //     ProductFacades::saveProductVariant($model->item_product_id, $variant);
+            // }
 
             if ($model->item_product_name && empty($model->item_product_slug)) {
                 $model->item_product_slug = Str::slug($model->item_product_name);
@@ -144,5 +153,19 @@ class Product extends Model
                 }
             }
         });
+    }
+
+    public function category()
+    {
+        return $this->hasOne(Category::class, CategoryFacades::getKeyName(), 'item_product_item_category_id');
+    }
+
+    public function brand()
+    {
+        return $this->hasOne(Brand::class, BrandFacades::getKeyName(), 'item_product_item_brand_id');
+    }
+
+    public function variant(){
+        return $this->belongsToMany(Variant::class, 'item_product_variant', 'item_product_id', 'item_variant_id');
     }
 }

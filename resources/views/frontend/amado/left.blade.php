@@ -2,7 +2,7 @@
 <div class="mobile-nav">
     <!-- Navbar Brand -->
     <div class="amado-navbar-brand">
-        <a href="index.html">
+        <a href="{{ url('/') }}">
             <img class="logo" src="{{ Helper::files('logo/'.config('website.logo')) }}" alt="">
         </a>
     </div>
@@ -20,49 +20,40 @@
     </div>
     <!-- Logo -->
     <div class="logo">
-        <a href="index.html">
+        <a href="{{ url('/') }}">
             <img class="logo" src="{{ Helper::files('logo/'.config('website.logo')) }}" alt="">
         </a>
     </div>
     <!-- Amado Nav -->
     <nav class="amado-nav">
         <ul>
-            <li class="active"><a href="index.html">Home</a></li>
-            <li><a href="shop.html">Shop</a></li>
-            <li><a href="shop.html">Cabang</a></li>
-            <li><a href="shop.html">Contact Us</a></li>
+            <li class="{{ request()->segment(1) == '' ? 'active' : '' }}"><a href="{{ url('/') }}">Home</a></li>
+            @auth
+            <li class="{{ request()->segment(1) == 'userprofile' ? 'active' : '' }}"><a href="{{ route('userprofile') }}">Profile</a></li>
+            <li class="{{ request()->segment(1) == 'myaccount' ? 'active' : '' }}"><a href="{{ route('myaccount') }}">List Order</a></li>
+            @endauth
+            <li class="{{ request()->segment(1) == 'product' ? 'active' : '' }} {{ request()->segment(1) == 'jual' ? 'active' : '' }}"><a href="{{ route('shop') }}">Shop</a></li>
+            <li class="{{ request()->segment(1) == 'confirmation' ? 'active' : '' }}"><a href="{{ route('confirmation') }}">Konfirmasi</a></li>
+            <li class="{{ request()->segment(1) == 'branch' ? 'active' : '' }}"><a href="{{ route('branch') }}">Cabang</a></li>
+            <li class="{{ request()->segment(1) == 'contact' ? 'active' : '' }}"><a href="{{ route('contact') }}">Contact Us</a></li>
         </ul>
     </nav>
 
     <hr>
     <!-- Button Group -->
-    <div class="amado-btn-group mt-50 mb-50">
-        <a href="#" class="btn amado-btn mb-15">Cart ( 5 )</a>
-        <a href="#" class="btn amado-btn active search-nav">Search</a>
+    <div class="amado-btn-group">
+        <a href="{{ route('cart') }}" class="btn amado-btn">Cart ( {{ Cart::getTotalQuantity() }} )</a>
+        <!-- <a href="#" class="btn amado-btn active search-nav">Search</a> -->
     </div>
 
-    <hr>
-
-
-    <!-- Amado Nav -->
-    <nav class="amado-nav mt-30">
-        <ul>
-            <li class="active"><a href="index.html">Salad Buah</a></li>
-            <li><a href="shop.html">Salad Sayur</a></li>
-            <li><a href="shop.html">Dressing</a></li>
-            <li><a href="shop.html">Bika Ambon</a></li>
-            <li><a href="shop.html">Sponge Cake</a></li>
-        </ul>
-    </nav>
-
-    <hr class="mt-50">
+    <hr class="">
 
     <!-- Social Button -->
     <div class="social-info d-flex justify-content-between">
-        <a href="#"><i class="fa fa-shopping-bag" aria-hidden="true"></i></a>
-        <a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a>
-        <a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a>
-        <a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+        @foreach($sosmed as $social)
+        <a target="_blank" href="{{ $social->marketing_sosmed_link }}"><i
+                class="fa fa-{{ $social->marketing_sosmed_icon }}" aria-hidden="true"></i></a>
+        @endforeach
     </div>
 
     <hr>

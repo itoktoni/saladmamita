@@ -2,28 +2,19 @@
 
 namespace Modules\Item\Http\Controllers;
 
-use Plugin\Notes;
+use App\Dao\Repositories\BranchRepository;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\GeneralRequest;
+use App\Http\Services\MasterService;
+use Illuminate\Support\Str;
+use Intervention\Image\Facades\Image;
+use Modules\Item\Dao\Repositories\BrandRepository;
+use Modules\Item\Dao\Repositories\CategoryRepository;
+use Modules\Item\Dao\Repositories\ProductRepository;
+use Modules\Item\Dao\Repositories\TagRepository;
+use Modules\Item\Dao\Repositories\VariantRepository;
 use Plugin\Helper;
 use Plugin\Response;
-use Illuminate\Support\Str;
-use Illuminate\Support\Facades\DB;
-use App\Http\Controllers\Controller;
-use App\Http\Services\MasterService;
-use App\Http\Requests\GeneralRequest;
-use Intervention\Image\Facades\Image;
-use Illuminate\Support\Facades\Config;
-use App\Dao\Repositories\BranchRepository;
-use Modules\Item\Http\Services\ProductService;
-use Modules\Item\Dao\Repositories\TagRepository;
-use Modules\Item\Dao\Repositories\TaxRepository;
-use Modules\Item\Dao\Repositories\SizeRepository;
-use Modules\Item\Dao\Repositories\BrandRepository;
-use Modules\Item\Dao\Repositories\ColorRepository;
-use Modules\Item\Dao\Repositories\ProductRepository;
-use Modules\Item\Dao\Repositories\CategoryRepository;
-use Modules\Item\Dao\Repositories\CurrencyRepository;
-use Modules\Item\Dao\Repositories\MaterialRepository;
-use Modules\Item\Dao\Repositories\UnitRepository;
 
 class ProductController extends Controller
 {
@@ -37,7 +28,7 @@ class ProductController extends Controller
             self::$model = new ProductRepository();
         }
         $this->folder = 'Item';
-        $this->template  = Helper::getTemplate(__CLASS__);
+        $this->template = Helper::getTemplate(__CLASS__);
     }
 
     public function index()
@@ -51,25 +42,21 @@ class ProductController extends Controller
         $branch = Helper::createOption((new BranchRepository()));
         $product = Helper::createOption((new ProductRepository()));
         $category = Helper::createOption((new CategoryRepository()));
-        $tax = Helper::createOption((new TaxRepository()));
-        $currency = Helper::createOption((new CurrencyRepository()));
         $tag = Helper::shareTag((new TagRepository()), 'item_tag_slug');
-        $unit = Helper::shareOption((new UnitRepository()));
-        $material = Helper::shareOption((new MaterialRepository()));
+        $variant = Helper::shareOption((new VariantRepository()), false);
         $type = Helper::shareStatus(self::$model->promo);
+        $data_variant = [];
 
         $view = [
-            'key'       => self::$model->getKeyName(),
-            'brand'      => $brand,
-            'branch'      => $branch,
-            'category'  => $category,
-            'tag'  => $tag,
-            'tax'  => $tax,
-            'currency'  => $currency,
-            'product'  => $product,
-            'unit'  => $unit,
-            'material'  => $material,
-            'type'  => $type,
+            'key' => self::$model->getKeyName(),
+            'brand' => $brand,
+            'branch' => $branch,
+            'category' => $category,
+            'tag' => $tag,
+            'product' => $product,
+            'variant' => $variant,
+            'data_variant' => $data_variant,
+            'type' => $type,
         ];
 
         return array_merge($view, $data);
@@ -77,43 +64,6 @@ class ProductController extends Controller
 
     public function create(MasterService $service, GeneralRequest $request)
     {
-//         $curl = curl_init();
-//         $token = "qD0N9C1fqFYUAZyDKWDI6OVzydlvQAW7fKlM3tch6kFaTC7JvRKMgAGjF5lOxFHR";
-//         $data = [
-//             'phone' => '081213427842',
-//             'message' =>    nl2br('NOTIFICATION ORDER SO2020010001 \n Customer : itok toni laksono \n Product : \n 1. gado gado 2 pcs x 20.000 = 40.000 \n 2. Ice cream 1 pcs x 10.000 = 10.000 \n Total product : 50.000 \n Voucher : 10.000 \n Jasa ongkir : 20.000 \n TOTAL : 60.000 \n'),
-// //             'message' => '
-// //             NOTIFICATION ORDER SO7353738
-// // Customer : itok toni laksono
-
-// // Product : 
-// // 1. gado gado 2 pcs x 20.000 = 40.000
-// // 2. Ice cream 1 pcs x 10.000 = 10.000
-// // Total product : 50.000
-// // Voucher : 10.000
-// // Jasa ongkir : 20.000
-// // TOTAL : 60.000
-// //             ',
-//         ];
-
-//         curl_setopt(
-//             $curl,
-//             CURLOPT_HTTPHEADER,
-//             array(
-//         "Authorization: $token",
-// )
-//         );
-//         curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "POST");
-//         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-//         curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($data));
-//         curl_setopt($curl, CURLOPT_URL, "https://selo.wablas.com/api/send-message");
-//         curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 0);
-//         curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
-//         $result = curl_exec($curl);
-//         curl_close($curl);
-
-//         dd($result);
-
         if (request()->isMethod('POST')) {
             $check = $service->save(self::$model, $request->all());
             if ($check['status']) {
@@ -121,7 +71,7 @@ class ProductController extends Controller
             }
             return redirect()->back();
         }
-        return view(Helper::setViewCreate())->with($this->share([
+        return view(Helper::setViewSave($this->template, $this->folder))->with($this->share([
             'model' => self::$model,
         ]));
     }
@@ -135,10 +85,11 @@ class ProductController extends Controller
 
         if (request()->has('code')) {
             $data = $service->show(self::$model);
-            return view(Helper::setViewUpdate())->with($this->share([
-                'model'        => $data,
+            return view(Helper::setViewSave($this->template, $this->folder))->with($this->share([
+                'model' => $data,
+                'data_variant' => $data->variant->pluck('item_variant_id')->toArray(),
                 'image_detail' => self::$model->getImageDetail($data->item_product_id),
-                'key'          => self::$model->getKeyName()
+                'key' => self::$model->getKeyName(),
             ]));
         }
     }
@@ -185,7 +136,7 @@ class ProductController extends Controller
     {
         $service->delete(self::$model);
         return Response::redirectBack();
-        ;
+
     }
 
     public function data(MasterService $service)
@@ -202,7 +153,7 @@ class ProductController extends Controller
         }
 
         return view(Helper::setViewData())->with([
-            'fields'   => Helper::listData(self::$model->datatable),
+            'fields' => Helper::listData(self::$model->datatable),
             'template' => $this->template,
         ]);
     }
@@ -213,8 +164,8 @@ class ProductController extends Controller
             $data = $service->show(self::$model);
             return view(Helper::setViewShow())->with($this->share([
                 'fields' => Helper::listData(self::$model->datatable),
-                'model'   => $data,
-                'key'   => self::$model->getKeyName()
+                'model' => $data,
+                'key' => self::$model->getKeyName(),
             ]));
         }
     }

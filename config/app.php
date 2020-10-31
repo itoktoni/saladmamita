@@ -204,6 +204,8 @@ return [
         Alkhachatryan\LaravelWebConsole\LaravelWebConsoleServiceProvider::class,
         Maatwebsite\Excel\ExcelServiceProvider::class,
         Laravolt\Avatar\ServiceProvider::class,
+        Darryldecode\Cart\CartServiceProvider::class,
+        Webklex\IMAP\Providers\LaravelServiceProvider::class,
         CarlosOCarvalho\Providers\CloudinaryServiceProvider::class
     ],
 
@@ -267,6 +269,8 @@ return [
         'Curl'          => Ixudra\Curl\Facades\Curl::class,
         'Image' => Intervention\Image\Facades\Image::class,
         'Avatar'    => Laravolt\Avatar\Facade::class,
+        'Client' => Webklex\IMAP\Facades\Client::class,
+        'Cart' => Darryldecode\Cart\Facades\CartFacade::class
     ],
 
 ];

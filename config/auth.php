@@ -1,5 +1,7 @@
 <?php
 
+use App\Dao\Models\User;
+
 return [
 
     /*
@@ -67,7 +69,7 @@ return [
     'providers' => [
         'users' => [
             'driver' => 'cacheableEloquent',
-            'model' => App\User::class,
+            'model' => User::class,
         ],
 
         // 'users' => [

@@ -12,6 +12,7 @@
 <script src="{{ Helper::backend('vendor/trumbowyg/trumbowyg.resizimg.min.js') }}"></script>
 <script src="{{ Helper::backend('vendor/trumbowyg/trumbowyg.upload.min.js') }}"></script>
 <script src="{{ Helper::backend('vendor/flatpickr/flatpickr.min.js') }}"></script>
+<script src="{{ Helper::backend('vendor/mask/cleave.min.js') }}"></script>
 <script src="{{ Helper::backend('vendor/jquery-datatables/media/js/jquery.dataTables.min.js') }}"></script>
 <!-- <script src="{{ Helper::backend('vendor/pjax/pjax.min.js') }}"></script> -->
 @endif

@@ -37,6 +37,9 @@ class ModuleServiceProvider extends ServiceProvider
         $this->app->bind('order_detail_facades', function () {
             return new \Modules\Sales\Dao\Repositories\OrderDetailRepository();
         });
+        $this->app->bind('order_detail_variant_facades', function () {
+            return new \Modules\Sales\Dao\Models\OrderDetailVariant();
+        });
         $this->app->bind('delivery_facades', function () {
             return new \Modules\Sales\Dao\Repositories\DeliveryRepository();
         });

@@ -1,129 +1,72 @@
 @extends(Helper::setExtendFrontend())
 
+@push('javascript')
+<script>
+$(function() {
+    $('#carouselExampleIndicators').carousel({
+        interval: 5000
+    });
+});
+</script>
+@endpush
+
 @section('content')
 
- <!-- Product Catagories Area Start -->
- <div class="products-catagories-area clearfix">
-     <div class="amado-pro-catagory clearfix">
+<!-- Product Catagories Area Start -->
+<div class="container products-catagories-area mb-5 clearfix">
 
-         <!-- Single Catagory -->
-         <div class="single-products-catagory clearfix">
-             <a href="shop.html">
-                 <img src="{{ Helper::frontend('img/bg-img/1.png') }}" alt="">
-                 <!-- Hover Content -->
-                 <div class="hover-content">
-                     <div class="line"></div>
-                     <p>From $180</p>
-                     <h4>Modern Chair</h4>
-                 </div>
-             </a>
-         </div>
+    <div class="container">
 
-         <!-- Single Catagory -->
-         <div class="single-products-catagory clearfix">
-             <a href="shop.html">
-                 <img src="{{ Helper::frontend('img/bg-img/2.png') }}" alt="">
-                 <!-- Hover Content -->
-                 <div class="hover-content">
-                     <div class="line"></div>
-                     <p>From $180</p>
-                     <h4>Minimalistic Plant Pot</h4>
-                 </div>
-             </a>
-         </div>
+        <div id="carouselExampleIndicators" class="carousel slide mt-5" data-ride="carousel">
+            <ol class="carousel-indicators">
+                @foreach($sliders as $slider)
+                <li data-target="#carouselExampleIndicators" data-slide-to="{{ $loop->index }}"
+                    class="{{ $loop->first ? 'active' : '' }}"></li>
+                @endforeach
+            </ol>
+            <div class="carousel-inner">
+                @foreach($sliders as $slider)
+                <div class="carousel-item {{ $loop->first ? 'active' : '' }}">
+                    <a href="{{ $slider->marketing_slider_link }}">
+                        <img class="d-block h-100 w-100"
+                            src="{{ Helper::files('slider/'.$slider->marketing_slider_image) }}" alt="First slide">
+                    </a>
+                </div>
+                @endforeach
+            </div>
+            <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
+        </div>
 
-         <!-- Single Catagory -->
-         <div class="single-products-catagory clearfix">
-             <a href="shop.html">
-                 <img src="{{ Helper::frontend('img/bg-img/3.png') }}" alt="">
-                 <!-- Hover Content -->
-                 <div class="hover-content">
-                     <div class="line"></div>
-                     <p>From $180</p>
-                     <h4>Modern Chair</h4>
-                 </div>
-             </a>
-         </div>
+    </div>
 
-         <!-- Single Catagory -->
-         <div class="single-products-catagory clearfix">
-             <a href="shop.html">
-                 <img src="{{ Helper::frontend('img/bg-img/4.png') }}" alt="">
-                 <!-- Hover Content -->
-                 <div class="hover-content">
-                     <div class="line"></div>
-                     <p>From $180</p>
-                     <h4>Night Stand</h4>
-                 </div>
-             </a>
-         </div>
+    <div class="row mt-2">
+        <div class="col-md-12 clearfix">
+            <div class="row flex justify-content-lg-center">
+                @foreach($product->where('item_product_display', 1)->take(3) as $item)
+                <!-- Single Catagory -->
+                <div class="single-products-catagory-index">
+                    <a href="{{ route('product', ['slug' => $item->item_product_slug]) }}">
+                        <img src="{{ Helper::files('product/'.$item->item_product_image) }}" alt="">
+                        <!-- Hover Content -->
+                        <div class="hover-content">
+                            <div class="line"></div>
+                            <p>Harga {{ Helper::createRupiah($item->item_product_sell) }}</p>
+                            <h4>{{ $item->item_product_name }}</h4>
+                        </div>
+                    </a>
+                </div>
+                @endforeach
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Product Catagories Area End -->
 
-         <!-- Single Catagory -->
-         <div class="single-products-catagory clearfix">
-             <a href="shop.html">
-                 <img src="{{ Helper::frontend('img/bg-img/5.png') }}" alt="">
-                 <!-- Hover Content -->
-                 <div class="hover-content">
-                     <div class="line"></div>
-                     <p>From $18</p>
-                     <h4>Plant Pot</h4>
-                 </div>
-             </a>
-         </div>
-
-         <!-- Single Catagory -->
-         <div class="single-products-catagory clearfix">
-             <a href="shop.html">
-                 <img src="{{ Helper::frontend('img/bg-img/6.png') }}" alt="">
-                 <!-- Hover Content -->
-                 <div class="hover-content">
-                     <div class="line"></div>
-                     <p>From $320</p>
-                     <h4>Small Table</h4>
-                 </div>
-             </a>
-         </div>
-
-         <!-- Single Catagory -->
-         <div class="single-products-catagory clearfix">
-             <a href="shop.html">
-                 <img src="{{ Helper::frontend('img/bg-img/7.png') }}" alt="">
-                 <!-- Hover Content -->
-                 <div class="hover-content">
-                     <div class="line"></div>
-                     <p>From $318</p>
-                     <h4>Metallic Chair</h4>
-                 </div>
-             </a>
-         </div>
-
-         <!-- Single Catagory -->
-         <div class="single-products-catagory clearfix">
-             <a href="shop.html">
-                 <img src="{{ Helper::frontend('img/bg-img/8.png') }}" alt="">
-                 <!-- Hover Content -->
-                 <div class="hover-content">
-                     <div class="line"></div>
-                     <p>From $318</p>
-                     <h4>Modern Rocking Chair</h4>
-                 </div>
-             </a>
-         </div>
-
-         <!-- Single Catagory -->
-         <div class="single-products-catagory clearfix">
-             <a href="shop.html">
-                 <img src="{{ Helper::frontend('img/bg-img/9.png') }}" alt="">
-                 <!-- Hover Content -->
-                 <div class="hover-content">
-                     <div class="line"></div>
-                     <p>From $318</p>
-                     <h4>Home Deco</h4>
-                 </div>
-             </a>
-         </div>
-     </div>
- </div>
- <!-- Product Catagories Area End -->
-
- @endsection
+@endsection

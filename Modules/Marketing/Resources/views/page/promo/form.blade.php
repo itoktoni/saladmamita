@@ -1,5 +1,4 @@
-@component('components.summernote', ['array' => ['basic']])
-@endcomponent
+<x-editor />
 
 @component('components.date', ['array' => ['date']])
 @endcomponent
@@ -28,15 +27,17 @@
         {!! $errors->first($form.'type', '<p class="help-block">:message</p>') !!}
     </div>
 
-    {!! Form::label('name', 'Default', ['class' => 'col-md-2 control-label']) !!}
-    <div class="col-md-4 {{ $errors->has($form.'default') ? 'has-error' : ''}}">
-        {{ Form::select($form.'default', $default, $model->marketing_promo_default ?? null, ['class'=> 'form-control']) }}
-        {!! $errors->first($form.'default', '<p class="help-block">:message</p>') !!}
+    {!! Form::label('name', 'Image', ['class' => 'col-md-2 control-label']) !!}
+    <div class="col-md-4 {{ $errors->has($form.'file') ? 'has-error' : ''}}">
+        <input type="hidden" value="{{ $form.'image' }}" name="$form.'image'">
+        <input type="file" name="{{ $form.'file' }}"
+            class="{{ $errors->has($form.'file') ? 'has-error' : ''}} btn btn-default btn-sm btn-block">
+        {!! $errors->first($form.'file', '<p class="help-block">:message</p>') !!}
     </div>
 
 </div>
 <hr>
-<div class="form-group">
+<!-- <div class="form-group">
 
     {!! Form::label('name', 'Minimum Payment', ['class' => 'col-md-2 control-label']) !!}
     <div class="col-md-4 {{ $errors->has($form.'minimal') ? 'has-error' : ''}}">
@@ -68,15 +69,10 @@
 
 </div>
 
+
 <div class="form-group">
 
-    {!! Form::label('name', 'Image', ['class' => 'col-md-2 control-label']) !!}
-    <div class="col-md-4 {{ $errors->has($form.'file') ? 'has-error' : ''}}">
-        <input type="hidden" value="{{ $form.'image' }}" name="$form.'image'">
-        <input type="file" name="{{ $form.'file' }}"
-            class="{{ $errors->has($form.'file') ? 'has-error' : ''}} btn btn-default btn-sm btn-block">
-        {!! $errors->first($form.'file', '<p class="help-block">:message</p>') !!}
-    </div>
+   
 
     {!! Form::label('name', 'Status', ['class' => 'col-md-2 control-label']) !!}
     <div class="col-md-4 {{ $errors->has($form.'status') ? 'has-error' : ''}}">
@@ -85,6 +81,9 @@
     </div>
 
 </div>
+
+ -->
+ 
 <div class="form-group">
     {!! Form::label('name', 'Description', ['class' => 'col-md-2 control-label']) !!}
     <div class="col-md-10">
@@ -99,14 +98,7 @@
         {!! $errors->first($form.'matrix', '<p class="help-block">:message</p>') !!}
     </div>
 </div>
-<hr>
-<div class="form-group">
-    {!! Form::label('name', 'Voucher', ['class' => 'col-md-2 control-label']) !!}
-    <div class="col-md-10 {{ $errors->has($form.'user_json') ? 'has-error' : ''}}">
-        {{ Form::select('emails[]', $user, json_decode($model->marketing_promo_user_json) ?? null, ['class'=> 'form-control', 'multiple']) }}
-        {!! $errors->first($form.'user_json', '<p class="help-block">:message</p>') !!}
-    </div>
-</div>
+
 <hr>
 <div class="form-group">
 
@@ -117,6 +109,6 @@
     </div>
 
     <div class="col-md-10">
-        {!! Form::textarea($form.'page', null, ['class' => 'form-control basic', 'rows' => '5']) !!}
+        {!! Form::textarea($form.'page', null, ['class' => 'form-control editor', 'rows' => '5']) !!}
     </div>
 </div>

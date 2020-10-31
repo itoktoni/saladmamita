@@ -1,3 +1,36 @@
+1.19.0 / 2020-10-29
+==================
+
+New functionality and features
+------------------------------
+  * Add method `Cloudinary::download_folder`
+  
+Other Changes
+-------------
+
+  * Fix `upload_large` endpoint
+  * Improve PHPUnit fixtures
+  * Add accessibility analysis tests
+
+1.18.0 / 2020-09-07
+==================
+
+New functionality and features
+------------------------------
+
+  * Add support for `date` in `usage` Admin API
+  * Add support for `eval` API parameter
+  
+Other Changes
+-------------
+
+  * Fix `@see` link for `usage` Admin API
+  * Fix assignment of value into previously undefined array
+  * Fix detection integration test
+  * Add pull request template
+  * Integrate with sub-account test service
+  * Add support of retries in unit tests
+
 
 1.17.0 / 2020-06-07
 ===================

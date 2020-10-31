@@ -175,13 +175,30 @@ function usersGenerator() {
 (new FastExcel(usersGenerator()))->export('test.xlsx');
 ```
 
+### Add header and rows style
+
+Add header and rows style with `headerStyle` and `rowsStyle` methods.
+
+```php
+$header_style = (new StyleBuilder())->setFontBold()->build();
+
+$rows_style = (new StyleBuilder())
+    ->setFontSize(15)
+    ->setShouldWrapText()
+    ->setBackgroundColor("EDEDED")
+    ->build();
+
+return (new FastExcel($list))
+    ->headerStyle($header_style)
+    ->rowsStyle($rows_style)
+    ->download('file.xlsx');
+```
+
 ## Why?
 
 FastExcel is intended at being Laravel-flavoured [Spout](https://github.com/box/spout):
 a simple, but elegant wrapper around [Spout](https://github.com/box/spout) with the goal
-of simplifying **imports and exports**.
-
-It could be considered as a faster (and memory friendly) alternative
+of simplifying **imports and exports**. It could be considered as a faster (and memory friendly) alternative
 to [Laravel Excel](https://laravel-excel.com/), with less features.
 Use it only for simple tasks.
 
@@ -196,4 +213,3 @@ Testing a XLSX export for 10000 lines, 20 columns with random data, 10 iteration
 | FastExcel  | 2.09 M | 2.76 s |
 
 Still, remember that [Laravel Excel](https://laravel-excel.com/) **has many more features.**
-Please help me improve benchmarks, more tests are coming. Feel free to criticize.

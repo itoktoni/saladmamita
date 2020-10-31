@@ -43,7 +43,7 @@ class OrderRepository extends Order implements MasterInterface
     public function userRepository($id)
     {
         $list = Helper::dataColumn($this->datatable, $this->getKeyName());
-        return $this->select($list)->where('sales_order_core_user_id', $id);
+        return $this->dataRepository()->where('sales_order_core_user_id', $id);
     }
 
     public function saveRepository($request)

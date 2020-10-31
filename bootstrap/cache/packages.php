@@ -10,6 +10,17 @@
       'Option' => 'Appstract\\Options\\OptionFacade',
     ),
   ),
+  'barryvdh/laravel-debugbar' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'Barryvdh\\Debugbar\\ServiceProvider',
+    ),
+    'aliases' => 
+    array (
+      'Debugbar' => 'Barryvdh\\Debugbar\\Facade',
+    ),
+  ),
   'barryvdh/laravel-dompdf' => 
   array (
     'providers' => 
@@ -35,6 +46,24 @@
       0 => 'ConsoleTVs\\Charts\\ChartsServiceProvider',
     ),
   ),
+  'darryldecode/cart' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'Darryldecode\\Cart\\CartServiceProvider',
+    ),
+    'aliases' => 
+    array (
+      'Cart' => 'Darryldecode\\Cart\\Facades\\CartFacade',
+    ),
+  ),
+  'fideloper/proxy' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'Fideloper\\Proxy\\TrustedProxyServiceProvider',
+    ),
+  ),
   'imliam/laravel-env-set-command' => 
   array (
     'providers' => 
@@ -53,22 +82,15 @@
       'Image' => 'Intervention\\Image\\Facades\\Image',
     ),
   ),
-  'nwidart/laravel-modules' => 
+  'ixudra/curl' => 
   array (
     'providers' => 
     array (
-      0 => 'Nwidart\\Modules\\LaravelModulesServiceProvider',
+      0 => 'Ixudra\\Curl\\CurlServiceProvider',
     ),
     'aliases' => 
     array (
-      'Module' => 'Nwidart\\Modules\\Facades\\Module',
-    ),
-  ),
-  'fideloper/proxy' => 
-  array (
-    'providers' => 
-    array (
-      0 => 'Fideloper\\Proxy\\TrustedProxyServiceProvider',
+      'Curl' => 'Ixudra\\Curl\\Facades\\Curl',
     ),
   ),
   'jackiedo/dotenv-editor' => 
@@ -93,76 +115,6 @@
       'Agent' => 'Jenssegers\\Agent\\Facades\\Agent',
     ),
   ),
-  'laravelcollective/html' => 
-  array (
-    'providers' => 
-    array (
-      0 => 'Collective\\Html\\HtmlServiceProvider',
-    ),
-    'aliases' => 
-    array (
-      'Form' => 'Collective\\Html\\FormFacade',
-      'Html' => 'Collective\\Html\\HtmlFacade',
-    ),
-  ),
-  'yajra/laravel-datatables-oracle' => 
-  array (
-    'providers' => 
-    array (
-      0 => 'Yajra\\DataTables\\DataTablesServiceProvider',
-    ),
-    'aliases' => 
-    array (
-      'DataTables' => 'Yajra\\DataTables\\Facades\\DataTables',
-    ),
-  ),
-  'laravolt/avatar' => 
-  array (
-    'providers' => 
-    array (
-      0 => 'Laravolt\\Avatar\\ServiceProvider',
-    ),
-    'aliases' => 
-    array (
-      'Avatar' => 'Laravolt\\Avatar\\Facade',
-    ),
-  ),
-  'ixudra/curl' => 
-  array (
-    'providers' => 
-    array (
-      0 => 'Ixudra\\Curl\\CurlServiceProvider',
-    ),
-    'aliases' => 
-    array (
-      'Curl' => 'Ixudra\\Curl\\Facades\\Curl',
-    ),
-  ),
-  'maatwebsite/excel' => 
-  array (
-    'providers' => 
-    array (
-      0 => 'Maatwebsite\\Excel\\ExcelServiceProvider',
-    ),
-    'aliases' => 
-    array (
-      'Excel' => 'Maatwebsite\\Excel\\Facades\\Excel',
-    ),
-  ),
-  'rap2hpoutre/fast-excel' => 
-  array (
-    'providers' => 
-    array (
-      0 => 'Rap2hpoutre\\FastExcel\\Providers\\FastExcelServiceProvider',
-    ),
-  ),
-  'nesbot/carbon' => 
-  array (
-    'providers' => 
-    array (
-      0 => 'Carbon\\Laravel\\ServiceProvider',
-    ),
-  ),
   'laravel/sanctum' => 
   array (
     'providers' => 
@@ -177,6 +129,29 @@
       0 => 'Laravel\\Ui\\UiServiceProvider',
     ),
   ),
+  'laravelcollective/html' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'Collective\\Html\\HtmlServiceProvider',
+    ),
+    'aliases' => 
+    array (
+      'Form' => 'Collective\\Html\\FormFacade',
+      'Html' => 'Collective\\Html\\HtmlFacade',
+    ),
+  ),
+  'laravolt/avatar' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'Laravolt\\Avatar\\ServiceProvider',
+    ),
+    'aliases' => 
+    array (
+      'Avatar' => 'Laravolt\\Avatar\\Facade',
+    ),
+  ),
   'livewire/livewire' => 
   array (
     'providers' => 
@@ -188,33 +163,62 @@
       'Livewire' => 'Livewire\\Livewire',
     ),
   ),
-  'barryvdh/laravel-debugbar' => 
+  'maatwebsite/excel' => 
   array (
     'providers' => 
     array (
-      0 => 'Barryvdh\\Debugbar\\ServiceProvider',
+      0 => 'Maatwebsite\\Excel\\ExcelServiceProvider',
     ),
     'aliases' => 
     array (
-      'Debugbar' => 'Barryvdh\\Debugbar\\Facade',
+      'Excel' => 'Maatwebsite\\Excel\\Facades\\Excel',
     ),
   ),
-  'facade/ignition' => 
+  'nesbot/carbon' => 
   array (
     'providers' => 
     array (
-      0 => 'Facade\\Ignition\\IgnitionServiceProvider',
+      0 => 'Carbon\\Laravel\\ServiceProvider',
+    ),
+  ),
+  'nwidart/laravel-modules' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'Nwidart\\Modules\\LaravelModulesServiceProvider',
     ),
     'aliases' => 
     array (
-      'Flare' => 'Facade\\Ignition\\Facades\\Flare',
+      'Module' => 'Nwidart\\Modules\\Facades\\Module',
     ),
   ),
-  'nunomaduro/collision' => 
+  'rap2hpoutre/fast-excel' => 
   array (
     'providers' => 
     array (
-      0 => 'NunoMaduro\\Collision\\Adapters\\Laravel\\CollisionServiceProvider',
+      0 => 'Rap2hpoutre\\FastExcel\\Providers\\FastExcelServiceProvider',
+    ),
+  ),
+  'webklex/laravel-imap' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'Webklex\\IMAP\\Providers\\LaravelServiceProvider',
+    ),
+    'aliases' => 
+    array (
+      'Client' => 'Webklex\\IMAP\\Facades\\Client',
+    ),
+  ),
+  'yajra/laravel-datatables-oracle' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'Yajra\\DataTables\\DataTablesServiceProvider',
+    ),
+    'aliases' => 
+    array (
+      'DataTables' => 'Yajra\\DataTables\\Facades\\DataTables',
     ),
   ),
 );

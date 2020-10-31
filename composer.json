@@ -12,6 +12,9 @@
         "carlosocarvalho/storage-cloudinary-laravel": "^1.0",
         "chriskonnertz/string-calc": "^1.0",
         "consoletvs/charts": "6.*",
+        "darryldecode/cart": "^4.2",
+        "emanueleminotto/simple-html-dom": "^1.5",
+        "fabpot/goutte": "^4.0",
         "fideloper/proxy": "~4.0",
         "filp/whoops": "^2.1",
         "fzaninotto/faker": "^1.8",
@@ -32,14 +35,13 @@
         "rap2hpoutre/fast-excel": "^2.0",
         "thedevsaddam/laravel-schema": "^2.0",
         "vkovic/laravel-custom-casts": "^1.1",
+        "webklex/laravel-imap": "^2.2",
         "yajra/laravel-datatables-oracle": "^9.0"
     },
     "require-dev": {
-        "facade/ignition": "^2.0",
         "fzaninotto/faker": "^1.9.1",
         "barryvdh/laravel-debugbar": "^3.2",
         "mockery/mockery": "^1.3.1",
-        "nunomaduro/collision": "^4.1",
         "phpunit/phpunit": "^8.5"
     },
     "autoload": {
