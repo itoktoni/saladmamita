@@ -39,15 +39,15 @@ $(document).ready(function() {
                         <a chref="{{ route('branch') }}">
                             <h6>List Order</h6>
                         </a>
-                       
+
                         <table id="table" class="table table-table table-bordered">
                             <thead>
                                 <tr>
                                     <th scope="col">No. Order</th>
                                     <th scope="col">Date</th>
-                                    <th style="text-align:right" scope="col">Total</th>
+                                    <th style="text-align:right" scope="col">Delivery From</th>
+                                    <th style="text-align:center" scope="col">Order From</th>
                                     <th style="text-align:right" scope="col">Status</th>
-                                    <th style="text-align:center" scope="col">Resi</th>
                                     <th style="text-align:center;width:100px;" scope="col">
                                         Detail</th>
                                 </tr>
@@ -56,16 +56,13 @@ $(document).ready(function() {
                                 @forelse ($order as $item)
                                 <tr style="position:relative">
                                     <td data-header="Order No.">
-                                        <button type="button" class="btn btn-primary btn-block btn-sm"
-                                            data-toggle="modal" data-target="#{{ $item->sales_order_id ?? '' }}">
-                                            {{ $item->sales_order_id ?? '' }}
-                                        </button>
+                                        {{ $item->sales_order_id ?? '' }}
                                     </td>
                                     <td data-header="Order Date">
-                                        {{ $item->sales_order_date->format('d M y') }}
+                                        {{ $item->sales_order_date_order->format('d M Y') ?? '' }}
                                     </td>
                                     <td data-header="Ongkir">
-                                        {{ $item->sales_order_rajaongkir_name ?? '' }}
+                                        {{ $item->sales_order_from_name ?? '' }}
                                     </td>
                                     <td data-header="Total" align="right">
                                         {{ number_format($item->sales_order_total) ?? '' }}
@@ -73,23 +70,12 @@ $(document).ready(function() {
                                     <td data-header="Status" align="right">
                                         {{ $status[$item->sales_order_status] ?? '' }}
                                     </td>
-                                    <td data-header="Courier" align="center">
-                                        {{ strtoupper($item->sales_order_rajaongkir_courier) ?? '' }}
-                                    </td>
+
                                     <td data-header="Detail" align="center">
-                                        @if ($item->sales_order_status < 2 || $item->sales_order_status == 0)
-                                            <a href="{{ route('confirmation', ['code' => $item->sales_order_id]) }}"
-                                                class="btn btn-success btn-sm">
-                                                Pay
-                                            </a>
-                                            @endif
-                                            @if ($item->sales_order_rajaongkir_waybill)
-                                            <a id="track" target="__blank"
-                                                href="{{ route('track', ['code' => $item->sales_order_id]) }}"
-                                                class="btn btn-danger btn-sm">
-                                                Track
-                                            </a>
-                                            @endif
+                                        <button type="button" class="btn btn-primary btn-block btn-sm"
+                                            data-toggle="modal" data-target="#{{ $item->sales_order_id ?? '' }}">
+                                            Show
+                                        </button>
                                     </td>
 
                                 </tr>

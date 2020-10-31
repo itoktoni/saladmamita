@@ -3,25 +3,25 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Dao\Models\User;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
 class LoginController extends Controller
 {
     /*
-      |--------------------------------------------------------------------------
-      | Login Controller
-      |--------------------------------------------------------------------------
-      |
-      | This controller handles authenticating users for the application and
-      | redirecting them to your home screen. The controller uses a trait
-      | to conveniently provide its functionality to your applications.
-      |
+    |--------------------------------------------------------------------------
+    | Login Controller
+    |--------------------------------------------------------------------------
+    |
+    | This controller handles authenticating users for the application and
+    | redirecting them to your home screen. The controller uses a trait
+    | to conveniently provide its functionality to your applications.
+    |
      */
     use AuthenticatesUsers;
 
@@ -88,7 +88,7 @@ class LoginController extends Controller
         //Validate input
         $validator = Validator::make($request->all(), [
             'email' => 'required|exists:users,email',
-            'password' => 'required|confirmed'
+            'password' => 'required|confirmed',
         ]);
 
         //check if input is valid before moving on
@@ -102,11 +102,16 @@ class LoginController extends Controller
             ->where('token', $request->token)->first();
         // Redirect the user back to the password reset request form if the token is invalid
         dd($tokenData);
-        if (!$tokenData) return view('auth.passwords.email');
+        if (!$tokenData) {
+            return view('auth.passwords.email');
+        }
 
         $user = User::where('email', $tokenData->email)->first();
         // Redirect the user back if the email is invalid
-        if (!$user) return redirect()->back()->withErrors(['email' => 'Email not found']);
+        if (!$user) {
+            return redirect()->back()->withErrors(['email' => 'Email not found']);
+        }
+
         //Hash and update the new password
         $user->password = Hash::make($password);
         $user->save(); //or $user->save();

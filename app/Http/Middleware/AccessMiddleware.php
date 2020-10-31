@@ -65,6 +65,9 @@ class AccessMiddleware
 
     public function handle($request, Closure $next)
     {
+        if(auth()->user()->group_user == 'customer'){
+            return redirect()->to('/');
+        }
         $access = $this->gate($this->data());
         if (!$access) {
             abort(403);

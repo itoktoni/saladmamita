@@ -110,9 +110,8 @@
                             $cart = Cart::getContent()->where('id', $item->item_product_id)->first()->attributes ??
                             false;
                             @endphp
-
-                            @if($item->variant->count() > 1)
-                            @foreach($item->variant as $variant)
+                            @if($item->variant()->count() > 1)
+                            @foreach($item->variant() as $variant)
                             <tr>
                                 <td class="align-middle" width="75%">{{ $variant->item_variant_name }}</td>
                                 <td class="align-right align-middle">

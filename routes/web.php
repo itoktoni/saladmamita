@@ -198,6 +198,7 @@ Route::post('/update_cart', function () {
 auth mechanizme
 */
 Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout');
+Route::get('register', 'PublicController@register')->name('register');
 Route::get('reset', 'UserController@resetRedis')->name('reset');
 Route::get('reboot', 'UserController@resetRouting')->name('reboot');
 

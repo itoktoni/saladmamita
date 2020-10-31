@@ -21,7 +21,6 @@ use Intervention\Image\Facades\Image;
 use Ixudra\Curl\Facades\Curl;
 use Jackiedo\DotenvEditor\Facades\DotenvEditor;
 use Modules\Finance\Dao\Repositories\BankRepository;
-use Modules\Finance\Dao\Repositories\PaymentRepository;
 use Modules\Item\Dao\Facades\ProductFacades;
 use Modules\Item\Dao\Models\Product;
 use Modules\Item\Dao\Models\Wishlist;
@@ -273,7 +272,6 @@ class PublicController extends Controller
             $city = request()->get('city');
             $area = request()->get('area');
 
-
             $validation = [
                 'name' => 'required',
                 'email' => 'required',
@@ -290,7 +288,7 @@ class PublicController extends Controller
             unset($request['province']);
             unset($request['city']);
             $success = $user->updateRepository(Auth::user()->id, $request);
-            $area = Helper::getSingleArea($request['area'],false,true);
+            $area = Helper::getSingleArea($request['area'], false, true);
 
             if ($success) {
                 session()->flash('info', 'Data Has been saved');
@@ -298,18 +296,22 @@ class PublicController extends Controller
             }
         }
 
-        $area = Helper::getSingleArea(Auth::user()->area,false,true);
+        $area = Helper::getSingleArea(Auth::user()->area, false, true);
         $province = Helper::createOption(new ProvinceRepository());
 
         return View(Helper::setViewFrontend(__FUNCTION__))->with($this->share([
             'model' => $data,
-            'province' => array_keys($area['province']),
-            'city' => array_keys($area['city']),
-            'area' => array_keys($area['area']),
+            'province' => isset($area['province']) ? array_keys($area['province']) : [],
+            'city' => isset($area['city']) ? array_keys($area['city']) : [],
+            'area' => isset($area['area']) ? array_keys($area['area']) : [],
             'list_province' => $province,
-            'list_city' => $area['city'],
-            'list_area' => $area['area'],
+            'list_city' => $area['city'] ?? [],
+            'list_area' => $area['area'] ?? [],
         ]));
+    }
+    public function register()
+    {
+        return View(Helper::setViewFrontend(__FUNCTION__))->with($this->share());
     }
 
     public function myaccount()
@@ -335,7 +337,7 @@ class PublicController extends Controller
             $location = Auth::user()->location;
             $data = $user->showRepository(Auth::user()->id);
 
-            $data_order = $order->userRepository(Auth::user()->id)->get();
+            $data_order = $order->userRepository(Auth::user()->email)->get();
         };
 
         if (request()->isMethod('POST')) {
@@ -744,21 +746,22 @@ class PublicController extends Controller
         $bank = new BankRepository();
         if (request()->isMethod('POST')) {
             $request = request()->all();
-            $payment = new PaymentRepository();
             $rules = [
-                'finance_payment_amount' => 'required',
-                'finance_payment_sales_order_id' => 'required|exists:sales_order,sales_order_id',
-                'finance_payment_person' => 'required',
-                'finance_payment_email' => 'required|email',
-                'finance_payment_date' => 'required',
+                'sales_order_payment_person' => 'required',
+                'code' => 'required|exists:sales_order,sales_order_id',
+                'sales_order_payment_person' => 'required',
+                'sales_order_payment_phone' => 'required',
+                'sales_order_payment_value' => 'required',
+                'sales_order_payment_email' => 'required|email',
+                'sales_order_payment_date' => 'required',
                 'files' => 'required|image|mimes:jpeg,png,jpg|max:2048',
-                'finance_payment_to' => 'required',
             ];
 
             $message = [
-                'finance_payment_person.required' => 'Nama Pengirim Harus Diisi',
-                'finance_payment_amount.required' => 'Jumlah Pembayaran Harus Diisi',
-                'finance_payment_sales_order_id.required' => 'No. Order Harus Diisi',
+                'sales_order_payment_person.required' => 'Nama Pengirim Harus Diisi',
+                'sales_order_payment_value.required' => 'Jumlah Pembayaran Harus Diisi',
+                'code.required' => 'No. Order Harus Diisi',
+                'code.exists' => 'No. Order Tidak',
                 'files.required' => 'Bukti Transfer Harus Upload',
             ];
 
@@ -768,18 +771,35 @@ class PublicController extends Controller
                 return redirect()->back()->withErrors($validate)->withInput();
             }
 
-            $check = $payment->saveRepository($request);
+            $update = OrderFacades::showRepository($request['code']);
+            $check['status'] = false;
+            if ($update) {
+                
+                $file = 'files';
+                $name = null;
+                if (request()->has($file)) {
+                    $image = $update->item_product_image;
+                    if ($image) {
+                        Helper::removeImage($image, Helper::getTemplate(__CLASS__));
+                    }
+                    
+                    $file = request()->file($file);
+                    $name = Helper::uploadImage($file, Helper::getTemplate(__CLASS__));
+                    
+                    $update->item_product_image = $name;
+                }
+                
+                $request['sales_order_term_top'] = 'CASH';
+                $request['sales_order_payment_file'] = $name;
+                $check = OrderFacades::updateRepository($request['code'], $request);
+            }
+
             if ($check['status']) {
                 return redirect()->route('confirmation')->with('success', 'Data has been Success');
             }
         }
 
-        if ($code = request()->get('code')) {
-            $order = new OrderRepository();
-            $data_order = $order->showRepository($code);
-        }
         return View(Helper::setViewFrontend(__FUNCTION__))->with($this->share([
-            'order' => $data_order ?? [],
             'bank' => Helper::shareOption($bank, false, true)->pluck('finance_bank_name', 'finance_bank_name'),
         ]));
     }

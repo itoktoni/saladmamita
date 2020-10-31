@@ -58,7 +58,7 @@ class Product extends Model
         'item_product_sell' => 'required',
     ];
 
-    public $with = ['category', 'brand', 'variant'];
+    public $with = ['category', 'brand'];
 
     const CREATED_AT = 'item_product_created_at';
     const UPDATED_AT = 'item_product_updated_at';
@@ -166,6 +166,7 @@ class Product extends Model
     }
 
     public function variant(){
-        return $this->belongsToMany(Variant::class, 'item_product_variant', 'item_product_id', 'item_variant_id');
+        return $this->leftJoin('item_product_variant', 'item_detail_product_id', 'item_product_id')
+        ->leftJoin('item_variant', 'item_variant_id', 'item_detail_variant_id')->whereColumn('item_detail_product_id','item_product_id')->get();
     }
 }

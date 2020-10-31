@@ -28,10 +28,6 @@
     <nav class="amado-nav">
         <ul>
             <li class="{{ request()->segment(1) == '' ? 'active' : '' }}"><a href="{{ url('/') }}">Home</a></li>
-            @auth
-            <li class="{{ request()->segment(1) == 'userprofile' ? 'active' : '' }}"><a href="{{ route('userprofile') }}">Profile</a></li>
-            <li class="{{ request()->segment(1) == 'myaccount' ? 'active' : '' }}"><a href="{{ route('myaccount') }}">List Order</a></li>
-            @endauth
             <li class="{{ request()->segment(1) == 'product' ? 'active' : '' }} {{ request()->segment(1) == 'jual' ? 'active' : '' }}"><a href="{{ route('shop') }}">Shop</a></li>
             <li class="{{ request()->segment(1) == 'confirmation' ? 'active' : '' }}"><a href="{{ route('confirmation') }}">Konfirmasi</a></li>
             <li class="{{ request()->segment(1) == 'branch' ? 'active' : '' }}"><a href="{{ route('branch') }}">Cabang</a></li>
@@ -47,6 +43,24 @@
     </div>
 
     <hr class="">
+
+     <!-- Amado Nav -->
+     <nav class="amado-nav">
+        <ul>
+            @auth
+            <li class="{{ request()->segment(1) == 'userprofile' ? 'active' : '' }}"><a href="{{ route('userprofile') }}">Profile</a></li>
+            <li class="{{ request()->segment(1) == 'myaccount' ? 'active' : '' }}"><a href="{{ route('myaccount') }}">List Order</a></li>
+            <li class="{{ request()->segment(1) == 'logout' ? 'active' : '' }}"><a class="text-danger" href="{{ route('logout') }}">Logout</a></li>
+            @else
+            <li class="{{ request()->segment(1) == 'login' ? 'active' : '' }}"><a href="{{ route('login') }}">Login</a></li>
+            <li class="{{ request()->segment(1) == 'register' ? 'active' : '' }}"><a href="{{ route('register') }}">Register</a></li>
+
+            @endauth
+        </ul>
+    </nav>
+
+    <hr>
+
 
     <!-- Social Button -->
     <div class="social-info d-flex justify-content-between">
