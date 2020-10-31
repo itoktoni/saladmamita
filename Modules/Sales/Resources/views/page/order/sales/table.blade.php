@@ -44,20 +44,20 @@
                         {{ $variant->variant->item_variant_name }}
                     </p>
                     <input type="hidden" value="{{ $variant->sales_order_detail_variant_order_id }}"
-                        name="variant[{{$item->sales_order_detail_item_product_id}}][{{ $loop->index }}][sales_order_detail_variant_order_id]">
+                        name="detail[{{$loop->parent->index}}][variant][{{ $loop->index }}][sales_order_detail_variant_order_id]">
                     
                     <input type="hidden" value="{{ $variant->sales_order_detail_variant_item_product_id }}"
-                        name="variant[{{$item->sales_order_detail_item_product_id}}][{{ $loop->index }}][sales_order_detail_variant_item_product_id]">
+                        name="detail[{{$loop->parent->index}}][variant][{{ $loop->index }}][sales_order_detail_variant_item_product_id]">
                     
                     <input type="hidden" value="{{ $variant->sales_order_detail_variant_item_variant_id }}"
-                        name="variant[{{$item->sales_order_detail_item_product_id}}][{{ $loop->index }}][sales_order_detail_variant_item_variant_id]">
+                        name="detail[{{$loop->parent->index}}][variant][{{ $loop->index }}][sales_order_detail_variant_item_variant_id]">
                     
                     <input type="number" value="{{ $variant->sales_order_detail_variant_qty }}" placeholder="INPUT QTY"
-                        name="variant[{{$item->sales_order_detail_item_product_id}}][{{ $loop->index }}][sales_order_detail_variant_qty]"
+                        name="detail[{{$loop->parent->index}}][variant][{{ $loop->index }}][sales_order_detail_variant_qty]"
                         class="form-control input-sm">
                     
                     <input type="hidden" value="{{ $variant->sales_order_detail_variant_order_detail_id }}"
-                        name="variant[{{$item->sales_order_detail_item_product_id}}][{{ $loop->index }}][sales_order_detail_variant_order_detail_id]">
+                        name="detail[{{$loop->parent->index}}][variant][{{ $loop->index }}][sales_order_detail_variant_order_detail_id]">
                     
                 </div>
                 @endforeach
@@ -102,8 +102,8 @@
                 'form-control', 'rows' => 1, 'tabindex' => 500]) !!}
             </td>
             <td data-title="Value" class="text-right col-md-1">
-                {!! Form::text('sales_order_discount_percent', null, ['id' => 'grand_discount_value', 'placeholder' =>
-                'Dalam %' ,'class' => 'number form-control text-right', 'tabindex' => 501]) !!}
+                {!! Form::text('sales_order_discount_value', null, ['id' => 'grand_discount_value', 'placeholder' =>
+                '- Value' ,'class' => 'number form-control text-right', 'tabindex' => 501]) !!}
             </td>
             <td data-title="Price" class="text-right col-md-1">
                 {!! Form::text('sales_order_discount_value', null, ['id' => 'grand_discount_price',

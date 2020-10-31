@@ -5,6 +5,7 @@ namespace Modules\Sales\Http\Controllers;
 use Carbon\Carbon;
 use Plugin\Helper;
 use Plugin\Response;
+use Barryvdh\DomPDF\Facade as PDF;
 use Barryvdh\DomPDF\PdfFacade;
 use Webklex\IMAP\Facades\Client;
 use App\Http\Controllers\Controller;
@@ -23,9 +24,9 @@ use Modules\Crm\Dao\Repositories\CustomerRepository;
 use Modules\Finance\Dao\Repositories\BankRepository;
 use Modules\Item\Dao\Repositories\ProductRepository;
 use Modules\Item\Dao\Repositories\VariantRepository;
-use Modules\Sales\Dao\Repositories\DeliveryRepository;
 use Modules\Finance\Dao\Repositories\PaymentRepository;
 use Modules\Marketing\Dao\Repositories\PromoRepository;
+use Modules\Rajaongkir\Dao\Repositories\DeliveryRepository;
 
 class OrderController extends Controller
 {
@@ -59,6 +60,7 @@ class OrderController extends Controller
         $branch = Helper::shareOption((new BranchRepository()));
         $bank = Helper::shareOption((new BankRepository()));
         $customers = Helper::shareOption((new CustomerRepository()));
+        $delivery = Helper::shareOption((new DeliveryRepository()));
         $status = Helper::shareStatus(self::$model->status);
 
         $from = $to = ['Please Choose Area'];
@@ -69,6 +71,7 @@ class OrderController extends Controller
             'tax' => $tax,
             'tops' => $tops,
             'product' => $product,
+            'delivery' => $delivery,
             'variant' => $variant,
             'status' => $status,
             'promo' => $promo,
@@ -207,7 +210,7 @@ class OrderController extends Controller
                 'detail' => $data->detail,
                 'banks' => BankFacades::dataRepository()->get(),
             ];
-            $pdf = PdfFacade::loadView(Helper::setViewPrint(__FUNCTION__, $this->folder), $pasing);
+            $pdf = PDF::loadView(Helper::setViewPrint(__FUNCTION__, $this->folder), $pasing);
             // return $pdf->download();
             return $pdf->stream();
         }

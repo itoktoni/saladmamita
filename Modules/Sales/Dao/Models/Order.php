@@ -208,6 +208,12 @@ class Order extends Model
 
         parent::saving(function ($model) {
             $model->sales_order_date_order = $model->sales_order_date_order->format('Y-m-d H:i:s');
+            if(!empty(request()->get('sales_order_payment_date'))){
+                $model->sales_order_payment_date = $model->sales_order_payment_date->format('Y-m-d H:i:s');
+            }
+            else{
+                $model->sales_order_payment_date = null;
+            }
         });
     }
 }

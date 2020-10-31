@@ -31,7 +31,6 @@ class OrderService extends MasterService
                 }
             }
 
-            
             if ($check && empty(request()->get('sales_order_to_id'))) {
 
                 $name = request()->get('sales_order_to_name');
@@ -92,19 +91,24 @@ class OrderService extends MasterService
         $check = $repository->updateRepository($id, $request);
         if (!empty($request['detail'])) {
             foreach ($request['detail'] as $item) {
+
+                if (isset($item['variant'])) {
+                    foreach ($item['variant'] as $variant) {
+                        $data = $variant;
+                        unset($variant['sales_order_detail_variant_qty']);
+                        OrderDetailVariantFacades::updateOrInsert($variant, $data);
+                    }
+                }
+
+                unset($item['variant']);
                 $where = [
                     'sales_order_detail_order_id' => $item['sales_order_detail_order_id'],
                     OrderDetailFacades::getForeignKey() => $item[OrderDetailFacades::getForeignKey()],
                 ];
                 OrderDetailFacades::updateOrInsert($where, $item);
+
             }
-            foreach ($request['variant'] as $variant) {
-                foreach ($variant as $single) {
-                    $data = $single;
-                    unset($single['sales_order_detail_variant_qty']);
-                    OrderDetailVariantFacades::updateOrInsert($single, $data);
-                }
-            }
+
         }
 
         if ($check['status']) {

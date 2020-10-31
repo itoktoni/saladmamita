@@ -270,6 +270,7 @@ return [
         'Image' => Intervention\Image\Facades\Image::class,
         'Avatar'    => Laravolt\Avatar\Facade::class,
         'Client' => Webklex\IMAP\Facades\Client::class,
+        'PDF' => Barryvdh\DomPDF\Facade::class,
         'Cart' => Darryldecode\Cart\Facades\CartFacade::class
     ],
 

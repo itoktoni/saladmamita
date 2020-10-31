@@ -2,9 +2,10 @@
 
 namespace Modules\Sales\Http\Services;
 
-use App\Dao\Facades\BranchFacades;
 use Plugin\Alert;
 use Plugin\Helper;
+use Darryldecode\Cart\Facades\CartFacade as Cart;
+use App\Dao\Facades\BranchFacades;
 use Illuminate\Support\Facades\DB;
 use App\Http\Services\MasterService;
 use App\Dao\Interfaces\MasterInterface;
@@ -27,12 +28,28 @@ class PublicService extends MasterService
             $branch = BranchFacades::find($request['sales_order_from_id']);
 
             $request['sales_order_from_name'] = $branch->branch_name;
+            $request['sales_order_from_name'] = $branch->branch_name;
             $request['sales_order_from_phone'] = $branch->branch_phone;
             $request['sales_order_from_email'] = $branch->branch_email;
             $request['sales_order_from_address'] = $branch->branch_address;
             $request['sales_order_from_area'] = $branch->branch_rajaongkir_area_id;
+
+            $sub_total = Cart::getSubTotal();
+            $total = Cart::getTotal();
+            $discount_value = 0;  
+            $discount_name = $discount_percent = '';
+
+            if($disc = Cart::getConditions()->first()){
+                $discount_value = $disc->getValue(); 
+                $discount_name = $disc->getAttributes()['name'] ?? '';
+            }   
             
-            $request['sales_order_sum_product'] = $branch->branch_rajaongkir_area_id;
+            $request['sales_order_discount_name'] = $discount_name;
+            $request['sales_order_discount_value'] = abs($discount_value);
+            
+            $request['sales_order_sum_product'] = $sub_total;
+            $request['sales_order_sum_discount'] = $total;
+            $request['sales_order_sum_total'] = $total;
 
             $check = $repository->saveRepository($request);
 
@@ -58,6 +75,7 @@ class PublicService extends MasterService
 
                 if ($customer = CustomerFacades::where('crm_customer_contact_person', $name)->where('crm_customer_contact_email', $email)->first()) {
                     $customer_id = $customer->crm_customer_id;
+
                 } else {
 
                     if (!empty($name)) {
@@ -91,11 +109,12 @@ class PublicService extends MasterService
                 $order = OrderFacades::find($request['sales_order_id']);
                 $order->sales_order_to_id = $customer_id;
                 $order->save();
+
+                Cart::clear();
+                Cart::clearCartConditions();
             }
 
-            Alert::create();
         } catch (\Throwable $th) {
-            dd($th->getMessage());
             Alert::error($th->getMessage());
             return $th->getMessage();
         }

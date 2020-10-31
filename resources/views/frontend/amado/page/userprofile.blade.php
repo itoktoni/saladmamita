@@ -39,6 +39,21 @@
                     {!! Form::model($model, ['route' => 'userprofile', 'class' =>
                     'form-horizontal', 'files' => true]) !!}
 
+                    <div class="row">
+                        <div class="col-md-12">
+                            @if ($errors)
+                            @foreach ($errors->all() as $error)
+                            <div class="alert alert-sm alert-danger alert-dismissible fade show" role="alert">
+                                <strong>{{ $error }}
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                            </div>
+                            @endforeach
+                            @endif
+                        </div>
+                    </div>
+
                     <div class="row form-group">
                         <div class="col-md-6">
                             <label>Name</label>
@@ -47,10 +62,9 @@
                             !!}
                         </div>
                         <div class="col-md-6">
-                            <label>Password</label>
-                            {!! Form::password('password', ['class' => 'form-control']) !!}
-                            {!! $errors->first('password', '<p class="text-danger">:message</p>
-                            ') !!}
+                            <label>Username</label>
+                            {!! Form::text('username', null, ['class' =>'form-control'])!!}
+                            {!! $errors->first('username', '<p class="text-danger">:message</p>') !!}
                         </div>
                     </div>
                     <div class="row form-group">
@@ -62,12 +76,19 @@
                         </div>
                         <div class="col-md-6">
                             <label>Phone</label>
-                            {!! Form::email('phone', null, ['class' => 'form-control']) !!}
+                            {!! Form::text('phone', null, ['class' => 'form-control']) !!}
                             {!! $errors->first('phone', '<p class="text-danger">:message</p>
                             ') !!}
                         </div>
                     </div>
                     <div class="row form-group">
+                        <div class="col-md-6">
+                            <label>Password</label>
+                            {!! Form::password('password', ['class' => 'form-control']) !!}
+                            {!! $errors->first('password', '<p class="text-danger">:message</p>
+                            ') !!}
+                        </div>
+
                         <div class="col-md-6">
                             <label>Address</label>
                             {!! Form::textarea('address', null, ['class' => 'form-control',
@@ -76,11 +97,6 @@
                             </p>
                             ') !!}
                         </div>
-                        <div class="col-md-6">
-                            <label>Postcode</label>
-                            {!! Form::text('postcode', null, ['class' =>'form-control'])!!}
-                            {!! $errors->first('postcode', '<p class="text-danger">:message</p>') !!}
-                        </div>
                     </div>
 
                     <hr>
@@ -88,16 +104,16 @@
                     <div class="row form-group">
                         <div class="col-md-4">
                             <label>Province</label>
-                            {{ Form::select('province', $list_province, $province, ['id' => 'province', 'class'=> ''.($errors->has('province') ? 'error':'')]) }}
+                            {{ Form::select('province', $list_province, $province, ['id' => 'province', 'class'=> 'form-control form-control-sm']) }}
                         </div>
                         <div class="col-md-4">
                             <label>Postcode</label>
                             <label>City</label>
-                            {{ Form::select('city', $list_city, $city, ['id' => 'city','class'=> 'chosen']) }}
+                            {{ Form::select('city', $list_city, $city, ['id' => 'city', 'class'=> 'form-control form-control-sm']) }}
                         </div>
                         <div class="col-md-4">
                             <label>Area</label>
-                            {{ Form::select('location', $list_location, $location, ['id' => 'location','class'=> ''.($errors->has('location') ? 'error':'')]) }}
+                            {{ Form::select('area', $list_area, $area, ['id' => 'location','class'=> 'form-control form-control-sm']) }}
                         </div>
                     </div>
                     <div class="row form-group">
@@ -119,3 +135,61 @@
     </div>
 </div>
 @endsection
+
+
+@push('javascript')
+<script>
+$(document).ready(function() {
+
+    $('#province').change(function() { // Jika Select Box id provinsi dipilih
+        var data = $("#province option:selected");
+        var province = data.val(); // Ciptakan variabel provinsi
+        var city = $('#city');
+        $.ajax({
+            type: 'GET', // Metode pengiriman data menggunakan POST
+            url: '{{ route("city") }}',
+            data: 'province=' + province, // Data yang akan dikirim ke file pemroses
+            success: function(response) { // Jika berhasil
+                city.empty();
+                city.append('<option value="">-- Select City --</option>');
+                $.each(response, function(idx, obj) {
+                    city.append('<option postcode="' + obj
+                        .rajaongkir_city_postal_code + '" value="' + obj
+                        .rajaongkir_city_id + '">' + obj.rajaongkir_city_type+ ' ' + obj.rajaongkir_city_name +
+                        '</option>');
+                });
+                city.trigger("chosen:updated");
+            }
+        });
+    });
+
+    $('#city').change(function() { // Jika Select Box id provinsi dipilih
+        var data = $("#city option:selected");
+        var city = data.val(); // Ciptakan variabel provinsi
+        // var postcode = data.attr('postcode');
+        var location = $('#location');
+        // $('#postcode').val(postcode);
+        $.ajax({
+            type: 'GET', // Metode pengiriman data menggunakan POST
+            url: '{{ route("location") }}',
+            data: 'city=' + city, // Data yang akan dikirim ke file pemroses
+            success: function(response) { // Jika berhasil
+                location.empty();
+                location.append('<option value="">-- Select Location --</option>');
+                $.each(response, function(idx, obj) {
+                    location.append('<option value="' + obj.rajaongkir_area_id +
+                        '">' + obj.rajaongkir_area_name + '</option>');
+                });
+                $("#location").trigger("chosen:updated");
+            }
+        });
+    });
+
+    $('#location').change(function() {
+        var data = $("#location option:selected").text();
+        $('#area_name').val(data);
+    });
+
+});
+</script>
+@endpush

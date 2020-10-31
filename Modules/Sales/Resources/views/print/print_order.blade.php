@@ -368,7 +368,7 @@
     #address {
         margin-bottom: 20px;
         position: absolute;
-        top: 55px;
+        top: 60px;
         margin-left: 0px;
     }
 
@@ -379,6 +379,7 @@
     #address p {
         margin-top: -25px;
         font-size: 10px;
+        line-height: 20px;
         margin-bottom: 50px;
     }
 
@@ -630,7 +631,7 @@
         </div>
         <div id="address">
             <h4>
-                {{ $master->sales_order_from_address }}
+                {{ config('website.address') }}
             </h4>
             <p>
                 {{ Helper::getSingleArea($master->sales_order_from_area, true) }}
@@ -666,9 +667,9 @@
                         <p>
                             @php
 
-                            $total_delivery = intval($detail->sum('sales_order_detail_total'));
-                            $total_discount = $master->sales_order_discount_percent * $total_delivery / 100;
-                            $grand_total = intval($total_delivery - $total_discount);
+                            $total_delivery = $master->sales_order_sum_product;
+                            $total_discount = $master->sales_order_sum_discount;
+                            $grand_total = $master->sales_order_sum_total;
                             @endphp
 
                             <strong style="font-size: 12px;">
@@ -707,7 +708,7 @@
                         </h1>
                         @foreach($item->variant->where('sales_order_detail_variant_qty','>', 0) as $variant)
                         <p>
-                            - ({{ $variant->sales_order_detail_variant_qty }}) {{ $variant->variant->item_variant_name }}
+                            - |{{ $variant->sales_order_detail_variant_qty }}| {{ $variant->variant->item_variant_name }}
                         </p>
                         @endforeach
                     </td>
@@ -735,30 +736,27 @@
                     </td>
                 </tr>
 
-                @if (!empty($master->sales_order_discount_percent))
+                @if (!empty($master->sales_order_discount_value))
                 <tr class="total_discount">
                     <td class="product" colspan="6">
                         {{ ucfirst($master->sales_order_discount_name) ?? '' }} : =
                         Total Discount
                     </td>
                     <td class="qty">
-                        {{ $master->sales_order_discount_percent ?? '' }}%
+                        {{ Helper::createRupiah($master->sales_order_discount_value) ?? '' }}
                     </td>
                     <td class="total">
                         -{{ Helper::createRupiah($total_discount) ?? '' }}
                     </td>
                 </tr>
                 @endif
-                @if (!empty($master->sales_order_tax_percent))
+                @if (!empty($master->sales_order_sum_ongkir))
                 <tr class="total_discount">
-                    <td class="product" colspan="6">
-                        {{ $master->tax->finance_tax_name ?? '' }}
-                    </td>
-                    <td class="qty">
-                        {{ $master->sales_order_tax_percent ?? '' }}%
+                    <td class="product" colspan="7">
+                        Ongkir
                     </td>
                     <td class="total">
-                        {{ Helper::createRupiah($total_tax) ?? '' }}
+                        {{ Helper::createRupiah($master->sales_order_sum_ongkir) ?? '' }}
                     </td>
                 </tr>
                 @endif

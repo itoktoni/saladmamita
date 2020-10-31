@@ -157,9 +157,11 @@
                                     <div class="row form-group">
                                         <div class="col-md-12">
                                             <label>Name</label>
-                                            <input type="text" name="sales_order_to_name"
-                                                class="form-control form-control-sm {{ $errors->has('sales_order_to_name') ? 'is-invalid' : ''}}"
-                                                value="{{ old('sales_order_to_name') ?? null }}">
+                                            {!! Form::text('sales_order_to_name', $user->name ??
+                                            null, ['class' =>
+                                            $errors->has('sales_order_to_name') ? 'form-control form-control-sm
+                                            is-invalid' : 'form-control form-control-sm']) !!}
+
                                             {!! $errors->first('sales_order_to_name', '<small
                                                 class="form-text text-danger">:message</small>') !!}
                                         </div>
@@ -167,17 +169,21 @@
                                     <div class="row form-group">
                                         <div class="col-md-6">
                                             <label>Email</label>
-                                            <input type="text" name="sales_order_to_email"
-                                                class="form-control form-control-sm {{ $errors->has('sales_order_to_email') ? 'is-invalid' : ''}}"
-                                                value="{{ old('sales_order_to_email') ?? null }}">
+                                            {!! Form::text('sales_order_to_email', $user->email ??
+                                            null, ['class' =>
+                                            $errors->has('sales_order_to_email') ? 'form-control form-control-sm
+                                            is-invalid' : 'form-control form-control-sm']) !!}
+
                                             {!! $errors->first('sales_order_to_email', '<small
                                                 class="form-text text-danger">:message</small>') !!}
                                         </div>
                                         <div class="col-md-6">
                                             <label>Phone</label>
-                                            <input type="text" name="sales_order_to_phone"
-                                                class="form-control form-control-sm {{ $errors->has('sales_order_to_phone') ? 'is-invalid' : ''}}"
-                                                value="{{ old('sales_order_to_phone') ?? null }}">
+                                            {!! Form::text('sales_order_to_phone', $user->phone ??
+                                            null, ['class' =>
+                                            $errors->has('sales_order_to_phone') ? 'form-control form-control-sm
+                                            is-invalid' : 'form-control form-control-sm']) !!}
+
                                             {!! $errors->first('sales_order_to_phone', '<small
                                                 class="form-text text-danger">:message</small>') !!}
                                         </div>
@@ -186,9 +192,11 @@
                                     <div class="row form-group">
                                         <div class="col-md-12">
                                             <label>Address</label>
-                                            <textarea name="sales_order_to_address"
-                                                class="form-control {{ $errors->has('sales_order_to_address') ? 'is-invalid' : '' }}"
-                                                rows="2">{{ old('sales_order_to_address') ?? '' }}</textarea>
+                                            {!! Form::textarea('sales_order_to_address', $user->address ??
+                                            null, ['rows' => 3, 'class' =>
+                                            $errors->has('sales_order_to_address') ? 'form-control form-control-sm
+                                            is-invalid' : 'form-control form-control-sm']) !!}
+
                                             {!! $errors->first('sales_order_to_address', '<small
                                                 class="form-text text-danger">:message</small>') !!}
                                         </div>
@@ -208,8 +216,9 @@
                                     </div>
                                     <div class="row form-group">
                                         <div class="col-md-12">
-                                            <input type="hidden" id="area_name" value="{{ old('area_name') ?? null }}" name="area_name">
-                                            {{ Form::select('sales_order_to_area', [old('sales_order_to_area') => old('area_name')] ?? [], null, ['id' => 'location','class'=> $errors->has('sales_order_to_area') ? 'form-control form-control-sm is-invalid' : 'form-control form-control-sm']) }}
+                                            <input type="hidden" id="area_name" value="{{ old('area_name') ?? null }}"
+                                                name="area_name">
+                                            {{ Form::select('sales_order_to_area', $area['area'] ?? [], null, ['id' => 'location','class'=> $errors->has('sales_order_to_area') ? 'form-control form-control-sm is-invalid' : 'form-control form-control-sm']) }}
                                             {!! $errors->first('sales_order_to_area', '<small
                                                 class="form-text text-danger">:message</small>') !!}
                                         </div>
@@ -309,7 +318,7 @@ $(document).ready(function() {
         });
     });
 
-    $('#location').change(function(){
+    $('#location').change(function() {
         var data = $("#location option:selected").text();
         $('#area_name').val(data);
     });

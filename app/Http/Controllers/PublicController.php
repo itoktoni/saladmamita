@@ -259,34 +259,20 @@ class PublicController extends Controller
     public function userprofile()
     {
         $user = new TeamRepository;
-        $order = new OrderRepository();
-
-        $province = $city = $location = $data = false;
-        $list_location = $list_city = $data_order = $my_wishlist = [];
-
-        if ($delete = request()->get('delete')) {
-            $c = Wishlist::where('item_wishlist_item_product_id', $delete)->where('item_wishlist_user_id', Auth::user()->id)->delete();
-            if ($c) {
-                return redirect()->route('myaccount')->with('info', 'Success Delete Product');
-            } else {
-                return redirect()->route('myaccount')->with('info', 'Fail Delete Product');
-            }
-        }
 
         if (Auth::check()) {
             $province = Auth::user()->province;
             $city = Auth::user()->city;
-            $location = Auth::user()->location;
+            $area = Auth::user()->area;
             $data = $user->showRepository(Auth::user()->id);
-
-            $data_order = $order->userRepository(Auth::user()->id)->get();
         };
 
         if (request()->isMethod('POST')) {
             $request = request()->all();
             $province = request()->get('province');
             $city = request()->get('city');
-            $location = request()->get('location');
+            $area = request()->get('area');
+
 
             $validation = [
                 'name' => 'required',
@@ -294,55 +280,35 @@ class PublicController extends Controller
                 'address' => 'required',
                 'province' => 'required',
                 'city' => 'required',
-                'location' => 'required',
-                // 'password' => 'required|min:6',
+                'area' => 'required',
             ];
 
             $validate = Validator::make($request, $validation);
             if ($validate->fails()) {
                 return redirect()->back()->withInput()->withErrors($validate);
             }
-
-            // if (!empty(request()->get('password'))) {
-            //     $request['password'] = bcrypt(request()->get('password'));
-            // } else {
-            //     unset($request['password']);
-            // }
-            // dd($request);
+            unset($request['province']);
+            unset($request['city']);
             $success = $user->updateRepository(Auth::user()->id, $request);
+            $area = Helper::getSingleArea($request['area'],false,true);
+
             if ($success) {
                 session()->flash('info', 'Data Has been saved');
                 return redirect()->back();
             }
         }
 
-        if (Cache::has('province')) {
-            $list_province = Cache::get('province');
-        } else {
-            $list_province = Cache::rememberForever('province', function () {
-                return DB::table('rajaongkir_provinces')->get()->sortBy('rajaongkir_province_name')->pluck('rajaongkir_province_name', 'rajaongkir_province_id')->prepend(' Choose Province', '0')->toArray();
-            });
-        }
-
-        if ($province) {
-            $list_city = DB::table('rajaongkir_cities')->where('rajaongkir_city_province_id', $province)->get()->sortBy('rajaongkir_city_name')->pluck('rajaongkir_city_name', 'rajaongkir_city_id')->toArray();
-        }
-
-        if ($city) {
-            $list_location = DB::table('rajaongkir_areas')->where('rajaongkir_area_city_id', $city)->get()->sortBy('rajaongkir_area_name')->pluck('rajaongkir_area_name', 'rajaongkir_area_id')->toArray();
-        }
+        $area = Helper::getSingleArea(Auth::user()->area,false,true);
+        $province = Helper::createOption(new ProvinceRepository());
 
         return View(Helper::setViewFrontend(__FUNCTION__))->with($this->share([
             'model' => $data,
-            'province' => $province,
-            'order' => $data_order,
-            'city' => $city,
-            'location' => $location,
-            'status' => Helper::shareStatus($order->status),
-            'list_province' => $list_province,
-            'list_city' => $list_city,
-            'list_location' => $list_location,
-            'my_wishlist' => $my_wishlist,
+            'province' => array_keys($area['province']),
+            'city' => array_keys($area['city']),
+            'area' => array_keys($area['area']),
+            'list_province' => $province,
+            'list_city' => $area['city'],
+            'list_area' => $area['area'],
         ]));
     }
 
@@ -653,16 +619,13 @@ class PublicController extends Controller
             if (isset($request['sales_order_to_area'])) {
                 $area_id = $request['sales_order_to_area'];
                 $area = Helper::getSingleArea($area_id, false, true);
-                view()->share([
-                    'area' => $area
-                ]);
             }
 
             $detail = collect($request['detail'])->map(function ($item) use ($autonumber) {
                 $item['sales_order_detail_order_id'] = $autonumber;
                 return $item;
             });
-            
+
             $request = array_merge($request, [
                 'detail' => $detail,
             ]);
@@ -693,18 +656,22 @@ class PublicController extends Controller
             $validate = Validator::make($request, $rules, $message);
             if ($validate->fails()) {
                 return redirect()->back()->withErrors($validate)->withInput()->with([
-                    'area' => $area
+                    'area' => $area,
                 ]);
             }
-            
+
             $order = new OrderRepository();
             $check = $service->save($order, $request);
-            if(!isset($check['status'])){
+            if (!isset($check['status'])) {
                 $validate->errors()->add('field', 'Something is wrong with this field!');
                 return redirect()->back()->withErrors($validate)->withInput()->with([
-                    'area' => $area
+                    'area' => $area,
                 ]);
             }
+        }
+
+        if (Auth::check()) {
+            $area = Helper::getSingleArea(auth()->user()->area, false, true);
         }
 
         $carts = Cart::getContent();
@@ -712,6 +679,7 @@ class PublicController extends Controller
         $branch = Helper::createOption(new BranchRepository());
         $user = Auth::user() ?? [];
         $metode = Helper::createOption(new DeliveryRepository());
+
         return View(Helper::setViewFrontend(__FUNCTION__))->with($this->share([
             'carts' => $carts,
             'list_province' => $list_province,
@@ -1132,13 +1100,13 @@ class PublicController extends Controller
         if (request()->isMethod('POST')) {
 
             $rules = [
-                'detail.temp_product_qty' => 'required|numeric|min:'.$product->item_product_min_order,
+                'detail.temp_product_qty' => 'required|numeric|min:' . $product->item_product_min_order,
             ];
 
             $message = [
                 'detail.temp_product_qty.required' => 'Qty Harus Diisi !',
                 'detail.temp_product_qty.numeric' => 'Qty Harus Angka !',
-                'detail.temp_product_qty.min' => 'Qty Minimal '.$product->item_product_min_order.' !',
+                'detail.temp_product_qty.min' => 'Qty Minimal ' . $product->item_product_min_order . ' !',
             ];
 
             if (request()->exists('variant')) {

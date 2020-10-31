@@ -37,20 +37,28 @@ class OrderRequestUpdate extends FormRequest
         $map = collect($this->detail)->map(function ($item) use ($autonumber) {
             $product = new ProductRepository();
             $data_product = $product->showRepository($item['temp_id'])->first();
-            $total = $item['temp_qty'] * Helper::filterInput($item['temp_price']) ?? 0;
+
+            $qty = Helper::filterInput($item['temp_qty']);
+            if(isset($item['variant'])){
+                $total = collect($item['variant'])->sum('sales_order_detail_variant_qty');
+                $qty = $total;
+                
+                // if(intval($item['temp_qty']) != $total){
+                //     abort(403, 'Qty Variant Tidak Sama Dengan Qty Total !');
+                // }
+
+                $data['variant'] = $item['variant'];
+            }
+
+            $data['sales_order_detail_qty'] = $qty;
+            $total = $qty * Helper::filterInput($item['temp_price']) ?? 0;
             $data['sales_order_detail_order_id'] = $autonumber;
             $data['sales_order_detail_item_product_id'] = $item['temp_id'];
             $data['sales_order_detail_item_product_description'] = $item['temp_notes'] ?? '';
             $data['sales_order_detail_item_product_price'] = $data_product->item_product_sell ?? '';
             $data['sales_order_detail_item_product_weight'] = $data_product->item_product_weight ?? '';
-            $data['sales_order_detail_qty'] = Helper::filterInput($item['temp_qty']);
             $data['sales_order_detail_price'] = Helper::filterInput($item['temp_price']) ?? 0;
             $data['sales_order_detail_total'] = $total;
-            
-            $total = collect(request()->get('variant')[$item['temp_id']])->sum('sales_order_detail_variant_qty');
-            if(intval($item['temp_qty']) != $total){
-                abort(403, 'Qty Variant Tidak Sama Dengan Qty Total !');
-            }
 
             return $data;
         });
@@ -61,8 +69,8 @@ class OrderRequestUpdate extends FormRequest
             'sales_order_sum_product' => Helper::filterInput($this->sales_order_sum_product) ?? 0,
             'sales_order_sum_discount' => Helper::filterInput($this->sales_order_sum_discount) ?? 0,
             'sales_order_sum_total' => Helper::filterInput($this->sales_order_sum_total) ?? 0,
+            'sales_order_sum_ongkir' => Helper::filterInput($this->sales_order_sum_ongkir) ?? 0,
             'detail' => array_values($map->toArray()),
-            'variant' => request()->get('variant'),
         ]);
             
 

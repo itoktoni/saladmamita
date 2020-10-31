@@ -29,6 +29,9 @@ $(document).ready(function() {
         $('.temp_total').each(function() {
             sum += numeral($(this).val()).value();
         });
+
+        var value_total_product = numeral(sum).value();
+
         var total_name = $('#total_name');
         var total_value = $('#total_value');
         var total_input = $('#hidden_total');
@@ -37,7 +40,7 @@ $(document).ready(function() {
         var before_discount = $('#before_discount');
 
         var disc = $('#grand_discount_value');
-        var price = sum * numeral(disc.val()).value() / 100;
+        var price = numeral(disc.val()).value();
         var mask_price_discount = numeral(price).format('0,0');
 
         var total_discount = sum - price;
@@ -61,7 +64,7 @@ $(document).ready(function() {
         total_value.text(numeral(sum).format('0,0'));
         total_product.val(numeral(sum).format('0,0'));
         total_payment.text(numeral(sum).format('0,0'));
-        before_discount.val(numeral(sum + price).format('0,0'));
+        before_discount.val(numeral(value_total_product).format('0,0'));
 
         $('#grand_discount_price').val(mask_price_discount);
         $('#grand_discount_total').val(mask_total_discount);

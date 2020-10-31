@@ -168,7 +168,7 @@
     {!! Form::label('name', 'Tanggal Pembayaran', ['class' => 'col-md-2 control-label']) !!}
     <div class="col-md-4 {{ $errors->has('sales_order_payment_date') ? 'has-error' : ''}}">
         <div class="input-group">
-            {!! Form::text('sales_order_payment_date', $model->sales_order_payment_date ?? date('Y-m-d'), ['class'=>'form-control date']) !!}
+            {!! Form::text('sales_order_payment_date', null, ['class'=>'form-control date']) !!}
             <span class="input-group-btn">
                 <button class="btn btn-danger from_area" type="button">Download</button>
             </span>
@@ -212,7 +212,7 @@
 <div class="form-group">
     {!! Form::label('name', 'Metode Delivery', ['class' => 'col-md-2 control-label']) !!}
     <div class="col-md-4 {{ $errors->has('sales_order_delivery_type') ? 'has-error' : ''}}">
-        {{ Form::select('sales_order_delivery_type', ['','Pengiriman Pribadi','Pengiriman Bebayar'], null, ['class'=> 'form-control']) }}
+        {{ Form::select('sales_order_delivery_type', $delivery, null, ['class'=> 'form-control']) }}
         {!! $errors->first('sales_order_delivery_type', '<p class="help-block">:message</p>') !!}
     </div>
 
