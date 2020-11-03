@@ -2,12 +2,12 @@
 
 namespace Modules\Crm\Http\Controllers;
 
+use App\Http\Controllers\Controller;
+use App\Http\Requests\GeneralRequest;
+use App\Http\Services\MasterService;
+use Modules\Crm\Dao\Repositories\CustomerRepository;
 use Plugin\Helper;
 use Plugin\Response;
-use App\Http\Controllers\Controller;
-use App\Http\Services\MasterService;
-use App\Http\Requests\GeneralRequest;
-use Modules\Crm\Dao\Repositories\CustomerRepository;
 
 class CustomerController extends Controller
 {
@@ -19,7 +19,7 @@ class CustomerController extends Controller
         if (self::$model == null) {
             self::$model = new CustomerRepository();
         }
-        $this->template  = Helper::getTemplate(__CLASS__);
+        $this->template = Helper::getTemplate(__CLASS__);
     }
 
     public function index()
@@ -32,7 +32,7 @@ class CustomerController extends Controller
         $area_contact = $area_delivery = $area_invoice = ['Please Choose Area'];
         $view = [
             'template' => $this->template,
-             'area_contact' => $area_contact,
+            'area_contact' => $area_contact,
             'area_delivery' => $area_delivery,
             'area_invoice' => $area_invoice,
         ];
@@ -58,11 +58,11 @@ class CustomerController extends Controller
         if (request()->has('code')) {
             $data = $service->show(self::$model);
             return view(Helper::setViewUpdate())->with($this->share([
-                'model'        => $data,
-                'key'          => self::$model->getKeyName(),
-                'area_contact'  => Helper::getSingleArea($data->crm_customer_contact_rajaongkir_area_id),
+                'model' => $data,
+                'key' => self::$model->getKeyName(),
+                'area_contact' => Helper::getSingleArea($data->crm_customer_contact_rajaongkir_area_id),
                 'area_delivery' => Helper::getSingleArea($data->crm_customer_delivery_rajaongkir_area_id),
-                'area_invoice'  => Helper::getSingleArea($data->crm_customer_invoice_rajaongkir_area_id),
+                'area_invoice' => Helper::getSingleArea($data->crm_customer_invoice_rajaongkir_area_id),
             ]));
         }
     }
@@ -71,7 +71,7 @@ class CustomerController extends Controller
     {
         $service->delete(self::$model);
         return Response::redirectBack();
-        ;
+
     }
 
     public function data(MasterService $service)
@@ -81,7 +81,7 @@ class CustomerController extends Controller
         }
 
         return view(Helper::setViewData())->with([
-            'fields'   => Helper::listData(self::$model->datatable),
+            'fields' => Helper::listData(self::$model->datatable),
             'template' => $this->template,
         ]);
     }
@@ -92,8 +92,8 @@ class CustomerController extends Controller
             $data = $service->show(self::$model);
             return view(Helper::setViewShow())->with($this->share([
                 'fields' => Helper::listData(self::$model->datatable),
-                'model'   => $data,
-                'key'   => self::$model->getKeyName()
+                'model' => $data,
+                'key' => self::$model->getKeyName(),
             ]));
         }
     }

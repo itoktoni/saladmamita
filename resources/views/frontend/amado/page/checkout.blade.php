@@ -38,7 +38,7 @@
                                         <td class="text-left" width="60%">Product Name</td>
                                         <td class="text-right" width="15%">Price</td>
                                         <td class="text-right" width="10%">Qty</td>
-                                        <td class="text-right" width="15%">Qty</td>
+                                        <td class="text-right" width="15%">Total</td>
                                     </tr>
                                 </thead>
                                 <tbody>

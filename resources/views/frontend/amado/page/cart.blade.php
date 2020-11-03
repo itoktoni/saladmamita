@@ -34,8 +34,8 @@
                                 <tr>
                                     <td width="10%">Delete</td>
                                     <td width="10%">Image</td>
-                                    <td width="35%">Product Name</td>
-                                    <td width="25%">Qty</td>
+                                    <td width="30%">Product Name</td>
+                                    <td width="30%">Qty</td>
                                     <td width="10%" class="text-right">Price</td>
                                 </tr>
                             </thead>
@@ -59,7 +59,7 @@
                                             alt="{{ $cart->name }}">
                                     </td>
                                     <td class="align-middle">
-                                        {{ $cart->name}}
+                                        <small>{{ $cart->name}}</small>
                                         <textarea name="detail[{{ $loop->index }}][temp_product_notes]"
                                             class="form-control" rows="2">{{ $item['temp_product_notes'] }}</textarea>
                                     </td>
@@ -72,19 +72,13 @@
 
                                         @foreach($cart->attributes->variant as $var)
 
-                                        <div class="input-group input-group-sm mb-3">
-
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text" id="inputGroup-sizing-sm">
-                                                    <small>{{ $var['temp_variant_name'] ?? '' }}</small>
-                                                </span>
+                                        <div class="row mt-2 align-items-center">
+                                            <div class="col-md-8">
+                                                <small>{{ $var['temp_variant_name'] ?? '' }}</small>
                                             </div>
-
-                                            <input type="text" value="{{ $var['temp_variant_qty'] ?? 0 }}"
-                                                class="form-control text-right"
-                                                name="detail[{{ $loop->parent->index }}][temp_product_variant][{{ $loop->index }}][temp_variant_qty]"
-                                                aria-label="Sizing example input"
-                                                aria-describedby="inputGroup-sizing-sm">
+                                            <div class="col-md-4 pull-right">
+                                                <input type="text" name="detail[{{ $loop->parent->index }}][temp_product_variant][{{ $loop->index }}][temp_variant_qty]" class="form-control form-control-sm text-right" value="{{ $var['temp_variant_qty'] ?? 0 }}" name="" id="">
+                                            </div>
 
                                             <input type="hidden" value="{{ $var['temp_variant_id'] }}"
                                                 name="detail[{{ $loop->parent->index }}][temp_product_variant][{{ $loop->index }}][temp_variant_id]">
@@ -137,11 +131,11 @@
                                     <td class="text-right">{{ number_format(Cart::getSubTotal()) }}</td>
                                 </tr>
                                 <tr>
-                                    <td class="total-col" colspan="4" >
+                                    <td class="total-col" colspan="4">
                                         Redem Discount :
                                         {{ Cart::getConditions()->first() ? Cart::getConditions()->first()->getAttributes()['name'] : 'No Voucher' }}
                                     </td>
-                                    <td class="text-right" >
+                                    <td class="text-right">
                                         {{ Cart::getConditions()->first() ? number_format(Cart::getConditions()->first()->getValue()) : 0 }}
                                     </td>
                                 </tr>

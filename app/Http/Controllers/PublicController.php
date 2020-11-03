@@ -7,6 +7,8 @@ use App\Dao\Facades\BranchFacades;
 use App\Dao\Repositories\BranchRepository;
 use App\Dao\Repositories\TeamRepository;
 use App\Http\Services\EcommerceService;
+use Barryvdh\DomPDF\Facade as PDF;
+use Carbon\Carbon;
 use Darryldecode\Cart\CartCondition;
 use Darryldecode\Cart\Facades\CartFacade as Cart;
 use Exception;
@@ -20,6 +22,7 @@ use Illuminate\Support\Str;
 use Intervention\Image\Facades\Image;
 use Ixudra\Curl\Facades\Curl;
 use Jackiedo\DotenvEditor\Facades\DotenvEditor;
+use Modules\Finance\Dao\Facades\BankFacades;
 use Modules\Finance\Dao\Repositories\BankRepository;
 use Modules\Item\Dao\Facades\ProductFacades;
 use Modules\Item\Dao\Models\Product;
@@ -30,7 +33,10 @@ use Modules\Item\Dao\Repositories\ColorRepository;
 use Modules\Item\Dao\Repositories\ProductRepository;
 use Modules\Item\Dao\Repositories\SizeRepository;
 use Modules\Item\Dao\Repositories\TagRepository;
+use Modules\Marketing\Dao\Facades\LanggananFacades;
 use Modules\Marketing\Dao\Repositories\ContactRepository;
+use Modules\Marketing\Dao\Repositories\HolidayRepository;
+use Modules\Marketing\Dao\Repositories\LanggananRepository;
 use Modules\Marketing\Dao\Repositories\PromoRepository;
 use Modules\Marketing\Dao\Repositories\SliderRepository;
 use Modules\Marketing\Dao\Repositories\SosmedRepository;
@@ -40,11 +46,14 @@ use Modules\Procurement\Emails\CreateOrderEmail as EmailsCreateOrderEmail;
 use Modules\Rajaongkir\Dao\Repositories\DeliveryRepository;
 use Modules\Rajaongkir\Dao\Repositories\ProvinceRepository;
 use Modules\Sales\Dao\Facades\OrderFacades;
+use Modules\Sales\Dao\Facades\SubscribeFacades;
 use Modules\Sales\Dao\Models\Area;
 use Modules\Sales\Dao\Models\City;
 use Modules\Sales\Dao\Models\Province;
 use Modules\Sales\Dao\Repositories\CourierRepository;
 use Modules\Sales\Dao\Repositories\OrderRepository;
+use Modules\Sales\Dao\Repositories\SubscribeRepository;
+use Modules\Sales\Http\Services\LanggananService;
 use Modules\Sales\Http\Services\PublicService;
 use Plugin\Helper;
 
@@ -691,6 +700,139 @@ class PublicController extends Controller
             'metode' => $metode,
         ]));
     }
+    public function langganan(LanggananService $service)
+    {
+        $area = $langganan_data = $carbon = [];
+
+        if (request()->has('token')) {
+            $token = request()->get('token');
+            $data = SubscribeFacades::where('sales_langganan_token', $token)->firstOrFail();
+            $pasing = [
+                'master' => $data,
+                'detail' => $data->detail,
+                'banks' => BankFacades::dataRepository()->get(),
+            ];
+            $pdf = PDF::loadView(Helper::setViewPrint('print_order'), $pasing);
+            return $pdf->stream();
+        }
+
+        if (request()->has('sales_langganan_date_order')) {
+            $date = request()->get('sales_langganan_date_order');
+            $carbon = Carbon::createFromFormat('Y-m-d', $date);
+        }
+
+        if (request()->has('area')) {
+            $area_id = request()->get('area');
+            $area = Helper::getSingleArea($area_id, false, true);
+        }
+
+        if (request()->has('code')) {
+            $code = request()->get('code');
+            $langganan_data = LanggananFacades::showRepository($code);
+        }
+
+        if (request()->isMethod('POST')) {
+            $request = request()->all();
+
+            if (request()->has('sales_langganan_to_area')) {
+                $area_id = request()->get('sales_langganan_to_area');
+                session()->put('area', Helper::getSingleArea($area_id, false, true));
+            }
+
+            $rules = [
+                'sales_langganan_to_name' => 'required',
+                'sales_langganan_to_phone' => 'required',
+                'sales_langganan_to_email' => 'required|email',
+                'sales_langganan_to_address' => 'required',
+                'sales_langganan_from_id' => 'required',
+                'sales_langganan_date_order' => 'required',
+                'sales_langganan_date_order' => 'required',
+                'sales_langganan_marketing_langganan_id' => 'required',
+                'sales_langganan_discount_code' => 'exists:marketing_promo,marketing_promo_code',
+            ];
+
+            $message = [
+                'sales_langganan_to_name.required' => 'Nama Customer Harus Diisi',
+                'sales_langganan_marketing_langganan_id.required' => 'Paket Langganan Harus Diisi',
+                'sales_langganan_to_phone.required' => 'No. Telp Harus Diisi',
+                'sales_langganan_to_address.required' => 'Alamat Harus Diisi',
+                'sales_langganan_to_email.required' => 'Email Harus Diisi',
+                'sales_langganan_to_email.email' => 'Email Tidak Valid',
+                'sales_langganan_from_id.required' => 'Lokasi Pickup Harus Diisi',
+                'sales_langganan_date_order.required' => 'Tanggal Pengiriman Harus Diisi',
+                'sales_langganan_marketing_langganan_id.required' => 'Paket Berlangganan Harus Diisi',
+                'sales_langganan_discount_code.exists' => 'Voucher Not Valid !',
+            ];
+
+            $validate = Validator::make($request, $rules, $message);
+            if ($validate->fails()) {
+                return redirect()->back()->withErrors($validate)->withInput();
+            }
+
+            if (request()->has('pilih')) {
+                return redirect()->route('langganan', ['code' => request()->get('sales_langganan_marketing_langganan_id'), 'area' => request()->get('sales_langganan_to_area'), 'date' => $date])->withInput();
+            }
+
+            $validasi = [];
+            if (isset($request['detail'])) {
+
+                foreach ($request['detail'] as $detail) {
+                    $qty = $int = 0;
+                    foreach ($detail['product'] as $product) {
+                        if (!isset($product['variant'])) {
+                            $quantity = intval($product['sales_order_detail_qty']);
+                        } else {
+                            $quantity = collect($product['variant'])->map(function ($item) {
+                                return intval($item['sales_order_detail_variant_qty']);
+                            })->sum();
+                        }
+                        $qty = $qty + intval($quantity);
+                    }
+                    $int++;
+                    $validasi[]['qty'] = $qty;
+                }
+
+                $request['hari'] = $validasi;
+                $validate2 = Validator::make($request, ['hari.*.qty' => 'not_in:0']);
+                if ($validate2->fails()) {
+                    return redirect()->back()->withErrors($validate2)->withInput();
+                }
+
+                $repo = new SubscribeRepository();
+                $check = $service->save($repo, $request);
+
+                if ($check['status']) {
+                    return redirect()->route('langganan', ['token' => $check['data']->sales_langganan_token->toString()]);
+                }
+            }
+        }
+
+        if (Auth::check()) {
+            $area = Helper::getSingleArea(auth()->user()->area, false, true);
+        }
+
+        $carts = Cart::getContent();
+        $list_province = Helper::createOption(new ProvinceRepository());
+        $branch = Helper::createOption(new BranchRepository());
+        $user = Auth::user() ?? [];
+        $metode = Helper::createOption(new DeliveryRepository());
+        $langganan = Helper::createOption(new LanggananRepository());
+        $product = Helper::createOption(new ProductRepository(), false, true, true)->where('item_product_langganan', 1);
+        $holiday = Helper::createOption(new HolidayRepository(), false, true, true)->where('item_product_langganan', 1);
+
+        return View(Helper::setViewFrontend(__FUNCTION__))->with($this->share([
+            'carts' => $carts,
+            'list_province' => $list_province,
+            'branch' => $branch,
+            'user' => $user,
+            'area' => $area,
+            'metode' => $metode,
+            'langganan' => $langganan,
+            'langganan_data' => $langganan_data,
+            'product' => $product,
+            'holiday' => $holiday,
+        ]));
+    }
 
     public function delete($id)
     {
@@ -774,7 +916,7 @@ class PublicController extends Controller
             $update = OrderFacades::showRepository($request['code']);
             $check['status'] = false;
             if ($update) {
-                
+
                 $file = 'files';
                 $name = null;
                 if (request()->has($file)) {
@@ -782,13 +924,13 @@ class PublicController extends Controller
                     if ($image) {
                         Helper::removeImage($image, Helper::getTemplate(__CLASS__));
                     }
-                    
+
                     $file = request()->file($file);
                     $name = Helper::uploadImage($file, Helper::getTemplate(__CLASS__));
-                    
+
                     $update->item_product_image = $name;
                 }
-                
+
                 $request['sales_order_term_top'] = 'CASH';
                 $request['sales_order_payment_file'] = $name;
                 $check = OrderFacades::updateRepository($request['code'], $request);

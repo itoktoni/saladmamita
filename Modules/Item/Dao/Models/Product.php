@@ -2,13 +2,13 @@
 
 namespace Modules\Item\Dao\Models;
 
-use Plugin\Helper;
-use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
-use Modules\Item\Dao\Facades\BrandFacades;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Str;
+use Modules\Item\Dao\Facades\BrandFacades;
 use Modules\Item\Dao\Facades\CategoryFacades;
 use Modules\Item\Dao\Facades\ProductFacades;
+use Plugin\Helper;
 
 class Product extends Model
 {
@@ -48,6 +48,7 @@ class Product extends Model
         'item_product_group',
         'item_product_stock',
         'item_product_display',
+        'item_product_langganan',
     ];
 
     public $timestamps = true;
@@ -85,6 +86,7 @@ class Product extends Model
         'item_product_description' => [false => 'Description'],
         'item_product_created_at' => [false => 'Created At'],
         'item_product_created_by' => [false => 'Updated At'],
+        'item_product_langganan' => [false => 'Updated At'],
     ];
 
     public $status = [
@@ -127,11 +129,13 @@ class Product extends Model
                 $model->item_product_min_order = 1;
             }
 
-            // $id = $model->item_product_id;
-            // ProductFacades::deleteProductVariant($id);
-            // foreach(request()->get('variant') as $variant){
-            //     ProductFacades::saveProductVariant($model->item_product_id, $variant);
-            // }
+            if (request()->isMethod('POST') && request()->has('variant')) {
+                $id = $model->item_product_id;
+                ProductFacades::deleteProductVariant($id);
+                foreach (request()->get('variant') as $variant) {
+                    ProductFacades::saveProductVariant($model->item_product_id, $variant);
+                }
+            }
 
             if ($model->item_product_name && empty($model->item_product_slug)) {
                 $model->item_product_slug = Str::slug($model->item_product_name);
@@ -165,8 +169,9 @@ class Product extends Model
         return $this->hasOne(Brand::class, BrandFacades::getKeyName(), 'item_product_item_brand_id');
     }
 
-    public function variant(){
-        return $this->leftJoin('item_product_variant', 'item_detail_product_id', 'item_product_id')
-        ->leftJoin('item_variant', 'item_variant_id', 'item_detail_variant_id')->whereColumn('item_detail_product_id','item_product_id')->get();
+    public function variant($product)
+    {
+        return $this->join('item_product_variant', 'item_detail_product_id', 'item_product_id')
+            ->join('item_variant', 'item_variant_id', 'item_detail_variant_id')->whereColumn('item_detail_product_id', 'item_product_id')->whereColumn('item_detail_variant_id', 'item_variant_id')->where('item_product_id', $product)->get();
     }
 }

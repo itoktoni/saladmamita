@@ -5,6 +5,7 @@ namespace Modules\Sales\Providers;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Database\Eloquent\Factory;
 use Modules\Sales\Dao\Repositories\DeliveryRepository;
+use Modules\Sales\Dao\Repositories\SubscribeRepository;
 use Modules\Sales\Dao\Repositories\DeliveryDetailRepository;
 
 class ModuleServiceProvider extends ServiceProvider
@@ -33,6 +34,9 @@ class ModuleServiceProvider extends ServiceProvider
         $this->app->register(RouteServiceProvider::class);
         $this->app->bind('order_facades', function () {
             return new \Modules\Sales\Dao\Repositories\OrderRepository();
+        });
+        $this->app->bind('subscribe_facades', function () {
+            return new \Modules\Sales\Dao\Repositories\SubscribeRepository();
         });
         $this->app->bind('order_detail_facades', function () {
             return new \Modules\Sales\Dao\Repositories\OrderDetailRepository();

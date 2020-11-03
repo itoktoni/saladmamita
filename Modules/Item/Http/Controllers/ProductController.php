@@ -87,7 +87,7 @@ class ProductController extends Controller
             $data = $service->show(self::$model);
             return view(Helper::setViewSave($this->template, $this->folder))->with($this->share([
                 'model' => $data,
-                'data_variant' => $data->variant()->pluck('item_variant_id')->toArray(),
+                'data_variant' => $data->variant($data->item_product_id)->pluck('item_variant_id')->toArray(),
                 'image_detail' => self::$model->getImageDetail($data->item_product_id),
                 'key' => self::$model->getKeyName(),
             ]));

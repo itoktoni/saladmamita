@@ -4,8 +4,8 @@
             <th class="text-left col-md-1">Product ID</th>
             <th class="text-left col-md-4">Product Name and Description</th>
             <th class="text-right col-md-1">Qty</th>
-            <th class="text-right col-md-2">Price</th>
-            <th class="text-right col-md-2">Total</th>
+            <th class="text-right col-md-1">Price</th>
+            <th class="text-right col-md-1">Total</th>
         </tr>
     </thead>
     <tbody class="markup">
@@ -35,7 +35,7 @@
 
                 <textarea rows="2" placeholder="notes" tabindex="{{ $loop->iteration }}5"
                     class="form-control temp_notes"
-                    name="detail[{{ $loop->index }}][temp_notes]">{{ $item['temp_notes'] ?? $item->sales_order_detail_item_product_description }}</textarea>
+                    name="detail[{{ $loop->index }}][temp_notes]">{{ $item['temp_notes'] ?? $item->sales_order_detail_notes }}</textarea>
                 <br>
                 @if($item->variant()->get()->count() > 0)
                 @foreach($item->variant()->get() as $variant)

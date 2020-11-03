@@ -29,6 +29,7 @@
         <ul>
             <li class="{{ request()->segment(1) == '' ? 'active' : '' }}"><a href="{{ url('/') }}">Home</a></li>
             <li class="{{ request()->segment(1) == 'product' ? 'active' : '' }} {{ request()->segment(1) == 'jual' ? 'active' : '' }}"><a href="{{ route('shop') }}">Shop</a></li>
+            <li class="{{ request()->segment(1) == 'langganan' ? 'active' : '' }} {{ request()->segment(1) == 'langganan' ? 'active' : '' }}"><a href="{{ route('langganan') }}">Berlangganan</a></li>
             <li class="{{ request()->segment(1) == 'confirmation' ? 'active' : '' }}"><a href="{{ route('confirmation') }}">Konfirmasi</a></li>
             <li class="{{ request()->segment(1) == 'branch' ? 'active' : '' }}"><a href="{{ route('branch') }}">Cabang</a></li>
             <li class="{{ request()->segment(1) == 'contact' ? 'active' : '' }}"><a href="{{ route('contact') }}">Contact Us</a></li>

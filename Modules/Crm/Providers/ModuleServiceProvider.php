@@ -2,6 +2,7 @@
 
 namespace Modules\Crm\Providers;
 
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Database\Eloquent\Factory;
 
@@ -66,7 +67,7 @@ class ModuleServiceProvider extends ServiceProvider
 
         $this->loadViewsFrom(array_merge(array_map(function ($path) {
             return $path . '/modules/Crm';
-        }, \Config::get('view.paths')), [$sourcePath]), 'Crm');
+        }, Config::get('view.paths')), [$sourcePath]), 'Crm');
     }
 
     /**

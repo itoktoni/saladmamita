@@ -110,6 +110,7 @@ Route::get('/track/{code}', 'PublicController@track')->name('track');
 
 Route::match(['get', 'post'], 'cart', 'PublicController@cart')->name('cart');
 Route::match(['get', 'post'], 'checkout', 'PublicController@checkout')->name('checkout');
+Route::match(['get', 'post'], 'langganan', 'PublicController@langganan')->name('langganan');
 Route::match(['get', 'post'], 'userprofile', 'PublicController@userprofile')->name('userprofile');
 Route::match(['get', 'post'], 'branch', 'PublicController@branch')->name('branch');
 Route::match(['get', 'post'], 'myaccount', 'PublicController@myaccount')->name('myaccount');

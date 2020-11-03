@@ -53,6 +53,7 @@ class Order extends Model
         'sales_order_term_valid',
         'sales_order_notes_internal',
         'sales_order_notes_external',
+        'sales_order_discount_code',
         'sales_order_discount_name',
         'sales_order_discount_percent',
         'sales_order_discount_value',
@@ -61,6 +62,7 @@ class Order extends Model
         'sales_order_tax_value',
         'sales_order_sum_product',
         'sales_order_sum_discount',
+        'sales_order_sum_product',
         'sales_order_sum_tax',
         'sales_order_sum_ongkir',
         'sales_order_sum_total',
@@ -210,8 +212,10 @@ class Order extends Model
         });
 
         parent::saving(function ($model) {
-            $model->sales_order_date_order = $model->sales_order_date_order->format('Y-m-d H:i:s');
-            if(!empty(request()->get('sales_order_payment_date'))){
+            if(request()->has('sales_order_date_order')){
+                $model->sales_order_date_order = $model->sales_order_date_order->format('Y-m-d H:i:s');
+            }
+            if(request()->has('sales_order_payment_date') && !empty(request()->get('sales_order_payment_date'))){
                 $model->sales_order_payment_date = $model->sales_order_payment_date->format('Y-m-d H:i:s');
             }
             else{

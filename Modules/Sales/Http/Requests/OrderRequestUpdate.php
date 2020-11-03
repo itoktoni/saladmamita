@@ -54,7 +54,7 @@ class OrderRequestUpdate extends FormRequest
             $total = $qty * Helper::filterInput($item['temp_price']) ?? 0;
             $data['sales_order_detail_order_id'] = $autonumber;
             $data['sales_order_detail_item_product_id'] = $item['temp_id'];
-            $data['sales_order_detail_item_product_description'] = $item['temp_notes'] ?? '';
+            $data['sales_order_detail_notes'] = $item['temp_notes'] ?? '';
             $data['sales_order_detail_item_product_price'] = $data_product->item_product_sell ?? '';
             $data['sales_order_detail_item_product_weight'] = $data_product->item_product_weight ?? '';
             $data['sales_order_detail_price'] = Helper::filterInput($item['temp_price']) ?? 0;
