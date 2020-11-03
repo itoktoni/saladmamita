@@ -54,7 +54,7 @@
                                     </td>
 
                                     <td class="align-middle">
-                                        <img class="img-fluid"
+                                        <img class="img-fluid"  data-src="{{ Helper::files('product/thumbnail_'.$cart->attributes['detail']['temp_product_image']) }}"
                                             src="{{ Helper::files('product/thumbnail_'.$cart->attributes['detail']['temp_product_image']) }}"
                                             alt="{{ $cart->name }}">
                                     </td>

@@ -35,7 +35,7 @@
                         <div class="carousel-inner">
                             <div class="carousel-item active">
                                 <a class="gallery_img" href="{{ Helper::files('product/'.$item->item_product_image) }}">
-                                    <img class="d-block w-100"
+                                    <img class="d-block w-100" data-src="{{ Helper::files('product/'.$item->item_product_image) }}"
                                         src="{{ Helper::files('product/'.$item->item_product_image) }}">
                                 </a>
                             </div>
@@ -43,7 +43,7 @@
                             <div class="carousel-item">
                                 <a class="gallery_img"
                                     href="{{ Helper::files('product_detail/'.$image->item_product_image_file) }}">
-                                    <img class="d-block w-100"
+                                    <img class="d-block w-100" data-src="{{ Helper::files('product_detail/'.$image->item_product_image_file) }}"
                                         src="{{ Helper::files('product_detail/'.$image->item_product_image_file) }}"
                                         alt="">
                                 </a>

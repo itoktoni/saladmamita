@@ -28,7 +28,7 @@ $(function() {
                 @foreach($sliders as $slider)
                 <div class="carousel-item {{ $loop->first ? 'active' : '' }}">
                     <a href="{{ $slider->marketing_slider_link }}">
-                        <img class="d-block h-100 w-100"
+                        <img data-src="{{ Helper::files('slider/'.$slider->marketing_slider_image) }}" class="d-block h-100 w-100"
                             src="{{ Helper::files('slider/'.$slider->marketing_slider_image) }}" alt="First slide">
                     </a>
                 </div>
@@ -53,7 +53,7 @@ $(function() {
                 <!-- Single Catagory -->
                 <div class="single-products-catagory-index">
                     <a href="{{ route('product', ['slug' => $item->item_product_slug]) }}">
-                        <img src="{{ Helper::files('product/'.$item->item_product_image) }}" alt="">
+                        <img  data-src="{{ Helper::files('product/'.$item->item_product_image) }}"  src="{{ Helper::files('product/'.$item->item_product_image) }}" alt="">
                         <!-- Hover Content -->
                         <div class="hover-content">
                             <div class="line"></div>

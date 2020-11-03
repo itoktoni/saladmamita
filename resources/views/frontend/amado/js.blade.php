@@ -11,3 +11,4 @@
 
 <script src="{{ Helper::backend('vendor/chosen/chosen.jquery.min.js') }}"></script>
 <script src="//cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lozad/dist/lozad.min.js"></script>

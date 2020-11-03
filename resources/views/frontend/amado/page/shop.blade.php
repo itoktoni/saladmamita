@@ -10,7 +10,7 @@
         <!-- Single Catagory -->
         <div class="single-products-catagory clearfix">
             <a href="{{ route('product', ['slug' => $item->item_product_slug]) }}">
-                <img src="{{ Helper::files('product/'.$item->item_product_image) }}" alt="">
+                <img data-src="{{ Helper::files('product/'.$item->item_product_image) }}"  src="{{ Helper::files('product/'.$item->item_product_image) }}" alt="">
                 <!-- Hover Content -->
                 <div class="hover-content">
                     <div class="line"></div>

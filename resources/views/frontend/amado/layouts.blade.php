@@ -47,6 +47,8 @@
     $(document).ready(function() {
         $("select:not(.form-control)").chosen();
         $('#table').DataTable();
+        const observer = lozad(); // lazy loads elements with default selector as '.lozad'
+        observer.observe();
     });
     </script>
     @stack('javascript')
