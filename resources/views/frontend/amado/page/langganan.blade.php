@@ -154,6 +154,9 @@ $location = $area['area'] ?? [];
                                     </div>
 
                                 </div>
+
+                                <hr>
+
                                 <div class="row form-group">
                                     <div class="col-md-12">
                                         <p class="text-right">
@@ -170,6 +173,7 @@ $location = $area['area'] ?? [];
                             </div>
                         </div>
                     </div>
+
 
                     <div class="row">
                         <div class="container">
@@ -261,11 +265,11 @@ $location = $area['area'] ?? [];
                                         </tbody>
 
                                     </table>
+
                                     @endfor
                                     @endif
 
-                                    <hr>
-
+                                    @if(!empty($langganan_data))
                                     <div class="row form-group">
                                         <div class="col-md-12">
                                             <p class="text-right">
@@ -275,7 +279,7 @@ $location = $area['area'] ?? [];
                                             </p>
                                         </div>
                                     </div>
-
+                                    @endif
                             </div>
                         </div>
                     </div>
