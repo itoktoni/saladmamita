@@ -131,7 +131,6 @@ class LanggananService extends MasterService
                             }
                         }
                     }
-
                 }
 
                 $ord = OrderFacades::find($order_id);

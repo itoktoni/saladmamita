@@ -366,7 +366,6 @@
         text-align: right;
     }
 
-
     #address {
         margin-bottom: 20px;
         position: absolute;
