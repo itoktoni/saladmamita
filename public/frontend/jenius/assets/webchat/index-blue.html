@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>Enterprise Web Chat</title>
+	<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1" />
+	<link rel="stylesheet" href="css/normalize.css">
+	<link rel='stylesheet prefetch' href='https://fonts.googleapis.com/css?family=Open+Sans'>
+	<link rel='stylesheet prefetch' href='css/jquery.mCustomScrollbar.min.css'>
+	<link rel="stylesheet" href="css/blue.css">
+	<link rel="stylesheet" href="css/button.css">
+	<style type="text/css">
+		html {
+			background: url(images/bg-login.jpg) no-repeat;
+			background-size: cover;
+			background-position: center;
+		}
+	</style>
+	<script language="javascript">
+		document.write(unescape('%3C%73%63%72%69%70%74%20%73%72%63%3D%22%68%74%74%70%73%3A%2F%2F%6D%61%70%73%2E%67%6F%6F%67%6C%65%61%70%69%73%2E%63%6F%6D%2F%6D%61%70%73%2F%61%70%69%2F%6A%73%3F%6B%65%79%3D%41%49%7A%61%53%79%41%6E%44%64%54%6D%51%41%6F%7A%50%63%4D%70%4B%63%50%4E%30%36%6A%44%35%63%79%30%42%35%78%74%38%46%77%26%6C%69%62%72%61%72%69%65%73%3D%70%6C%61%63%65%73%22%3E%3C%2F%73%63%72%69%70%74%3E'));
+	</script>
+	<script src="https://www.google.com/recaptcha/api.js"></script>
+	<script src='js/jquery.min.js'></script>
+	<script src='js/jquery.mCustomScrollbar.concat.min.js'></script>
+	<script src="js/cryptojs/pbkdf2.js"></script>
+	<script src="js/cryptojs/aes.js"></script>
+	<script src="js/cipher/aes-util.js"></script>
+	<script src="js/stp.js"></script>
+	<script src="js/sjs.js"></script>
+	<script src="js/chat.js"></script>
+	<script src="js/fuse.js"></script>
+	<script>
+		$(document).ready(function () {
+			Chat.init({
+				connect_message: 'Do you have questions ? <br>Come chat with us, we are here to help you',
+				loading_message: 'Thank you for using our chat <br>Please wait a moment...',
+				loader_sub_header: 'Connecting...',
+				login_sub_header: 'Please tell us about yourself',
+				chat_sub_header: 'Our agent will serve you shortly',
+				welcome_message: 'Please enter your question while waiting for our agent',
+				url: 'https://211b31a3.ngrok.io',
+				client_id: 'ddaba53678eb50e8c3915488e0875358',
+				client_secret: '130d4ec42b5cab54db678a1f5ce87625',
+				type_placeholder: 'Type message...',
+				avatar: 'http://www.inmotion.co.id/assets/images/logo/sri_face.png',
+				agent_avatar: 'http://www.inmotion.co.id/assets/images/logo/sri_face.png',
+				header: 'Welcome to Inmotion Chat'
+			});
+		});
+	</script>
+</head>
+
+</html>

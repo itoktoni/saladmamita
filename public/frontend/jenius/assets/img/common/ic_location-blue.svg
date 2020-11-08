@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="40px" height="40px" viewBox="0 0 40 40" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 50.2 (55047) - http://www.bohemiancoding.com/sketch -->
+    <title>Mark 3@1x</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <path d="M10.1791258,30.7663818 C8.92413677,29.013931 7.81649718,27.5694028 6.81779542,26.0530889 C4.10127626,21.9291936 1.52266107,17.7347722 0.321826106,12.8558685 C-0.731659417,8.57580811 0.843846129,4.25796577 4.42368187,1.78262112 C7.87505913,-0.603306343 12.5304198,-0.593231167 15.9654249,1.80717936 C19.5332964,4.30078526 21.1113208,8.60414454 20.0068297,12.8961692 C18.2934202,19.5577492 14.3464702,24.9819718 10.1791258,30.7663818" id="path-1"></path>
+        <filter x="-34.4%" y="-16.3%" width="168.8%" height="145.5%" filterUnits="objectBoundingBox" id="filter-2">
+            <feOffset dx="0" dy="2" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="2" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.5 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+        </filter>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Mark-3">
+            <g id="Group" transform="translate(10.000000, 5.000000)">
+                <g id="Fill-1">
+                    <use fill="black" fill-opacity="1" filter="url(#filter-2)" xlink:href="#path-1"></use>
+                    <use fill="#1CA5DB" fill-rule="evenodd" xlink:href="#path-1"></use>
+                </g>
+                <path d="M10.1413439,15.4382619 C13.0700714,15.4577826 15.5019669,13.0504454 15.4673335,10.165167 C15.4339594,7.3510446 13.0348083,4.97645171 10.2112404,4.96196865 C7.31336811,4.94685588 4.8606926,7.38504832 4.88776964,10.2526951 C4.91484667,13.0938946 7.27054861,15.4187413 10.1413439,15.4382619" id="Path" fill="#FFFFFF"></path>
+            </g>
+        </g>
+    </g>
+</svg>

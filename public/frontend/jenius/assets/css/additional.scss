@@ -1,0 +1,640 @@
+.wrapper-title-in {
+  height:100%;
+  padding-bottom: 5px;
+}
+
+.title-desktop-post {
+  font-weight: bold !important;
+}
+
+.clearfix {
+  clear: both;
+}
+
+.wrapper-img-carousel {
+  margin-top:-95px;
+}
+
+.wrapper-title-produk h5 {
+  font-size: 24px;
+  font-weight: 400;
+}
+
+.wrapper-title-produk {
+  padding:15px 45px;
+}
+
+.wrapper-title-produk a {
+  color:white;
+}
+
+.wrapper-thumbnail {
+  margin-bottom:-25%;
+}
+
+.wrapper-title-section {
+  padding:5% 0;
+  padding-top:8%;
+}
+
+.wrapper-title-section h3 {
+  color:black;
+}
+
+.wrapper-product-section {
+  padding-top:0.8%;
+  padding-bottom:6%;
+}
+
+.wrapper-button {
+  padding:7% 0;
+  padding-top:0;
+}
+
+.btn-orange {
+  border-radius: 8px 8px;
+  background:#ed6f24;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.big-title-section {
+  font-size: 38px;
+}
+
+.section-title-slug {
+  display:block;
+  font-weight: 300;
+  font-size:24px;
+  margin-bottom: 10%;
+}
+
+.wrapper-banner-bottom {
+  background:#fdbd3d;
+  color:white;
+  padding:65px 0;
+}
+
+.section-widget-video-wrapper {
+  margin-bottom:45px;
+}
+
+.wrapper-content-detail {
+  margin-top:0px;
+}
+
+.wrapper-content-detail h3 {
+  font-size:36px;
+}
+
+.article-section {
+  font-size: 20px;
+}
+
+.wrapper-single-content {
+  padding:40px 0;
+}
+
+.wrapper-vector-icons {
+  margin:40px 0;
+}
+
+.wrapper-products-hari {
+  padding:55px 0;
+}
+
+.wrapper-title-product h4 {
+  font-size: 38px;
+}
+
+.wrapper-product-decription {
+  font-size:22px;
+}
+
+.wrapper-title-product {
+  margin-top:70px;
+  color:white;
+}
+
+.title-banner-rotator {
+  color:white;
+  font-size:92px;
+  margin-top:8%;
+}
+
+.title-banner-rotator-mobile {
+  color:white;
+  margin-top:27%;
+}
+
+.heading-slug {
+  display:block;
+  font-size:38px;
+  padding-top:1.5%;
+}
+
+.heading-slug-mobile {
+  display:block;
+  padding-top:1.5%;
+  font-size:26px;
+}
+
+.wrapper-rotator {
+  height:100vh !important;
+}
+
+#headers,.title-banner-rotator-mobile {
+  font-family: 'bebas_neueregular' !important;
+  font-weight: 300;
+}
+
+.wrapper-rotate h2 {
+  color:white;
+  font-size:62px;
+}
+
+#js-rotating {
+  width:225px;
+}
+
+.wrapper-rotate {
+  margin-top:8%;
+}
+
+.arrow-text {
+  font-size:22px;
+}
+
+.wrapper-scroll-down {
+  color:white;
+  margin-top:10%;
+  font-family: "Jenius Sans", "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol" !important;
+}
+
+.wrapper-scroll-down a {
+  color:white;
+}
+
+.mobile-wrap-banner {
+  margin-top:5%;
+}
+
+.wrapper-rotate-mobile h2 {
+  font-size:24px;
+  color:white;
+  margin-top:20%;
+  margin-bottom:30%;
+}
+
+.mobile-scroll {
+  font-size:14px !important;
+}
+
+.title-banner-rotator-mobile {
+  font-size:46px;
+}
+
+.mobile-text-arrow {
+  font-size:13px;
+}
+
+.wrapper-rotate-mobile-text {
+  font-size:42px;
+}
+
+#headers {
+  position: relative;
+  background-color: black;
+  height: 75vh;
+  min-height: 25rem;
+  width: 100%;
+  overflow: hidden;
+}
+
+#headers video {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 100%;
+  object-fit : cover !important;
+  z-index: 0;
+  -ms-transform: translateX(-50%) translateY(-50%);
+  -moz-transform: translateX(-50%) translateY(-50%);
+  -webkit-transform: translateX(-50%) translateY(-50%);
+  transform: translateX(-50%) translateY(-50%);
+}
+
+#headers .container {
+  position: relative;
+  z-index: 2;
+}
+
+#headers .overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-image:url('../img/bg/gradient_BG_02.png');
+  background-repeat: no-repeat;
+  background-size:100%;
+  z-index: 1;
+}
+
+.grid-0 {
+  padding:0;
+}
+
+.wrapper-banner-header {
+  background-size: 100%;
+  height: 85vh;
+  font-family: 'bebas_neueregular';
+}
+
+.desktop-heading {
+  font-family: 'bebas_neuebook' !important;
+  font-weight: 300;
+  margin-bottom: -65px;
+}
+
+.hashtag-banner {
+  font-family: 'bebas_neueregular' !important;
+  font-size: 3.5rem !important;
+  font-weight: 300;
+  margin-top:50px;
+}
+
+#js-rotating  {
+  font-weight: 300;
+  font-family: 'bebas_neueregular' !important;
+  color:white !important;
+  font-size: 8rem !important;
+}
+
+.title-banner-rotator-mobile {
+  font-family: 'bebas_neueregular' !important;
+  font-size: 40px !important;
+  margin-top: 28% !important;
+  font-weight: 300 !important;
+  margin-bottom: 27%;
+}
+
+.prefix-rotator {
+  font-family: 'bebas_neuebook' !important;
+  font-weight: 300;
+  font-size: 40px;
+}
+
+#js-rotating-mobile-2 {
+  font-family: 'bebas_neueregular' !important;
+  font-size: 44px;
+  margin-top:-14px;
+}
+
+.mobile-small {
+  margin-top: -15px;
+  letter-spacing: 1px;
+}
+
+.display-scroll-mobile {
+  display: block;
+  font-family: "Jenius Sans", "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol" !important;
+  font-size: 23.5px;
+}
+
+.wrapper-rotate-mobile-text {
+  margin-top:20%;
+}
+
+.title-product h5 {
+  font-size:15px;
+  text-align: left;
+  font-weight: 800;
+}
+
+.title-product a {
+  color:#000;
+}
+
+.title-product {
+  padding:15px 0;
+  margin-top:25px;
+}
+
+.title-heading-sub {
+  margin-top:35%;
+}
+
+.wrapper-sub-detail-content {
+  color:white;
+}
+
+.mobile-wrapper-single {
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.mobile-wrapper-single h2 {
+  margin-top: 115% !important;
+  font-size: 1.85rem !important;
+}
+
+.mobile-padding-title-article {
+  padding-top:28px;
+}
+
+.section-desktop-single {
+  background-width: 100%;
+  background-repeat: -no-repeat;
+  height: 485px !important;
+
+}
+
+.section-desktop-single h2 {
+  font-size: 52px;
+  margin-top:25%;
+  line-height: 63px;
+}
+
+
+.mobile-title-article h5 {
+  margin-top: -62px !important;
+  padding: 0px 5px !important;
+  font-size:14px !important;
+  text-align: center !important;
+}
+
+.mobile-title-article a {
+  color:white !important;
+}
+
+.title-white-banner-post-wrapper {
+  font-size: 2.9rem;
+  line-height: 40px;
+}
+
+.description-post-wrapper {
+  display: block;
+  font-size: 22px !important;
+  line-height: 29px !important;
+  padding-top:10px;
+}
+
+.heading-wrapper-banner {
+  opacity:0.7;
+  margin-bottom: 10px;
+}
+
+.additional-mobile-index {
+  background-size: cover;
+  background-position: top;
+  height: 100% !important;
+  background-repeat: no-repeat;
+}
+
+.widget-iframe {
+  position: relative;
+  padding-bottom: 56.25%; /* 16:9 */
+  padding-top: 25px;
+  height: 0;
+  margin:25px auto;
+}
+
+.widget-iframe iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.section-desktop-single,.mobile-wrapper-single {
+  background-repeat: no-repeat;
+}
+
+.empty-wrapper {
+  margin-top:8% !important;
+  padding-top:8%;
+  padding-bottom:15%;
+  color:#20A4DC;
+}
+
+.mobile-404 {
+  margin-top:8% !important;
+  padding-top:8%;
+  padding-bottom:15%;
+  color:#20A4DC;
+}
+
+.slug-desc {
+  display:block;
+  font-size: 19px;
+}
+
+.title-404 {
+  font-size: 120px;
+}
+
+.empty-wrapper {
+  background-image: url('https://assets.jenius.com/assets/2019/03/23011259/bg_404.jpg');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
+.appsflyer-banner-text-container {
+  color:white;
+}
+
+.appsflyer-banner-title {
+  margin-bottom:-5px;
+}
+
+.appsflyer-banner-download-button {
+  color:#20A4DC !important;
+  font-family: "Jenius Sans", "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol" !important;
+  font-weight: 700;
+  padding: 0px 16px;
+}
+
+.appsflyer-banner-container {
+  box-shadow: none !important;
+}
+
+#jenius-banner {
+  background:none;
+}
+
+.container-wrapper {
+  background: white;
+}
+
+.appsflyer-banner-container {
+  background: #20A4DC;
+  border-radius:0px 0px 17px 17px;
+}
+
+.appsflyer-banner-subtitle {
+  font-family: "Jenius Sans", "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol" !important;
+}
+
+.appsflyer-banner-subtitle {
+  text-align: center;
+  letter-spacing: 1px;
+  line-height: 18px;
+  padding-left:12px !important;
+}
+
+.mt-15 {
+  margin-top:15px;
+}
+
+.wrapper-history-cards {
+  padding:15px 0;
+  margin:6% 0;
+}
+
+.wrapper-mobile-404 {
+  padding-top:5%;
+}
+
+.mobile-image {
+  z-index: 99;
+  position: relative;
+}
+
+.mobile-play {
+  z-index: 999;
+  position: relative;
+  margin-top:-40%;
+  margin-bottom:50%;
+}
+
+.wrapper-video-mobile-ramadan {
+  z-index: 9;
+  position: relative;
+}
+
+.content-story {
+  padding:8% 0;
+}
+
+/* Ramadan Custom Stylesheet
+*/
+
+.ramadhan-header-banner {
+  padding:8% 0;
+  background:#f7f7f7;
+}
+
+.wrapper-play-icon {
+  padding-top:30%;
+  border-radius:80%;
+  color:white;
+  background:rgba(0,0,0,0.35);
+  width:80px;
+  height:80px;
+  text-align:center;
+  transition:1s linear;
+  -transition:1s linear;
+  -moz-transition:1s linear;
+  -o-transition:1s linear;
+  -webkit-transition:1s linear;
+}
+
+@media (max-width:812px) {
+  .wrapper-play-icon {
+  padding-top:6.5%;
+  margin:0px auto;
+  }
+}
+
+@media (min-width:1025px) {
+  .wrapper-play-icon {
+  padding-top:45%;
+  }
+}
+
+.wrapper-play-icon:hover {
+  background:rgba(0,0,0,0.6);
+}
+
+.wrapper-histories h3 {
+font-family: 'Sunday Morning';
+font-weight:lighter;
+color:#20A4DC;
+text-transform: uppercase;
+}
+
+.wrapper-heading-banner h1 {
+  margin-top:100px;
+}
+
+.ramadan-header h1,.wrapper-heading-banner h1 {
+font-family: 'Sunday Morning';
+font-weight:lighter;
+color:#20A4DC;
+text-transform: uppercase;
+font-size:42px;
+}
+
+.wrapper-histories h3,.wrapper-get-jenius h3 {
+font-family: 'Sunday Morning';
+font-weight:lighter;
+color:#20A4DC;
+text-transform: uppercase;
+font-size:41px;
+}
+
+.wrapper-histories h3 {
+  font-size:38px;
+}
+
+.ramadan-header small,.wrapper-histories small,.wrapper-get-jenius small,.wrapper-heading-banner small {
+  display:block;
+  text-transform: none;
+  font-size:29px;
+}
+
+.wrapper-readmore-ramadan {
+  margin-top:5%;
+}
+
+.wrapper-get-jenius {
+  background:#f7f7f7;
+  padding:1% 0;
+}
+
+.wrapper-title-ramadan-card h3 {
+  font-family: 'Sunday Morning';
+  font-weight:lighter;
+  color:#8f8f8f;
+  text-transform: uppercase;
+  font-size:38px;
+}
+
+.ramadan-desc {
+  padding:0px 18px;
+}
+
+.ramadan-btn {
+  border-radius: .5rem;
+}
+
+.ramadan-mobile-wrap-head {
+  margin-top:-25px;
+}
+
+.wrapper-heading-banner {
+  margin-top:-85px;
+}
+
+.wrapper-get-jenius img {
+  margin-bottom:35px;
+}
+
+.ramadan-heading {
+  font-size:16px;
+  padding: 0px 20px;
+}

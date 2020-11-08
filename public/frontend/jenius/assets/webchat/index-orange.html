@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>Enterprise Web Chat</title>
+	<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1" />
+	<link rel="stylesheet" href="css/normalize.css">
+	<link rel='stylesheet prefetch' href='https://fonts.googleapis.com/css?family=Open+Sans'>
+	<link rel='stylesheet prefetch' href='css/jquery.mCustomScrollbar.min.css'>
+	<link rel="stylesheet" href="css/orange.css">
+	<link rel="stylesheet" href="css/button.css">
+	<style type="text/css">
+		html {
+			background: url(images/bg-login.jpg) no-repeat;
+			background-size: cover;
+			background-position: center;
+		}
+	</style>
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAnDdTmQAozPcMpKcPN06jD5cy0B5xt8Fw&libraries=places"></script>
+	<script src="https://www.google.com/recaptcha/api.js"></script>
+	<script src='js/jquery.min.js'></script>
+	<script src='js/jquery.mCustomScrollbar.concat.min.js'></script>
+	<script src="js/cryptojs/pbkdf2.js"></script>
+	<script src="js/cryptojs/aes.js"></script>
+	<script src="js/cipher/aes-util.js"></script>
+	<script src="js/stp.js"></script>
+	<script src="js/sjs.js"></script>
+	<script src="js/chat.js"></script>
+	<script src="js/fuse.js"></script>
+	<script>
+		$(document).ready(function () {
+			Chat.init({
+				connect_message: 'Do you have questions ? <br>Come chat with us, we are here to help you',
+				loading_message: 'Thank you for using our chat <br>Please wait a moment...',
+				loader_sub_header: 'Connecting...',
+				login_sub_header: 'Please tell us about yourself',
+				chat_sub_header: 'Our agent will serve you shortly',
+				welcome_message: 'Please enter your question while waiting for our agent',
+				url: 'http://chat.3dolphinsocial.com:32397',
+				client_id: 'f181392d7b4f13ec1903d6359edf0cf2',
+				client_secret: 'c9f4cc4c703b28c56162e4577cf689f9',
+				// url: 'http://localhost:34326',
+				// client_id: 'ddaba53678eb50e8c3915488e0875358',
+				// client_secret: '130d4ec42b5cab54db678a1f5ce87625',
+				type_placeholder: 'Type message...',
+				avatar: 'http://www.inmotion.co.id/assets/images/logo/sri_face.png',
+				agent_avatar: 'http://www.inmotion.co.id/assets/images/logo/sri_face.png',
+				header: 'Welcome to Inmotion Chat'
+			});
+		});
+	</script>
+</head>
+
+</html>

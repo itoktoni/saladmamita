@@ -1,0 +1,41 @@
+	/*
+  	Flaticon icon font: Flaticon
+  	Creation date: 05/08/2020 18:55
+  	*/
+
+@font-face {
+  font-family: "Flaticon";
+  src: url("./Flaticon.eot");
+  src: url("./Flaticon.eot?#iefix") format("embedded-opentype"),
+       url("./Flaticon.woff2") format("woff2"),
+       url("./Flaticon.woff") format("woff"),
+       url("./Flaticon.ttf") format("truetype"),
+       url("./Flaticon.svg#Flaticon") format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+  @font-face {
+    font-family: "Flaticon";
+    src: url("./Flaticon.svg#Flaticon") format("svg");
+  }
+}
+
+[class^="flaticon-"]:before, [class*=" flaticon-"]:before,
+[class^="flaticon-"]:after, [class*=" flaticon-"]:after {   
+  font-family: Flaticon;
+        font-size: 20px;
+font-style: normal;
+margin-left: 20px;
+}
+
+.flaticon-washing-machine:before { content: "\f100"; }
+.flaticon-washing-machine-1:before { content: "\f101"; }
+.flaticon-clean-clothes:before { content: "\f102"; }
+.flaticon-laundry-basket:before { content: "\f103"; }
+.flaticon-iron-board:before { content: "\f104"; }
+.flaticon-delivery-truck:before { content: "\f105"; }
+.flaticon-scale:before { content: "\f106"; }
+.flaticon-shirt:before { content: "\f107"; }
+.flaticon-laundry-shop:before { content: "\f108"; }

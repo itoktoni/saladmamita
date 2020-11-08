@@ -1,0 +1,111 @@
+$color: #2a5fe1;
+$paragraph: #132c66;
+$feature: #e8ebf4;
+@mixin setColor($color) {
+    color: $color !important;
+}
+
+@mixin setBefore($color) {
+    &:before {
+        color: $color !important;
+    }
+}
+
+.container {
+    h1 {
+        @include setColor($color);
+    }
+    h2 {
+        @include setColor($color);
+    }
+    h3 {
+        @include setColor($color);
+    }
+    h4 {
+        @include setColor($color);
+    }
+    p {
+        @include setColor($paragraph);
+    }
+    .text-gray-400 {
+        @include setColor($paragraph);
+    }
+}
+
+.accordion-header[aria-expanded="true"] {
+    h5 {
+        @include setColor($color);
+    }
+    .close-panel {
+        &::before {
+            background: $color !important;
+        }
+        &:after {
+            background: $color !important;
+        }
+    }
+}
+
+.heading {
+    ul {
+        li {
+            @include setColor($paragraph)
+        }
+    }
+    ol {
+        li {
+            @include setColor($paragraph)
+        }
+    }
+}
+
+.scroll-menu {
+    .content {
+        .nav {
+            .nav-item {
+                .nav-tab-item {
+
+                    &:hover, &:focus, &:active, &.selected {
+                        color: $color !important;
+                        &:before {
+                        content: " ";
+                        background-color: $color;
+                        }
+                    }
+                    &.selected {
+                        @include setColor($paragraph);
+                        &:before {
+                            background-color: $color;
+                        }
+                        &:after {
+                            background-color: $color;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+.slider-nav {
+    .slick-prev {
+        @include setBefore($color);
+    }
+    .slick-next {
+        @include setBefore($color);
+    }
+}
+
+.slick-dots-solid {
+    .slick-dots {
+        li {
+            &.slick-active {
+                button {
+                    &:before {
+                        border: 2px $color solid;
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,14 @@
+{
+    "name": "Rajaongkir",
+    "alias": "rajaongkir",
+    "description": "",
+    "keywords": [],
+    "active": 1,
+    "order": 0,
+    "providers": [
+        "Modules\\Rajaongkir\\Providers\\ModuleServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}
