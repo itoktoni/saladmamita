@@ -29,6 +29,7 @@ use Modules\Item\Dao\Repositories\StockRepository;
 use Modules\Procurement\Dao\Models\PurchaseDetail;
 use Modules\Sales\Dao\Repositories\OrderRepository;
 use Maatwebsite\Excel\Concerns\WithColumnFormatting;
+use Modules\Rajaongkir\Dao\Repositories\DeliveryRepository;
 use Modules\Procurement\Dao\Repositories\PurchaseRepository;
 
 class ReportDeliveryRepository extends Order implements FromView, ShouldAutoSize
@@ -136,7 +137,7 @@ class ReportDeliveryRepository extends Order implements FromView, ShouldAutoSize
 
         $query = $query->orderBy($this->model->getKeyName(), 'ASC');
         return view('Sales::page.report.export_delivery', [
-            'export' => $query->get()
+            'export' => $query->get(),
         ]);
     }
 }

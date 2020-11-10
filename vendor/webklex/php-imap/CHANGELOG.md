@@ -17,6 +17,23 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 ### Breaking changes
 - NaN
 
+
+## [2.2.3] - 2020-11-02
+### Fixed
+- Text/Html body fetched as attachment if subtype is null #34
+- Potential header overwriting through header extensions #35
+- Prevent empty attachments #37
+
+### Added
+- Set fetch order during query #41 [@Max13](https://github.com/Max13)
+
+### Affected Classes
+- [Message::class](src/Message.php)
+- [Part::class](src/Part.php)
+- [Header::class](src/Header.php)
+- [Query::class](src/Query/Query.php)
+
+
 ## [2.2.2] - 2020-10-20
 ### Fixed
 - IMAP::FT_PEEK removing "Seen" flag issue fixed #33

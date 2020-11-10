@@ -5,10 +5,16 @@
 @php
 $area = session()->has('area') ? session()->get('area') : false;
 $city = $location = [];
+
+if(!$area && auth()->check()){
+$area = Helper::getSingleArea(auth()->user()->area, false, true);
+}
+
 if($area){
 $city = $area['city'] ?? [];
 $location = $area['area'] ?? [];
 }
+
 @endphp
 
 <!-- Product Details Area Start -->
@@ -292,7 +298,7 @@ $location = $area['area'] ?? [];
 @push('javascript')
 
 <script>
-$(document).ready(function () {
+$(document).ready(function() {
 
     $('#province').change(function() { // Jika Select Box id provinsi dipilih
         var data = $("#province option:selected");

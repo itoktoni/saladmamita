@@ -13,7 +13,7 @@
         @foreach($value->groupBy('sales_order_detail_variant_item_variant_id') as $variant_id => $data)
         @if($variant_id)
         <tr>
-            <td>{{ str_replace(' 00:00:00', '', $data[0]->sales_order_date_order) ?? '' }} </td>
+            <td>{{ Carbon\Carbon::parse($data[0]->sales_order_date_order)->format('d-m-Y') ?? '' }} </td>
             <td>{{ $data[0]->item_category_name ?? '' }} </td>
             <td>{{ $data[0]->item_product_name ?? '' ?? '' }} </td>
             <td>{{ $data[0]->item_variant_name ?? '' }}</td>
@@ -21,7 +21,7 @@
         </tr>
         @else
         <tr>
-            <td>{{ str_replace(' 00:00:00', '', $data[0]->sales_order_date_order) ?? '' }} </td>
+            <td>{{ Carbon\Carbon::parse($data[0]->sales_order_date_order)->format('d-m-Y') ?? '' }} </td>
             <td>{{ $data[0]->item_category_name ?? '' }} </td>
             <td>{{ $data[0]->item_product_name ?? '' }} </td>
             <td>DEFAULT</td>

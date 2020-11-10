@@ -33,8 +33,8 @@
         @foreach($data->variant as $variant)
         <tr>
             <td>{{ $data->sales_order_id }} </td>
-            <td>{{ str_replace(' 00:00:00', '', $data->sales_order_created_at) ?? '' }} </td>
-            <td>{{ str_replace(' 00:00:00', '', $data->sales_order_date_order) ?? '' }} </td>
+            <td>{{Carbon\Carbon::parse($data->sales_order_created_at)->format('d-m-Y') ?? '' }} </td>
+            <td>{{Carbon\Carbon::parse($data->sales_order_date_order)->format('d-m-Y') ?? '' }} </td>
             <td>{{ $data->sales_order_to_name }} </td>
             <td>{{ $data->sales_order_to_email }} </td>
             <td>{{ $data->sales_order_to_phone }} </td>
@@ -61,9 +61,9 @@
         @else
         <tr>
             <td>{{ $data->sales_order_id }} </td>
-            <td>{{ str_replace(' 00:00:00', '', $data->sales_order_created_at) ?? '' }} </td>
-            <td>{{ str_replace(' 00:00:00', '', $data->sales_order_date_order) ?? '' }} </td>
-            <td>{{ $data->sales_order_to_name }} </td>
+            <td>{{Carbon\Carbon::parse($data->sales_order_created_at)->format('d-m-Y') ?? '' }} </td>
+            <td>{{Carbon\Carbon::parse($data->sales_order_date_order)->format('d-m-Y') ?? '' }} </td>
+             <td>{{ $data->sales_order_to_name }} </td>
             <td>{{ $data->sales_order_to_email }} </td>
             <td>{{ $data->sales_order_to_phone }} </td>
             <td>{{ $data->status[$data->sales_order_status][0] ?? '' }} </td>

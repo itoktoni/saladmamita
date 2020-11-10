@@ -2,6 +2,20 @@
 <x-date :array="['date']" />
 @section('content')
 
+@php
+$area = session()->has('area') ? session()->get('area') : false;
+$city = $location = [];
+
+if(!$area && auth()->check()){
+$area = Helper::getSingleArea(auth()->user()->area, false, true);
+}
+
+if($area){
+$city = $area['city'] ?? [];
+$location = $area['area'] ?? [];
+}
+
+@endphp
 <!-- Product Details Area Start -->
 <div class="single-product-area clearfix">
     <div class="container-fluid">
@@ -147,13 +161,10 @@
                                 </div>
                             </div>
 
-
                         </div>
                         <div class="col-md-5">
                             <div class="single_product_desc">
-
                                 <div>
-
                                     <div class="row form-group">
                                         <div class="col-md-12">
                                             <label>Name</label>
@@ -167,7 +178,7 @@
                                         </div>
                                     </div>
                                     <div class="row form-group">
-                                        <div class="col-md-6">
+                                        <div class="col-md-7">
                                             <label>Email</label>
                                             {!! Form::text('sales_order_to_email', $user->email ??
                                             null, ['class' =>
@@ -177,7 +188,7 @@
                                             {!! $errors->first('sales_order_to_email', '<small
                                                 class="form-text text-danger">:message</small>') !!}
                                         </div>
-                                        <div class="col-md-6">
+                                        <div class="col-md-5">
                                             <label>Phone</label>
                                             {!! Form::text('sales_order_to_phone', $user->phone ??
                                             null, ['class' =>
@@ -206,12 +217,12 @@
 
                                     <div class="row form-group">
                                         <div class="col-md-12">
-                                            {{ Form::select('province', $list_province, isset($area['province']) ? array_keys($area['province']) : null, ['id' => 'province', 'class'=> ''.($errors->has('province') ? 'error':'')]) }}
+                                            {{ Form::select('province', $list_province, isset($area['province']) ? array_keys($area['province']) : null, ['id' => 'province', 'class'=> 'form-control form-control-sm']) }}
                                         </div>
                                     </div>
                                     <div class="row form-group">
                                         <div class="col-md-12">
-                                            {{ Form::select('city', $area['city'] ?? [], null, ['id' => 'city','class'=> 'chosen']) }}
+                                            {{ Form::select('city', $area['city'] ?? [], null, ['id' => 'city', 'class'=> 'form-control form-control-sm']) }}
                                         </div>
                                     </div>
                                     <div class="row form-group">

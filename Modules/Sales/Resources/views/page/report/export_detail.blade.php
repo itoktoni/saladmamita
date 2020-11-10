@@ -30,12 +30,8 @@
         @foreach($export as $data)
         <tr>
             <td>{{ $data->sales_order_id }} </td>
-            <td>{{ $data->sales_order_created_at ? $data->sales_order_created_at->format('Y-m-d') : '' }} </td>
-<<<<<<< HEAD
-            <td>{{ $data->sales_order_date_order ? $data->sales_order_date_order->format('Y-m-d') : '' }} </td>
-=======
-            <td>{{ $data->sales_order_date ? $data->sales_order_date->format('Y-m-d') : '' }} </td>
->>>>>>> 8e727ccac18036b4c7abeab096310c7d5c65110d
+            <td>{{ $data->sales_order_created_at ? $data->sales_order_created_at->format('d-m-Y') : '' }} </td>
+            <td>{{ $data->sales_order_date_order ? $data->sales_order_date_order->format('d-m-Y') : '' }} </td>
             <td>{{ $data->sales_order_to_name }} </td>
             <td>{{ $data->sales_order_to_email }} </td>
             <td>{{ $data->sales_order_to_phone }} </td>

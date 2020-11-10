@@ -2,20 +2,21 @@
 
 namespace Modules\Sales\Dao\Models;
 
-use App\Dao\Models\Company;
 use App\User;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Support\Facades\Auth;
-use Modules\Crm\Dao\Models\Customer;
-use Modules\Finance\Dao\Models\Payment;
-use Modules\Finance\Dao\Models\Tax;
-use Modules\Finance\Dao\Models\Top;
-use Modules\Forwarder\Dao\Models\Vendor;
+use App\Dao\Models\Company;
+use Illuminate\Support\Str;
 use Modules\Sales\Dao\Models\Area;
 use Modules\Sales\Dao\Models\City;
-use Modules\Sales\Dao\Models\OrderDetail;
+use Modules\Finance\Dao\Models\Tax;
+use Modules\Finance\Dao\Models\Top;
+use Illuminate\Support\Facades\Auth;
+use Modules\Crm\Dao\Models\Customer;
 use Modules\Sales\Dao\Models\Province;
+use Illuminate\Database\Eloquent\Model;
+use Modules\Finance\Dao\Models\Payment;
+use Modules\Forwarder\Dao\Models\Vendor;
+use Modules\Sales\Dao\Models\OrderDetail;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Order extends Model
 {
@@ -77,6 +78,7 @@ class Order extends Model
         'sales_order_payment_notes',
         'sales_order_delivery_type',
         'sales_order_delivery_name',
+        'sales_order_token',
         'sales_order_print_counter'
     ];
 
@@ -95,6 +97,7 @@ class Order extends Model
     public $searching = 'sales_order_id';
     public $datatable = [
         'sales_order_id' => [true => 'Code'],
+        'sales_order_created_at' => [false => 'Delivery Date'],
         'sales_order_date_order' => [true => 'Delivery Date'],
         'crm_customer_name' => [false => 'Customer'],
         'sales_order_from_name' => [true => 'Pickup'],
@@ -209,6 +212,7 @@ class Order extends Model
         parent::boot();
         parent::creating(function ($model) {
             $model->sales_order_created_by = auth()->user()->username ?? '';
+            $model->sales_order_token = Str::uuid();
         });
 
         parent::saving(function ($model) {

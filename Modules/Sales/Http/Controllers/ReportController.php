@@ -66,7 +66,6 @@ class ReportController extends Controller
     {
         if (request()->isMethod('POST')) {
             $name = 'report_sales_order_' . date('Y_m_d') . '.xlsx';
-            ;
             return $this->excel->download(new ReportSummaryOrderRepository(), $name);
         }
         return view(Helper::setViewForm($this->template, __FUNCTION__, config('folder')))->with($this->share());

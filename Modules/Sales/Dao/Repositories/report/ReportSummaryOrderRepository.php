@@ -87,8 +87,8 @@ class ReportSummaryOrderRepository extends Order implements FromCollection, With
     {
         return [
            $data->sales_order_id, 
-           $data->sales_order_created_at ? $data->sales_order_created_at->format('Y-m-d') : '', 
-           $data->sales_order_date_order ? $data->sales_order_date_order->format('Y-m-d') : '', 
+           $data->sales_order_created_at ? $data->sales_order_created_at->format('d-m-Y') : '', 
+           $data->sales_order_date_order ? $data->sales_order_date_order->format('d-m-Y') : '', 
            $data->sales_order_from_name, 
            $data->sales_order_to_name, 
            $data->status[$data->sales_order_status][0] ?? '', 

@@ -1,7 +1,6 @@
 @extends(Helper::setExtendFrontend())
 
 @section('content')
-
 <!-- Product Details Area Start -->
 <div class="single-product-area clearfix">
     <div class="container-fluid">

@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Invoice_{{ str_replace("SO","INV",$master->sales_langganan_id ?? '') }}</title>
+    <title>Invoice_{{ str_replace("SO","INV",$master->sales_order_id ?? '') }}</title>
 
     <style>
     body {
@@ -318,9 +318,8 @@
     }
 
     .address p {
-        margin-top: 5px;
-        line-height: 20px;
-        margin-bottom: 10px;
+        margin-top: 0px;
+        margin-bottom: 0px;
     }
 
     #description {
@@ -592,25 +591,9 @@
     #paraf .header .term {
         text-align: left;
     }
-
-    .address{
-        margin-bottom: 10px;
-    }
-
-    .address p{
-        line-height: 20px;
-    }
-
     </style>
 
 </head>
-
-@php
-
-$total_delivery = $master->sales_langganan_sum_product;
-$total_discount = $master->sales_langganan_sum_discount;
-$grand_total = $master->sales_langganan_sum_total;
-@endphp
 
 <body>
     <div id='page'>
@@ -619,11 +602,11 @@ $grand_total = $master->sales_langganan_sum_total;
             <div id="box">
                 <h1>
                     <span>
-                        NO. {{ str_replace("SO","INVG",$master->sales_langganan_id ?? '') }}
+                        NO. {{ $master->sales_order_id ?? '' }}
                     </span>
                 </h1>
                 <h2>
-                    Order Date : {{ $master->sales_langganan_created_at->format('d F Y') }}
+                    Delivery Date : {{ $master->sales_order_date_order->format('d F Y') }}
                 </h2>
                 <table>
                     <tr>
@@ -631,13 +614,13 @@ $grand_total = $master->sales_langganan_sum_total;
                             Contact Person
                         </td>
                         <td>
-                            {{ $master->sales_langganan_from_name ?? '' }} (
-                            {{ $master->sales_langganan_from_phone ?? '' }} )
+                            {{ $master->sales_order_from_name ?? '' }} (
+                            {{ $master->sales_order_from_phone ?? '' }} )
                         </td>
                     </tr>
                     <tr>
                         <td class="head">
-                            Transfer To
+                            Transfer to
                         </td>
                         <td>
                         {{ $banks->finance_bank_name ?? '' }} a.n {{ $banks->finance_bank_account_name ?? '' }} ( {{ $banks->finance_bank_account_number ?? '' }} )
@@ -651,7 +634,7 @@ $grand_total = $master->sales_langganan_sum_total;
                 {{ config('website.address') }}
             </h4>
             <p>
-                {{ Helper::getSingleArea($master->sales_langganan_from_area, true) }}
+                {{ Helper::getSingleArea($master->sales_order_from_area, true) }}
             </p>
         </div>
         <div id="container">
@@ -659,58 +642,41 @@ $grand_total = $master->sales_langganan_sum_total;
                 <tr>
                     <td align='left' colspan='8' valign='middle'>
                         <h1 id="headline">
-                            KONTRAK INVOICE
+                            INVOICE
                         </h1>
                     </td>
                 </tr>
-
-                <tr>
-                    <td align="center" colspan="4">
-                        <strong>Pengiriman Dari</strong>
-                    </td>
-                    <td align="center" colspan="4">
-                        <strong>
-                            Tujuan Pengiriman
-                        </strong>
+                <tr class="destination">
+                    <td colspan='8'>
+                        <strong>Invoiced To : </strong>
                     </td>
                 </tr>
-
                 <tr class="contact">
-
-                    <td colspan='4'>
+                    <td colspan='8'>
                         <strong>
-                            Area Pengiriman :
-                            {{ $master->branch->branch_name ?? '' }}
+                            {{ $master->customer->crm_customer_name ?? '' }}
                         </strong>
                         <p>
-                            {{ $master->branch->branch_address ?? '' }}
-                        </p>
-                        <p>
-                            {{ Helper::getSingleArea($master->sales_langganan_from_area, true) ?? '' }}
-                        </p>
-                    </td>
-
-                    <td class="address" colspan='4'>
-                        <strong>
-                            {{ $master->sales_langganan_to_name ?? '' }}
-                        </strong>
-                        <p>
-                            {{ $master->sales_langganan_to_address ?? '' }}
-                        </p>
-                        <p>
-                            {{ Helper::getSingleArea($master->sales_langganan_to_area, true) ?? '' }}
+                            {{ $master->sales_order_to_address ?? '' }} /
+                            {{ Helper::getSingleArea($master->sales_order_to_area, true) ?? '' }}
                         </p>
                     </td>
                 </tr>
+                <tr>
+                    <td colspan="8">
+                        <p>
+                            @php
 
-                @foreach($detail as $order)
-                <tr class="header">
-                    <td class="no" colspan="7">
-                        <strong>Hari {{ $loop->iteration }} - Tanggal Kirim
-                            {{ $order->sales_order_date_order->format('d F Y') }}</strong>
-                    </td>
-                    <td align="center">
-                        <strong>{{ $order->sales_order_id }}</strong>
+                            $total_delivery = $master->sales_order_sum_product;
+                            $total_discount = $master->sales_order_sum_discount;
+                            $grand_total = $master->sales_order_sum_total;
+                            @endphp
+
+                            <strong style="font-size: 12px;">
+                                Total Amount : Rp {{ Helper::createRupiah($grand_total) }} ( <span
+                                    style="font-style: italic;">{{ Helper::terbilang($grand_total) }} rupiah. </span>)
+                            </strong>
+                        </p>
                     </td>
                 </tr>
 
@@ -731,72 +697,72 @@ $grand_total = $master->sales_langganan_sum_total;
                         <strong>Total</strong>
                     </td>
                 </tr>
-                @foreach($order->detail as $item)
+                @foreach($detail as $item)
                 <tr class="item">
                     <td class="no">
+                        {{ $loop->iteration }}
                     </td>
                     <td class="product" colspan="4">
                         <h1>
                             {{ $item->product->item_product_name ?? '' }}
                         </h1>
-                        @if(!empty($item->variant))
-                        <i style="text-transform: lowercase;">
-                            @foreach($item->variant->where('sales_order_detail_variant_qty', '>', 0) as $variant)
-                            @if($loop->first)
-                            ( {{ $variant->sales_order_detail_variant_qty }} )
-                            {{ $variant->variant->item_variant_name ?? '' }}
-                            @else
-                            , ( {{ $variant->sales_order_detail_variant_qty }} )
-                            {{ $variant->variant->item_variant_name ?? '' }}
-                            @endif
-                            @endforeach
-                            @endif
-                        </i>
-
+                        @foreach($item->variant->where('sales_order_detail_variant_qty','>', 0) as $variant)
+                        <p>
+                            - |{{ $variant->sales_order_detail_variant_qty }}| {{ $variant->variant->item_variant_name }}
+                        </p>
+                        @endforeach
                     </td>
                     <td class="price">
-                        {{ !empty($item->sales_order_detail_price) ? Helper::createRupiah($item->sales_order_detail_price) : '' }}
+                        {{ Helper::createRupiah($item->sales_order_detail_price) ?? '' }}
                     </td>
                     <td class="qty">
                         {{ $item->sales_order_detail_qty ?? '' }}
                     </td>
                     <td class="total">
-                        {{ !empty($item->sales_order_detail_total) ? Helper::createRupiah($item->sales_order_detail_total) : '' }}
+                        {{ Helper::createRupiah($item->sales_order_detail_total) ?? '' }}
                     </td>
                 </tr>
                 @endforeach
-                @endforeach
 
-                @if (!empty($master->sales_langganan_discount_value))
+                <tr class="total_product">
+                    <td class="product" colspan="6">
+                        Total Product
+                    </td>
+                    <td class="qty">
+                        {{ $detail->sum('sales_order_detail_qty') ?? '' }}
+                    </td>
+                    <td class="total">
+                        {{ Helper::createRupiah($total_delivery) ?? '' }}
+                    </td>
+                </tr>
+
+                @if (!empty($master->sales_order_discount_value))
                 <tr class="total_discount">
                     <td class="product" colspan="6">
-                        {{ ucfirst($master->sales_langganan_discount_name) ?? '' }} : =
+                        {{ ucfirst($master->sales_order_discount_name) ?? '' }} : =
                         Total Discount
                     </td>
                     <td class="qty">
-                        {{ Helper::createRupiah($master->sales_langganan_discount_value) ?? '' }}
+                        {{ Helper::createRupiah($master->sales_order_discount_value) ?? '' }}
                     </td>
                     <td class="total">
                         -{{ Helper::createRupiah($total_discount) ?? '' }}
                     </td>
                 </tr>
                 @endif
-                @if (!empty($master->sales_langganan_sum_ongkir))
+                @if (!empty($master->sales_order_sum_ongkir))
                 <tr class="total_discount">
                     <td class="product" colspan="7">
                         Ongkir
                     </td>
                     <td class="total">
-                        {{ Helper::createRupiah($master->sales_langganan_sum_ongkir) ?? '' }}
+                        {{ Helper::createRupiah($master->sales_order_sum_ongkir) ?? '' }}
                     </td>
                 </tr>
                 @endif
                 <tr class="total_sumary">
                     <td class="product" colspan="7">
-                        <strong style="font-size: 12px;">
-                            Total Amount : Rp {{ Helper::createRupiah($grand_total) }} ( <span
-                                style="font-style: italic;">{{ Helper::terbilang($grand_total) }} rupiah. </span>)
-                        </strong>
+                        Total
                     </td>
                     <td class="total">
                         {{ Helper::createRupiah($grand_total) ?? '' }}

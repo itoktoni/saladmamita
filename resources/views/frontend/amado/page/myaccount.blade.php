@@ -1,16 +1,20 @@
 @extends(Helper::setExtendFrontend())
 
 @push('css')
-<link rel="stylesheet" href="//cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css">
-@endpush
+<style>
+.main-content-wrapper .single-product-area .single_product_desc .product-meta-data a {
+    display: unset
+}
 
-@push('js')
-<script src="//cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
-<script>
-$(document).ready(function() {
-    $('#table').DataTable();
-});
-</script>
+.dataTables_paginate {
+    margin-top: 10px
+}
+
+.modal-backdrop.show{
+    z-index: 0 !important;
+    background-color: #fff;
+}
+</style>
 @endpush
 
 @section('content')
@@ -44,12 +48,13 @@ $(document).ready(function() {
                             <thead>
                                 <tr>
                                     <th scope="col">No. Order</th>
-                                    <th scope="col">Date</th>
+                                    <th scope="col">Create</th>
+                                    <th scope="col">Sent</th>
                                     <th style="text-align:right" scope="col">Delivery From</th>
-                                    <th style="text-align:center" scope="col">Order From</th>
-                                    <th style="text-align:right" scope="col">Status</th>
+                                    <th style="text-align:center" scope="col">Status</th>
                                     <th style="text-align:center;width:100px;" scope="col">
-                                        Detail</th>
+                                        Detail
+                                    </th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -59,15 +64,15 @@ $(document).ready(function() {
                                         {{ $item->sales_order_id ?? '' }}
                                     </td>
                                     <td data-header="Order Date">
-                                        {{ $item->sales_order_date_order->format('d M Y') ?? '' }}
+                                        {{ $item->sales_order_created_at ? $item->sales_order_created_at->format('d M Y') : '' }}
+                                    </td>
+                                    <td data-header="Order Date">
+                                        {{ $item->sales_order_date_order ? $item->sales_order_date_order->format('d M Y') : '' }}
                                     </td>
                                     <td data-header="Ongkir">
                                         {{ $item->sales_order_from_name ?? '' }}
                                     </td>
-                                    <td data-header="Total" align="right">
-                                        {{ number_format($item->sales_order_total) ?? '' }}
-                                    </td>
-                                    <td data-header="Status" align="right">
+                                    <td data-header="Status" align="center">
                                         {{ $status[$item->sales_order_status] ?? '' }}
                                     </td>
 
@@ -79,6 +84,7 @@ $(document).ready(function() {
                                     </td>
 
                                 </tr>
+                                
                                 <!-- Modal Order -->
                                 <div class="modal fade" id="{{ $item->sales_order_id ?? '' }}" tabindex="-1"
                                     role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -103,29 +109,19 @@ $(document).ready(function() {
                                                         class="list-group-item d-flex justify-content-between align-items-center">
 
                                                         {{ $detail->product->item_product_name }}
-                                                        {{ $detail->sales_order_detail_item_size ?? '' }}
-                                                        {{ $detail->color->item_color_name ?? '' }}
                                                         <br>
                                                         [
-                                                        {{ $detail->sales_order_detail_qty_order }}
+                                                        {{ $detail->sales_order_detail_qty }}
                                                         pcs *
-                                                        {{ number_format($detail->sales_order_detail_price_order) }}
+                                                        {{ number_format($detail->sales_order_detail_price) }}
                                                         ]
-                                                        @if (config('website.tax'))
-                                                        <br>
-                                                        VAT
-                                                        {{ $detail->sales_order_detail_tax_name }}
-                                                        :
-                                                        {{ number_format($detail->sales_order_detail_tax_value) }}
-                                                        @endif
-                                                        <span>{{ number_format($detail->sales_order_detail_total_order) }}</span>
+                                                        <span>{{ number_format($detail->sales_order_detail_total) }}</span>
                                                     </li>
                                                     @endforeach
                                                     @endif
                                                     <li
                                                         class="list-group-item d-flex justify-content-between align-items-center">
-                                                        {{ $item->sales_order_rajaongkir_service }}
-                                                        <span>{{ number_format($item->sales_order_rajaongkir_ongkir) }}</span>
+                                                        <span>{{ $item->sales_order_sum_ongkir ?? '' }}</span>
                                                     </li>
                                                 </ul>
                                             </div>
@@ -133,14 +129,14 @@ $(document).ready(function() {
                                                 <div class="row">
                                                     <div style="position:absolute;bottom:20px;left:20px;">
                                                         Voucher
-                                                        {{ $item->sales_order_marketing_promo_name }}
+                                                        {{ $item->sales_order_discount_name ?? '' }}
                                                         :
                                                         -
-                                                        {{ number_format($item->sales_order_marketing_promo_value) ?? '' }}
+                                                        {{ $item->sales_order_discount_value ?? '' }}
                                                     </div>
                                                     <div class="pull-right" style="margin-left:5px;margin-right:30px;">
                                                         Total :
-                                                        {{ number_format($item->sales_order_total) ?? '' }}
+                                                        {{ $item->sales_order_sum_total ?? '' }}
                                                     </div>
                                                 </div>
                                             </div>

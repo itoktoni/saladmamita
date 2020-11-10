@@ -26,7 +26,6 @@ use Modules\Finance\Dao\Facades\BankFacades;
 use Modules\Finance\Dao\Repositories\BankRepository;
 use Modules\Item\Dao\Facades\ProductFacades;
 use Modules\Item\Dao\Models\Product;
-use Modules\Item\Dao\Models\Wishlist;
 use Modules\Item\Dao\Repositories\BrandRepository;
 use Modules\Item\Dao\Repositories\CategoryRepository;
 use Modules\Item\Dao\Repositories\ColorRepository;
@@ -327,10 +326,10 @@ class PublicController extends Controller
     public function myaccount()
     {
         $order = new OrderRepository();
-
+        $data = $order->dataRepository()->select('*')->where('sales_order_to_phone', auth()->user()->phone)->orderBy('sales_order_date_order', 'DESC')->get();
         return View(Helper::setViewFrontend(__FUNCTION__))->with($this->share([
             'status' => Helper::shareStatus($order->status),
-            
+            'order' => $data
         ]));
     }
 
@@ -540,24 +539,40 @@ class PublicController extends Controller
         }
 
         $carts = Cart::getContent();
-
         return View(Helper::setViewFrontend(__FUNCTION__))->with($this->share([
             'carts' => $carts,
-
         ]));
     }
+
     public function checkout(PublicService $service)
     {
         $area = [];
+        // session()->forget('area');
+        if (request()->has('token')) {
+            $token = request()->get('token');
+            $data = OrderFacades::where('sales_order_token', $token)->firstOrFail();
+            $pasing = [
+                'master' => $data,
+                'detail' => $data->detail,
+                'banks' => BankFacades::dataRepository()->first(),
+            ];
+            $pdf = PDF::loadView(Helper::setViewPrint('print_order'), $pasing)->setPaper('A4', 'potrait');
+            return $pdf->stream();
+        }
 
         if (request()->isMethod('POST')) {
             $request = request()->all();
             $autonumber = Helper::autoNumber(OrderFacades::getTable(), OrderFacades::getKeyName(), 'SO' . date('Ym'), config('website.autonumber'));
 
-            if (isset($request['sales_order_to_area'])) {
-                $area_id = $request['sales_order_to_area'];
-                $area = Helper::getSingleArea($area_id, false, true);
+            if (request()->has('sales_order_to_area')) {
+                $area_id = request()->get('sales_order_to_area');
+                session()->put('area', Helper::getSingleArea($area_id, false, true));
             }
+
+            // if (isset($request['sales_order_to_area'])) {
+            //     $area_id = $request['sales_order_to_area'];
+            //     $area = Helper::getSingleArea($area_id, false, true);
+            // }
 
             $detail = collect($request['detail'])->map(function ($item) use ($autonumber) {
                 $item['sales_order_detail_order_id'] = $autonumber;
@@ -571,7 +586,7 @@ class PublicController extends Controller
             $rules = [
                 'sales_order_to_name' => 'required',
                 'sales_order_to_phone' => 'required',
-                'sales_order_to_email' => 'required|email',
+                'sales_order_to_email' => 'sometimes|email',
                 'sales_order_to_address' => 'required',
                 'sales_order_to_area' => 'required',
                 'sales_order_from_id' => 'required',
@@ -583,7 +598,7 @@ class PublicController extends Controller
                 'sales_order_to_name.required' => 'Nama Customer Harus Diisi',
                 'sales_order_to_phone.required' => 'No. Telp Harus Diisi',
                 'sales_order_to_address.required' => 'Alamat Harus Diisi',
-                'sales_order_to_email.required' => 'Email Harus Diisi',
+                // 'sales_order_to_email.required' => 'Email Harus Diisi',
                 'sales_order_to_email.email' => 'Email Tidak Valid',
                 'sales_order_to_area.required' => 'Area Pengiriman Harus Diisi',
                 'sales_order_from_id.required' => 'Lokasi Pickup Harus Diisi',
@@ -605,6 +620,9 @@ class PublicController extends Controller
                 return redirect()->back()->withErrors($validate)->withInput()->with([
                     'area' => $area,
                 ]);
+            }
+            else{
+                return redirect()->route('checkout', ['token' => $check['data']->sales_order_token->toString()]);
             }
         }
 
@@ -639,7 +657,7 @@ class PublicController extends Controller
                 'detail' => $data->order,
                 'banks' => BankFacades::dataRepository()->first(),
             ];
-            $pdf = PDF::loadView(Helper::setViewPrint('print_order'), $pasing);
+            $pdf = PDF::loadView(Helper::setViewPrint('print_langganan'), $pasing);
             return $pdf->stream();
         }
 
@@ -648,10 +666,10 @@ class PublicController extends Controller
             $carbon = Carbon::createFromFormat('Y-m-d', $date);
         }
 
-        if (request()->has('area')) {
-            $area_id = request()->get('area');
-            $area = Helper::getSingleArea($area_id, false, true);
-        }
+        // if (request()->has('area')) {
+        //     $area_id = request()->get('area');
+        //     $area = Helper::getSingleArea($area_id, false, true);
+        // }
 
         if (request()->has('code')) {
             $code = request()->get('code');
@@ -669,7 +687,7 @@ class PublicController extends Controller
             $rules = [
                 'sales_langganan_to_name' => 'required',
                 'sales_langganan_to_phone' => 'required',
-                'sales_langganan_to_email' => 'required|email',
+                'sales_langganan_to_email' => 'sometimes|email',
                 'sales_langganan_to_address' => 'required',
                 'sales_langganan_from_id' => 'required',
                 'sales_langganan_date_order' => 'required',
@@ -683,7 +701,7 @@ class PublicController extends Controller
                 'sales_langganan_marketing_langganan_id.required' => 'Paket Langganan Harus Diisi',
                 'sales_langganan_to_phone.required' => 'No. Telp Harus Diisi',
                 'sales_langganan_to_address.required' => 'Alamat Harus Diisi',
-                'sales_langganan_to_email.required' => 'Email Harus Diisi',
+                // 'sales_langganan_to_email.required' => 'Email Harus Diisi',
                 'sales_langganan_to_email.email' => 'Email Tidak Valid',
                 'sales_langganan_from_id.required' => 'Lokasi Pickup Harus Diisi',
                 'sales_langganan_date_order.required' => 'Tanggal Pengiriman Harus Diisi',
@@ -757,7 +775,7 @@ class PublicController extends Controller
 
                 // $request['discount'] = $discount_total;
                 // $request['discount_name'] = $discount_name;
-                
+
                 $request['hari'] = $validasi;
                 $validate2 = Validator::make($request, ['hari.*.qty' => 'not_in:0']);
                 if ($validate2->fails()) {
@@ -770,8 +788,11 @@ class PublicController extends Controller
                 if (isset($check['status']) && $check['status']) {
                     return redirect()->route('langganan', ['token' => $check['data']->sales_langganan_token->toString()]);
                 }
+
             }
         }
+
+       
 
         if (Auth::check()) {
             $area = Helper::getSingleArea(auth()->user()->area, false, true);
@@ -1223,9 +1244,9 @@ class PublicController extends Controller
         $data_product = new ProductRepository();
         $product = $data_product->slugRepository($slug);
         $product_id = $product->item_product_id;
-        
+
         if (request()->isMethod('POST')) {
-            
+
             $request = request()->all();
             $rules = [
                 'detail.temp_product_qty' => 'required|numeric|min:' . $product->item_product_min_order,
@@ -1271,8 +1292,8 @@ class PublicController extends Controller
             Cart::add($product_id, $product->item_product_name, $product->item_product_sell, $qty, $attributes);
             $this->updatePromo();
         }
-        $product->item_product_counter = $product->item_product_counter + 1;
-        $product->save();
+        // $product->item_product_counter = $product->item_product_counter + 1;
+        // $product->save();
         $product_image = $data_product->getImageDetail($product->item_product_id) ?? [];
 
         return View(Helper::setViewFrontend(__FUNCTION__))->with($this->share([

@@ -44,7 +44,7 @@ class LanggananService extends MasterService
             $phone = request()->get('sales_langganan_to_phone');
             $area = request()->get('sales_langganan_to_area');
 
-            if ($customer = CustomerFacades::where('crm_customer_contact_person', $name)->where('crm_customer_contact_email', $email)->first()) {
+            if ($customer = CustomerFacades::where('crm_customer_contact_person', $name)->where('sales_langganan_to_phone', $phone)->first()) {
                 $customer_id = $customer->crm_customer_id;
 
             } else {
