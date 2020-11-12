@@ -4,13 +4,13 @@
             <td>Sales ID</td>
             <td>Create Date</td>
             <td>Delivery Date</td>
+            <td>Status</td>
+            <td>Branch</td>
             <td>Customer</td>
             <td>Email</td>
             <td>Phone</td>
-            <td>Status</td>
-            <td>Branch</td>
             <td>Delivery</td>
-            <td>Delivery Notes</td>
+            <td>Notes</td>
             <td>Total Order</td>
             <td>Discount Name</td>
             <td>Discount</td>
@@ -24,7 +24,7 @@
             <td>Qty Order</td>
             <td>Price Order</td>
             <td>Total Order</td>
-            <td>Note</td>
+            <td>Description</td>
         </tr>
     </thead>
     <tbody>
@@ -35,13 +35,13 @@
             <td>{{ $data->sales_order_id }} </td>
             <td>{{Carbon\Carbon::parse($data->sales_order_created_at)->format('d-m-Y') ?? '' }} </td>
             <td>{{Carbon\Carbon::parse($data->sales_order_date_order)->format('d-m-Y') ?? '' }} </td>
+            <td>{{ $status[$data->sales_order_status] ?? '' }} </td>
+            <td>{{ $data->branch_name }} </td>
             <td>{{ $data->sales_order_to_name }} </td>
             <td>{{ $data->sales_order_to_email }} </td>
             <td>{{ $data->sales_order_to_phone }} </td>
-            <td>{{ $data->status[$data->sales_order_status][0] ?? '' }} </td>
-            <td>{{ $data->branch_name }} </td>
-            <td>{{ $data->rajaongkir_delivery_name }} </td>
-            <td>{{ $data->sales_order_delivery_name }} </td>
+            <td>{{ $delivery[$data->sales_order_delivery_type] ?? '' }} </td>
+            <td>{{ $data->sales_order_notes_external }} </td>
             <td>{{ $data->sales_order_sum_product }} </td>
             <td>{{ $data->sales_order_discount_name  }} </td>
             <td>{{ $data->sales_order_discount_value }} </td>
@@ -63,13 +63,13 @@
             <td>{{ $data->sales_order_id }} </td>
             <td>{{Carbon\Carbon::parse($data->sales_order_created_at)->format('d-m-Y') ?? '' }} </td>
             <td>{{Carbon\Carbon::parse($data->sales_order_date_order)->format('d-m-Y') ?? '' }} </td>
+            <td>{{ $status[$data->sales_order_status] ?? '' }} </td>
+            <td>{{ $data->branch_name }} </td>
              <td>{{ $data->sales_order_to_name }} </td>
             <td>{{ $data->sales_order_to_email }} </td>
             <td>{{ $data->sales_order_to_phone }} </td>
-            <td>{{ $data->status[$data->sales_order_status][0] ?? '' }} </td>
-            <td>{{ $data->branch_name }} </td>
-            <td>{{ $data->rajaongkir_delivery_name }} </td>
-            <td>{{ $data->sales_order_delivery_name }} </td>
+            <td>{{ $delivery[$data->sales_order_delivery_type] ?? '' }} </td>
+            <td>{{ $data->sales_order_notes_external }} </td>
             <td>{{ $data->sales_order_sum_product }} </td>
             <td>{{ $data->sales_order_discount_name  }} </td>
             <td>{{ $data->sales_order_discount_value }} </td>

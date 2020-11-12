@@ -335,7 +335,7 @@
         position: absolute;
         right: 0;
         text-align: right;
-        top: -30px;
+        top: -50px;
     }
 
     #box h1 {
@@ -373,18 +373,20 @@
     }
 
     #address h4 {
+        margin-top: 30px;
         font-size: 12px;
+        line-height: 15px;
     }
 
     #address p {
-        margin-top: -25px;
-        font-size: 10px;
+        margin-top: -20px;
+        font-size: 12px;
         line-height: 20px;
-        margin-bottom: 50px;
+        margin-bottom: 10px;
     }
 
     #container {
-        margin-top: 30px;
+        margin-top: 50px;
     }
 
     #container table {
@@ -414,7 +416,7 @@
     }
 
     #container table .contact td p {
-        line-height: 1px;
+        line-height: 15px;
         margin-bottom: 0px;
     }
 

@@ -41,6 +41,7 @@ class Slider extends Model
     'marketing_slider_button'        => [false => 'Button'],
     'marketing_slider_link'        => [false => 'Link'],
     'marketing_slider_slug'        => [false => 'Slug'],
+    'marketing_slider_page'        => [false => 'Slug'],
     'marketing_slider_description' => [true => 'Description'],
     'marketing_slider_image'        => [true => 'Images'],
     'marketing_slider_created_by'  => [false => 'Updated At'],  

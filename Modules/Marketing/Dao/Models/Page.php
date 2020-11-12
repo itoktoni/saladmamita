@@ -38,10 +38,10 @@ class Page extends Model
     'marketing_page_id'          => [false => 'ID'],
     'marketing_page_name'        => [true => 'Name'],
     'marketing_page_slug'        => [true => 'Slug'],
-    'marketing_page_image'        => [true => 'Slug'],
+    'marketing_page_image'        => [false => 'Slug'],
     'marketing_page_link'        => [false => 'Link'],
     'marketing_page_button'        => [false => 'Button'],
-    'marketing_page_description'        => [true => 'Description'],
+    'marketing_page_description'        => [false => 'Description'],
     'marketing_page_created_at'  => [false => 'Created At'],  
     'marketing_page_created_by'  => [false => 'Created By'],  
     'marketing_page_status'        => [false => 'Status'],
@@ -51,4 +51,13 @@ class Page extends Model
     '1' => ['Active', 'primary'],
     '0' => ['Not Active', 'danger'],
   ];
+
+  public static function boot(){
+    parent::boot();
+    parent::saving(function($model){
+      if ($model->marketing_page_name && empty($model->marketing_page_slug)) {
+        $model->marketing_page_slug = Str::slug($model->marketing_page_name);
+      }
+    });
+  }
 }

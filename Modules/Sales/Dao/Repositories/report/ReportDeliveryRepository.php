@@ -136,8 +136,11 @@ class ReportDeliveryRepository extends Order implements FromView, ShouldAutoSize
         }
 
         $query = $query->orderBy($this->model->getKeyName(), 'ASC');
+        
         return view('Sales::page.report.export_delivery', [
             'export' => $query->get(),
+            'status' => Helper::shareStatus($this->model->status),
+            'delivery' => Helper::shareOption((new DeliveryRepository()),false),  
         ]);
     }
 }

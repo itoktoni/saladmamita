@@ -21,15 +21,13 @@ class SubscribeRepository extends Subscribe implements MasterInterface
     public function dataRepository()
     {
         $list = Helper::dataColumn($this->datatable, $this->getKeyName());
-        return $this->select($list)
-        ->leftJoin(CustomerFacades::getTable(), CustomerFacades::getKeyName(), 'sales_order_to_id')
-        ->leftJoin(CompanyFacades::getTable(), CompanyFacades::getKeyName(), 'sales_order_from_id');
+        return $this->select($list);
     }
 
     public function userRepository($id)
     {
         $list = Helper::dataColumn($this->datatable, 'order.*');
-        return $this->dataRepository()->where('sales_order_to_email', $id);
+        return $this->dataRepository()->where('sales_langganan_to_email', $id);
     }
 
     public function saveRepository($request)

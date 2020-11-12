@@ -64,38 +64,4 @@ class PageRepository extends Page implements MasterInterface
         return $this->findOrFail($id);
     }
 
-      public static function boot()
-    {
-        parent::boot();
-        parent::saving(function ($model) {
-
-            $file = 'marketing_page_file';
-            if (request()->has($file)) {
-                $image = $model->marketing_page_image;
-                if ($image) {
-                    Helper::removeImage($image, Helper::getTemplate(__CLASS__));
-                }
-
-                $file = request()->file($file);
-                $name = Helper::uploadImage($file, Helper::getTemplate(__CLASS__));
-                $model->marketing_page_image = $name;
-            }
-
-            if ($model->marketing_page_name && empty($model->marketing_page_slug)) {
-                $model->marketing_page_slug = Str::slug($model->marketing_page_name);
-            }
-        });
-
-        parent::deleting(function ($model) {
-            if (request()->has('id')) {
-                $data = $model->getDataIn(request()->get('id'));
-                if ($data) {
-                    foreach ($data as $value) {
-                        Helper::removeImage($value->marketing_page_image, Helper::getTemplate(__CLASS__));
-                    }
-                }
-            }
-        });
-    }
-
 }

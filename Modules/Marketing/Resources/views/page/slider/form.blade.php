@@ -22,9 +22,9 @@
 <div class="form-group">
 
     {!! Form::label('name', 'Link', ['class' => 'col-md-2 control-label']) !!}
-    <div class="col-md-4 {{ $errors->has($form.'link') ? 'has-error' : ''}}">
-        {!! Form::text($form.'link', null, ['class' => 'form-control']) !!}
-        {!! $errors->first($form.'link', '<p class="help-block">:message</p>') !!}
+    <div class="col-md-4 {{ $errors->has($form.'slug') ? 'has-error' : ''}}">
+        {!! Form::text($form.'slug', null, ['class' => 'form-control']) !!}
+        {!! $errors->first($form.'slug', '<p class="help-block">:message</p>') !!}
     </div>
 
     {!! Form::label('name', 'Button', ['class' => 'col-md-2 control-label']) !!}

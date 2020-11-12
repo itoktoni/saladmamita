@@ -18,6 +18,7 @@ use Modules\Finance\Dao\Models\Payment;
 use Modules\Forwarder\Dao\Models\Vendor;
 use Modules\Sales\Dao\Models\OrderDetail;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Modules\Sales\Dao\Facades\OrderFacades;
 
 class Subscribe extends Model
 {
@@ -80,7 +81,7 @@ class Subscribe extends Model
     public $timestamps = true;
     public $incrementing = false;
     public $rules = [
-        'sales_langganan_email' => 'required',
+        'sales_langganan_to_name' => 'required',
     ];
 
     public $with = ['order'];
@@ -92,13 +93,13 @@ class Subscribe extends Model
     public $searching = 'sales_langganan_id';
     public $datatable = [
         'sales_langganan_id' => [true => 'Code'],
-        'sales_langganan_date_order' => [true => 'Delivery Date'],
-        'crm_customer_name' => [false => 'Customer'],
+        'sales_langganan_created_at' => [true => 'Create Order'],
+        'sales_langganan_date_order' => [false => 'Delivery Date'],
         'sales_langganan_from_name' => [true => 'Pickup'],
         'sales_langganan_to_name' => [true => 'Contact'],
         'sales_langganan_to_phone' => [true => 'Phone'],
         'sales_langganan_status' => [true => 'Status'],
-        'sales_langganan_token' => [true => 'Status'],
+        'sales_langganan_token' => [false => 'Token'],
     ];
 
     protected $dates = [
@@ -107,8 +108,9 @@ class Subscribe extends Model
     ];
 
     protected $casts = [
-        'sales_langganan_date_order' => 'datetime:Y-m-d',
-        'sales_langganan_payment_date' => 'datetime:Y-m-d',
+        'sales_langganan_date_order' => 'datetime:d-m-Y',
+        'sales_langganan_payment_date' => 'datetime:d-m-Y',
+        'sales_langganan_created_at' => 'datetime:d-m-Y',
     ];
 
     public $status = [
@@ -205,6 +207,23 @@ class Subscribe extends Model
     public function forwarder()
     {
         return $this->hasOne(Vendor::class, 'forwarder_vendor_id', 'sales_langganan_forwarder_vendor_id');
+    }
+
+    public static function boot(){
+        parent::boot();
+
+        parent::updated(function($model){
+
+            if(request()->has('sales_langganan_status')){
+                 $id = $model->sales_langganan_id;
+                 $data = OrderFacades::where('sales_order_code_reference', $id);
+                 if($data->count() > 0){
+                    $data->update([
+                        'sales_order_status' => request()->get('sales_langganan_status')
+                    ]);
+                 }
+            }
+        });
     }
 
 }

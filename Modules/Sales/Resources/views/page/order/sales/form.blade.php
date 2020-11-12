@@ -170,7 +170,8 @@
         <div class="input-group">
             {!! Form::text('sales_order_payment_date', null, ['class'=>'form-control date']) !!}
             <span class="input-group-btn">
-                <a class="btn btn-danger" target="_blank" href="{{ Helper::files('public/'.$model->sales_order_payment_file) }}">Download</a>
+                <a class="btn btn-danger" target="_blank"
+                    href="{{ Helper::files('public/'.$model->sales_order_payment_file) }}">Download</a>
             </span>
             {!! $errors->first('sales_order_payment_date', '<p class="help-block">:message</p>') !!}
         </div>
@@ -188,9 +189,22 @@
 <div class="form-group">
 
     {!! Form::label('name', 'Catatan Pembayaran', ['class' => 'col-md-2 control-label']) !!}
-    <div class="col-md-10 {{ $errors->has('sales_order_payment_notes') ? 'has-error' : ''}}">
+    <div class="col-md-4 {{ $errors->has('sales_order_payment_notes') ? 'has-error' : ''}}">
         {!! Form::textarea('sales_order_payment_notes', null, ['class' => 'form-control', 'rows' => 3]) !!}
         {!! $errors->first('sales_order_payment_notes', '<p class="help-block">:message</p>') !!}
+    </div>
+
+    {!! Form::label('name', 'Berlangganan', ['class' => 'col-md-2 control-label']) !!}
+    <div class="col-md-4 {{ $errors->has('sales_order_code_reference') ? 'has-error' : ''}}">
+        <div class="input-group">
+            {!! Form::text('sales_order_code_reference', null, ['class'=>'form-control', 'readonly']) !!}
+            <span class="input-group-btn">
+                <a class="btn btn-primary" target="_blank"
+                    href="{{ $model->sales_order_code_reference ? route('sales_subscribe_update', ['code' => $model->sales_order_code_reference]) : '' }}">Link</a>
+            </span>
+            {!! $errors->first('sales_order_code_reference', '<p class="help-block">:message</p>') !!}
+        </div>
+        {!! $errors->first('sales_order_code_reference', '<p class="help-block">:message</p>') !!}
     </div>
 
 </div>

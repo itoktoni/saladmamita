@@ -209,9 +209,9 @@ class OrderController extends Controller
                 'detail' => $data->detail,
                 'banks' => BankFacades::dataRepository()->get(),
             ];
-            $pdf = PDF::loadView(Helper::setViewPrint(__FUNCTION__, $this->folder), $pasing);
-            // return $pdf->download();
-            return $pdf->stream();
+            $pdf = PDF::loadView(Helper::setViewPrint(__FUNCTION__, $this->folder), $pasing)->setPaper('a6', 'potrait');
+            return $pdf->download();
+            // return $pdf->stream();
         }
     }
 }

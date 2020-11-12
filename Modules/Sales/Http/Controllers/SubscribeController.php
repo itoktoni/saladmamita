@@ -2,30 +2,33 @@
 
 namespace Modules\Sales\Http\Controllers;
 
-use PDF;
 use Plugin\Helper;
 use Plugin\Response;
-use Barryvdh\DomPDF\Facade;
-use Barryvdh\DomPDF\PdfFacade;
+use Barryvdh\DomPDF\Facade as PDF;
 use App\Http\Controllers\Controller;
 use App\Http\Services\MasterService;
+use App\Http\Requests\GeneralRequest;
+use App\Dao\Repositories\BranchRepository;
 use App\Dao\Repositories\CompanyRepository;
-use Modules\Sales\Dao\Models\OrderDelivery;
+use Modules\Finance\Dao\Facades\BankFacades;
+use Modules\Sales\Dao\Models\OrderSubscribe;
 use Modules\Sales\Http\Requests\OrderRequest;
 use Modules\Sales\Http\Services\OrderService;
+use Modules\Sales\Dao\Facades\SubscribeFacades;
+use Modules\Sales\Http\Requests\SubscribeRequest;
 use Modules\Finance\Dao\Repositories\TaxRepository;
 use Modules\Finance\Dao\Repositories\TopRepository;
 use Modules\Sales\Dao\Repositories\OrderRepository;
 use Modules\Crm\Dao\Repositories\CustomerRepository;
-use Modules\Finance\Dao\Facades\BankFacades;
+use Modules\Finance\Dao\Repositories\BankRepository;
 use Modules\Item\Dao\Repositories\ProductRepository;
+use Modules\Item\Dao\Repositories\VariantRepository;
 use Modules\Finance\Dao\Repositories\PaymentRepository;
 use Modules\Marketing\Dao\Repositories\PromoRepository;
-use Modules\Sales\Dao\Facades\DeliveryFacades;
-use Modules\Sales\Dao\Repositories\DeliveryRepository;
-use Modules\Sales\Http\Requests\DeliveryRequest;
+use Modules\Sales\Dao\Repositories\SubscribeRepository;
+use Modules\Rajaongkir\Dao\Repositories\DeliveryRepository;
 
-class DeliveryController extends Controller
+class SubscribeController extends Controller
 {
     public $template;
     public static $model;
@@ -35,7 +38,7 @@ class DeliveryController extends Controller
     public function __construct()
     {
         if (self::$model == null) {
-            self::$model = new DeliveryRepository();
+            self::$model = new SubscribeRepository();
             self::$delivery = new OrderRepository();
         }
         $this->template  = Helper::getTemplate(__CLASS__);
@@ -51,48 +54,54 @@ class DeliveryController extends Controller
     {
         $tops = Helper::shareOption((new TopRepository()));
         $product = Helper::shareOption((new ProductRepository()));
+        $variant = Helper::shareOption((new VariantRepository()));
         $tax = Helper::shareOption((new TaxRepository()));
         $promo = Helper::shareOption((new PromoRepository()));
-        $company = Helper::shareOption((new CompanyRepository()));
+        $branch = Helper::shareOption((new BranchRepository()));
+        $bank = Helper::shareOption((new BankRepository()));
         $customers = Helper::shareOption((new CustomerRepository()));
+        $delivery = Helper::shareOption((new DeliveryRepository()));
         $status = Helper::shareStatus(self::$model->status);
 
         $from = $to = ['Please Choose Area'];
-        
+
         $view = [
-            'key'      => self::$model->getKeyName(),
+            'key' => self::$model->getKeyName(),
             'template' => $this->template,
             'tax' => $tax,
             'tops' => $tops,
             'product' => $product,
+            'delivery' => $delivery,
+            'variant' => $variant,
             'status' => $status,
             'promo' => $promo,
             'from' => $from,
             'to' => $to,
-            'company' => $company,
+            'branch' => $branch,
+            'bank' => $bank,
             'customers' => $customers,
         ];
 
         return array_merge($view, $data);
     }
 
-    public function update(OrderService $service, DeliveryRequest $request)
+    public function update(MasterService $service, GeneralRequest $request)
     {
         if (request()->isMethod('POST')) {
-            $data = $service->updated(self::$model, $request->all());
-            $data = $request->all();
+            $data = $service->update(self::$model, $request->all());
+            
             return Response::redirectBack($data);
         }
 
         $data = $service->show(self::$model);
-        $from = Helper::getSingleArea($data->sales_delivery_from_area);
-        $to = Helper::getSingleArea($data->sales_delivery_to_area);
+        $from = Helper::getSingleArea($data->sales_langganan_from_area);
+        $to = Helper::getSingleArea($data->sales_langganan_to_area);
 
-        return view(Helper::setViewUpdate($this->template, $this->folder))->with($this->share([
+        return view(Helper::setViewUpdate())->with($this->share([
             'model'        => $data,
             'from'        => $from,
             'to'        => $to,
-            'detail' => $data->detail,
+            'detail' => $data->order,
         ]));
     }
 
@@ -111,10 +120,10 @@ class DeliveryController extends Controller
     public function data(MasterService $service)
     {
         if (request()->isMethod('POST')) {
-            $datatable = $service->setRaw(['sales_delivery_status'])->datatable(self::$model);
-            $datatable->editColumn('sales_delivery_status', function ($select) {
+            $datatable = $service->setRaw(['sales_langganan_status'])->datatable(self::$model);
+            $datatable->editColumn('sales_langganan_status', function ($select) {
                 return Helper::createStatus([
-                    'value'  => $select->sales_delivery_status,
+                    'value'  => $select->sales_langganan_status,
                     'status' => self::$model->status,
                 ]);
             });
@@ -132,13 +141,11 @@ class DeliveryController extends Controller
     {
         $data = $service->show(self::$model);
         $field = Helper::listData(self::$model->datatable);
-        unset($field['sales_delivery_status']);
+        unset($field['sales_langganan_status']);
         unset($field['rajaongkir_paket_name']);
         unset($field['finance_top_name']);
-        $payment = PaymentRepository::where('finance_payment_sales_delivery_id', $data->sales_delivery_id)->get();
         return view(Helper::setViewShow())->with($this->share([
             'fields' => $field,
-            'payment'   => $payment,
             'model'   => $data,
             'key'   => self::$model->getKeyName()
         ]));
@@ -153,7 +160,7 @@ class DeliveryController extends Controller
                 'master' => $data,
                 'detail' => $data->detail,
             ];
-            $pdf = PdfFacade::loadView(Helper::setViewPrint(__FUNCTION__, $this->folder), $pasing);
+            $pdf = PDF::loadView(Helper::setViewPrint(__FUNCTION__, $this->folder), $pasing);
             return $pdf->download();
             // return $pdf->stream();
         }
@@ -169,7 +176,7 @@ class DeliveryController extends Controller
                 'detail' => $data->detail,
                 'banks'   => BankFacades::dataRepository()->get(),
             ];
-            $pdf = PdfFacade::loadView(Helper::setViewPrint(__FUNCTION__, $this->folder), $pasing);
+            $pdf = PDF::loadView(Helper::setViewPrint(__FUNCTION__, $this->folder), $pasing);
             return $pdf->download();
             // return $pdf->stream();
         }

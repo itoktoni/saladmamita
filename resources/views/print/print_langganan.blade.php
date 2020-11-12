@@ -336,7 +336,7 @@
         position: absolute;
         right: 0;
         text-align: right;
-        top: -30px;
+        top: -50px;
     }
 
     #box h1 {
@@ -375,18 +375,20 @@
     }
 
     #address h4 {
+        margin-top: 30px;
         font-size: 12px;
+        line-height: 15px;
     }
 
     #address p {
-        margin-top: -25px;
-        font-size: 10px;
+        margin-top: -20px;
+        font-size: 12px;
         line-height: 20px;
-        margin-bottom: 50px;
+        margin-bottom: 10px;
     }
 
     #container {
-        margin-top: 30px;
+        margin-top: 50px;
     }
 
     #container table {
@@ -416,7 +418,7 @@
     }
 
     #container table .contact td p {
-        line-height: 1px;
+        line-height: 15px;
         margin-bottom: 0px;
     }
 
@@ -667,11 +669,11 @@ $grand_total = $master->sales_langganan_sum_total;
 
                 <tr>
                     <td align="center" colspan="4">
-                        <strong>Pengiriman Dari</strong>
+                        <strong>Pengiriman {{ $master->branch->branch_name ?? '' }} </strong>
                     </td>
                     <td align="center" colspan="4">
                         <strong>
-                            Tujuan Pengiriman
+                            Tujuan {{ $master->sales_langganan_to_name ?? '' }}
                         </strong>
                     </td>
                 </tr>
@@ -679,27 +681,14 @@ $grand_total = $master->sales_langganan_sum_total;
                 <tr class="contact">
 
                     <td colspan='4'>
-                        <strong>
-                            Area Pengiriman :
-                            {{ $master->branch->branch_name ?? '' }}
-                        </strong>
-                        <p>
-                            {{ $master->branch->branch_address ?? '' }}
-                        </p>
                         <p>
                             {{ Helper::getSingleArea($master->sales_langganan_from_area, true) ?? '' }}
                         </p>
                     </td>
 
                     <td class="address" colspan='4'>
-                        <strong>
-                            {{ $master->sales_langganan_to_name ?? '' }}
-                        </strong>
                         <p>
-                            {{ $master->sales_langganan_to_address ?? '' }}
-                        </p>
-                        <p>
-                            {{ Helper::getSingleArea($master->sales_langganan_to_area, true) ?? '' }}
+                            {{ $master->sales_langganan_to_address ?? '' }} |  {{ Helper::getSingleArea($master->sales_langganan_to_area, true) ?? '' }}
                         </p>
                     </td>
                 </tr>

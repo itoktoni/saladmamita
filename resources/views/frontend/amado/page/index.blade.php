@@ -27,7 +27,7 @@ $(function() {
             <div class="carousel-inner">
                 @foreach($sliders as $slider)
                 <div class="carousel-item {{ $loop->first ? 'active' : '' }}">
-                    <a href="{{ $slider->marketing_slider_link }}">
+                    <a href="{{ $slider->marketing_slider_link ? route('single_slider' , ['slug' => $slider->marketing_slider_slug]) : '' }}">
                         <img data-src="{{ Helper::files('slider/'.$slider->marketing_slider_image) }}" class="d-block h-100 w-100"
                             src="{{ Helper::files('slider/'.$slider->marketing_slider_image) }}" alt="First slide">
                     </a>

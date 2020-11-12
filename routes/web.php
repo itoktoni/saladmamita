@@ -100,7 +100,7 @@ Route::get('language/{locale}', function ($locale) {
 });
 
 Route::get('/', 'PublicController@index')->name('beranda');
-Route::get('/slider/{slider}', 'PublicController@index')->name('single_slider');
+Route::get('/slider/{slug}', 'PublicController@slider')->name('single_slider');
 
 Route::match(['get', 'post'], 'product', 'PublicController@shop')->name('shop');
 Route::get('/product/{type}/{slug}', 'PublicController@shop')->name('filters');

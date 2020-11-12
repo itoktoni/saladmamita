@@ -10,7 +10,7 @@
 
     <style>
     body {
-        margin: 10px;
+        margin: 0px;
     }
 
     table#border {
@@ -196,6 +196,7 @@
 
     #page {
         width: 100%;
+        margin-top:20px;
         position: relative
     }
 
@@ -324,24 +325,27 @@
 
     #description {
         line-height: 0.9px !important;
+        font-size: 10px;
     }
 
     #logo {
-        height: 100px;
-        margin-top: 0px;
+        height: 60px;
+        margin-top: -20px;
+        margin-left: -10px;
     }
 
     #box {
         position: absolute;
         right: 0;
+        font-size: 9px;
         text-align: right;
-        top: -30px;
+        top: -110px;
     }
 
     #box h1 {
         margin-bottom: 0px;
         margin-right: -15px;
-        font-size: 25px;
+        font-size: 10px;
     }
 
     #box h2 {
@@ -349,14 +353,14 @@
         top: 70px;
         right: -3;
         text-align: right;
-        font-size: 12px;
+        font-size: 10px;
     }
 
     #box table {
         position: absolute;
-        top: 90px;
+        top: 88px;
         right: 0px;
-        width: 330px;
+        width: 200px;
         font-size: 10px;
     }
 
@@ -368,27 +372,30 @@
     #address {
         margin-bottom: 20px;
         position: absolute;
-        top: 60px;
+        top: 15px;
         margin-left: 0px;
     }
 
     #address h4 {
-        font-size: 12px;
+        line-height: 10px;
+        font-size: 9px;
     }
 
     #address p {
-        margin-top: -25px;
-        font-size: 10px;
+        margin-top: -18px;
+        font-size: 9px;
         line-height: 20px;
         margin-bottom: 50px;
     }
 
     #container {
-        margin-top: 30px;
+        margin-right: 5px;
+        margin-top: 25px;
     }
 
     #container table {
         width: 100% !important;
+        font-size: 9px;
     }
 
     #container table .destination td {
@@ -401,21 +408,22 @@
     }
 
     #container table .contact strong {
-        font-size: 15px;
+        font-size: 12px;
     }
 
     #container table .person {
-        margin-top: 20px;
+        margin-top: 0px;
     }
 
     #container table .contact td {
-        padding-top: 5px;
-        padding-bottom: 10px;
+        padding-top: 0px;
+        padding-bottom: 0px;
     }
 
     #container table .contact td p {
-        line-height: 1px;
-        margin-bottom: 0px;
+        line-height: 10px;
+        font-size: 10px;
+        margin-top: 5px;
     }
 
     #container table .rest {
@@ -447,25 +455,25 @@
     }
 
     #container table .header .no {
-        width: 25px;
+        width: 5px;
     }
 
     #container table .header .product {
-        width: 350px;
+        width: 100px;
     }
 
     #container table .header .qty {
-        width: 50px;
+        width: 20px;
         text-align: right;
     }
 
     #container table .header .price {
-        width: 100px;
+        width: 30px;
         text-align: right;
     }
 
     #container table .header .total {
-        width: 100px;
+        width: 30px;
         text-align: right;
     }
 
@@ -500,14 +508,18 @@
     }
 
     #container table .item .product h1 {
-        font-size: 12px;
+        font-size: 8px;
+        line-height: 10px;
         margin: 0px;
+        font-weight: bolder;
+        margin-bottom: 5px;
     }
 
     #container table .item .product h2 {
         font-size: 10px;
         font-weight: bold;
         margin: 0px;
+        vertical-align: middle;
     }
 
     #container table .item .product h3 {
@@ -519,7 +531,7 @@
     }
 
     #container table .item .product p {
-        font-size: 10px;
+        font-size: 7px;
         text-align: left;
         margin: 0px;
     }
@@ -537,25 +549,25 @@
     #container table .total_product td {
         text-align: right;
         background-color: #F5F5F5 !important;
-        padding-bottom: 10px;
+        padding-bottom: 5px;
     }
 
     #container table .total_discount td {
         text-align: right;
         background-color: #F5F5F5 !important;
-        padding-bottom: 10px;
+        padding-bottom: 5px;
     }
 
     #container table .total_tax td {
         text-align: right;
         background-color: #F5F5F5 !important;
-        padding-bottom: 10px;
+        padding-bottom: 5px;
     }
 
     #container table .total_sumary td {
         text-align: right;
         background-color: lightgray !important;
-        padding-bottom: 10px;
+        padding-bottom: 5px;
         font-weight: bold;
     }
 
@@ -611,11 +623,10 @@
                 <table>
                     <tr>
                         <td class="head">
-                            Contact Person
+                            No. Order
                         </td>
                         <td>
-                            {{ $master->sales_order_from_name ?? '' }} (
-                            {{ $master->sales_order_from_phone ?? '' }} )
+                            {{ $master->sales_order_id ?? '' }}
                         </td>
                     </tr>
                     <tr>
@@ -639,22 +650,15 @@
         </div>
         <div id="container">
             <table cellpadding="" 5 cellspacing="0" width="100%">
-                <tr>
-                    <td align='left' colspan='8' valign='middle'>
-                        <h1 id="headline">
-                            INVOICE
-                        </h1>
-                    </td>
-                </tr>
                 <tr class="destination">
                     <td colspan='8'>
-                        <strong>Invoiced To : </strong>
+                        <strong>Kepada : </strong>
                     </td>
                 </tr>
                 <tr class="contact">
                     <td colspan='8'>
                         <strong>
-                            {{ $master->customer->crm_customer_name ?? '' }}
+                            {{ $master->sales_order_to_name ?? '' }} ( {{ $master->sales_order_to_phone ?? '' }} )
                         </strong>
                         <p>
                             {{ $master->sales_order_to_address ?? '' }} /
@@ -662,23 +666,12 @@
                         </p>
                     </td>
                 </tr>
-                <tr>
-                    <td colspan="8">
-                        <p>
-                            @php
+                @php
 
-                            $total_delivery = $master->sales_order_sum_product;
-                            $total_discount = $master->sales_order_sum_discount;
-                            $grand_total = $master->sales_order_sum_total;
-                            @endphp
-
-                            <strong style="font-size: 12px;">
-                                Total Amount : Rp {{ Helper::createRupiah($grand_total) }} ( <span
-                                    style="font-style: italic;">{{ Helper::terbilang($grand_total) }} rupiah. </span>)
-                            </strong>
-                        </p>
-                    </td>
-                </tr>
+                $total_delivery = $master->sales_order_sum_product;
+                $total_discount = $master->sales_order_sum_discount;
+                $grand_total = $master->sales_order_sum_total;
+                @endphp
 
                 <tr class="header">
                     <td class="no">
@@ -708,7 +701,8 @@
                         </h1>
                         @foreach($item->variant->where('sales_order_detail_variant_qty','>', 0) as $variant)
                         <p>
-                            - |{{ $variant->sales_order_detail_variant_qty }}| {{ $variant->variant->item_variant_name }}
+                            - <strong>({{ $variant->sales_order_detail_variant_qty }})</strong>
+                            {{ $variant->variant->item_variant_name }}
                         </p>
                         @endforeach
                     </td>
@@ -725,11 +719,8 @@
                 @endforeach
 
                 <tr class="total_product">
-                    <td class="product" colspan="6">
+                    <td class="product" colspan="7">
                         Total Product
-                    </td>
-                    <td class="qty">
-                        {{ $detail->sum('sales_order_detail_qty') ?? '' }}
                     </td>
                     <td class="total">
                         {{ Helper::createRupiah($total_delivery) ?? '' }}
@@ -738,15 +729,12 @@
 
                 @if (!empty($master->sales_order_discount_value))
                 <tr class="total_discount">
-                    <td class="product" colspan="6">
+                    <td class="product" colspan="7">
                         {{ ucfirst($master->sales_order_discount_name) ?? '' }} : =
                         Total Discount
                     </td>
-                    <td class="qty">
-                        {{ Helper::createRupiah($master->sales_order_discount_value) ?? '' }}
-                    </td>
                     <td class="total">
-                        -{{ Helper::createRupiah($total_discount) ?? '' }}
+                        -{{ Helper::createRupiah($master->sales_order_discount_value) ?? '' }}
                     </td>
                 </tr>
                 @endif

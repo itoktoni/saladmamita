@@ -10,31 +10,13 @@
         {!! $errors->first($form.'name', '<p class="help-block">:message</p>') !!}
     </div>
 
-    {!! Form::label('name', 'Image', ['class' => 'col-md-2 control-label']) !!}
-    <div class="col-md-4 {{ $errors->has($form.'file') ? 'has-error' : ''}}">
-        <input type="file" name="{{ $form.'file' }}"
-            class="{{ $errors->has($form.'file') ? 'has-error' : ''}} btn btn-default btn-sm btn-block">
-        {!! $errors->first($form.'file', '<p class="help-block">:message</p>') !!}
+    {!! Form::label('name', 'Metode Delivery', ['class' => 'col-md-2 control-label']) !!}
+    <div class="col-md-4 {{ $errors->has('marketing_page_status') ? 'has-error' : ''}}">
+        {{ Form::select('marketing_page_status', [0 => 'Backend', 1 => 'Frontend'], null, ['class'=> 'form-control']) }}
+        {!! $errors->first('marketing_page_status', '<p class="help-block">:message</p>') !!}
     </div>
 
 </div>
-
-<div class="form-group">
-
-    {!! Form::label('name', 'Button', ['class' => 'col-md-2 control-label']) !!}
-    <div class="col-md-4 {{ $errors->has($form.'button') ? 'has-error' : ''}}">
-        {!! Form::text($form.'button', null, ['class' => 'form-control']) !!}
-        {!! $errors->first($form.'button', '<p class="help-block">:message</p>') !!}
-    </div>
-
-    {!! Form::label('name', 'Link', ['class' => 'col-md-2 control-label']) !!}
-    <div class="col-md-4 {{ $errors->has($form.'link') ? 'has-error' : ''}}">
-        {!! Form::text($form.'link', null, ['class' => 'form-control']) !!}
-        {!! $errors->first($form.'link', '<p class="help-block">:message</p>') !!}
-    </div>
-
-</div>
-
 
 <div class="form-group">
     {!! Form::label('name', 'Description Page', ['class' => 'col-md-2 control-label']) !!}

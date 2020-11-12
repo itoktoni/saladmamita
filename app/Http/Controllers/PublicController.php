@@ -6,7 +6,6 @@ use App;
 use App\Dao\Facades\BranchFacades;
 use App\Dao\Repositories\BranchRepository;
 use App\Dao\Repositories\TeamRepository;
-use App\Http\Services\EcommerceService;
 use Barryvdh\DomPDF\Facade as PDF;
 use Carbon\Carbon;
 use Darryldecode\Cart\CartCondition;
@@ -14,7 +13,6 @@ use Darryldecode\Cart\Facades\CartFacade as Cart;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
@@ -36,12 +34,11 @@ use Modules\Marketing\Dao\Facades\LanggananFacades;
 use Modules\Marketing\Dao\Repositories\ContactRepository;
 use Modules\Marketing\Dao\Repositories\HolidayRepository;
 use Modules\Marketing\Dao\Repositories\LanggananRepository;
+use Modules\Marketing\Dao\Repositories\PageRepository;
 use Modules\Marketing\Dao\Repositories\PromoRepository;
 use Modules\Marketing\Dao\Repositories\SliderRepository;
 use Modules\Marketing\Dao\Repositories\SosmedRepository;
 use Modules\Marketing\Emails\ContactEmail;
-use Modules\Procurement\Dao\Repositories\PurchasePrepareRepository;
-use Modules\Procurement\Emails\CreateOrderEmail as EmailsCreateOrderEmail;
 use Modules\Rajaongkir\Dao\Repositories\DeliveryRepository;
 use Modules\Rajaongkir\Dao\Repositories\ProvinceRepository;
 use Modules\Sales\Dao\Facades\OrderFacades;
@@ -49,7 +46,6 @@ use Modules\Sales\Dao\Facades\SubscribeFacades;
 use Modules\Sales\Dao\Models\Area;
 use Modules\Sales\Dao\Models\City;
 use Modules\Sales\Dao\Models\Province;
-use Modules\Sales\Dao\Repositories\CourierRepository;
 use Modules\Sales\Dao\Repositories\OrderRepository;
 use Modules\Sales\Dao\Repositories\SubscribeRepository;
 use Modules\Sales\Http\Services\LanggananService;
@@ -68,17 +64,19 @@ class PublicController extends Controller
         $sosmed = Helper::createOption(new SosmedRepository(), false, true);
         $category = Helper::createOption(new CategoryRepository(), false, true);
         $product = Helper::createOption(new ProductRepository(), false, true);
+        $page = Helper::createOption(new PageRepository(), false, true);
 
         $view = [
             'sosmed' => $sosmed,
             'category' => $category,
             'product' => $product,
+            'page' => $page,
         ];
 
         return array_merge($view, $data);
     }
 
-    public function index($slider = false)
+    public function index($slug = false)
     {
         if (config('website.application')) {
             return redirect()->route('login');
@@ -329,22 +327,39 @@ class PublicController extends Controller
         $data = $order->dataRepository()->select('*')->where('sales_order_to_phone', auth()->user()->phone)->orderBy('sales_order_date_order', 'DESC')->get();
         return View(Helper::setViewFrontend(__FUNCTION__))->with($this->share([
             'status' => Helper::shareStatus($order->status),
-            'order' => $data
+            'order' => $data,
         ]));
     }
 
     public function page($slug = false)
     {
-        if ($slug && Cache::has('marketing_page_api')) {
-            $page = Cache::get('marketing_page_api');
+        if ($slug) {
+            $page = new PageRepository();
             $data = $page->where('marketing_page_slug', $slug)->first();
             if (!$data) {
                 abort(404, 'Page not found !');
             }
 
-            return View(Helper::setViewFrontend('page'))->with([
+            return View(Helper::setViewFrontend('page'))->with($this->share([
                 'data' => $data,
-            ]);
+            ]));
+        }
+
+        abort(404, 'Page not found !');
+    }
+
+    public function slider($slug = false)
+    {
+        if ($slug) {
+            $slider = new SliderRepository();
+            $data = $slider->dataRepository()->where('marketing_slider_slug', $slug)->first();
+            if (!$data) {
+                abort(404, 'Page not found !');
+            }
+
+            return View(Helper::setViewFrontend('slider'))->with($this->share([
+                'data' => $data,
+            ]));
         }
 
         abort(404, 'Page not found !');
@@ -620,8 +635,7 @@ class PublicController extends Controller
                 return redirect()->back()->withErrors($validate)->withInput()->with([
                     'area' => $area,
                 ]);
-            }
-            else{
+            } else {
                 return redirect()->route('checkout', ['token' => $check['data']->sales_order_token->toString()]);
             }
         }
@@ -792,8 +806,6 @@ class PublicController extends Controller
             }
         }
 
-       
-
         if (Auth::check()) {
             $area = Helper::getSingleArea(auth()->user()->area, false, true);
         }
@@ -876,21 +888,21 @@ class PublicController extends Controller
         if (request()->isMethod('POST')) {
             $request = request()->all();
             $rules = [
-                'sales_order_payment_person' => 'required',
-                'code' => 'required|exists:sales_order,sales_order_id',
-                'sales_order_payment_person' => 'required',
-                'sales_order_payment_phone' => 'required',
-                'sales_order_payment_value' => 'required',
-                'sales_order_payment_email' => 'required|email',
-                'sales_order_payment_date' => 'required',
+                'payment_person' => 'required',
+                'code' => 'required',
+                'payment_person' => 'required',
+                'payment_phone' => 'required',
+                'payment_value' => 'required',
+                'payment_email' => 'required|email',
+                'payment_date' => 'required',
                 'files' => 'required|image|mimes:jpeg,png,jpg|max:2048',
             ];
-
+            
             $message = [
-                'sales_order_payment_person.required' => 'Nama Pengirim Harus Diisi',
-                'sales_order_payment_value.required' => 'Jumlah Pembayaran Harus Diisi',
+                'payment_person.required' => 'Nama Pengirim Harus Diisi',
+                'payment_value.required' => 'Jumlah Pembayaran Harus Diisi',
                 'code.required' => 'No. Order Harus Diisi',
-                'code.exists' => 'No. Order Tidak',
+                // 'code.exists' => 'No. Order Tidak',
                 'files.required' => 'Bukti Transfer Harus Upload',
             ];
 
@@ -900,257 +912,73 @@ class PublicController extends Controller
                 return redirect()->back()->withErrors($validate)->withInput();
             }
 
-            $update = OrderFacades::showRepository($request['code']);
-            $check['status'] = false;
-            if ($update) {
+            if (OrderFacades::find($request['code'])) {
 
-                $file = 'files';
-                $name = null;
-                if (request()->has($file)) {
-                    $image = $update->item_product_image;
-                    if ($image) {
-                        Helper::removeImage($image, Helper::getTemplate(__CLASS__));
+                $update = OrderFacades::showRepository($request['code']);
+                $check['status'] = false;
+                if ($update) {
+
+                    $file = 'files';
+                    $name = null;
+                    if (request()->has($file)) {
+
+                        $file = request()->file($file);
+                        $name = Helper::uploadImage($file, Helper::getTemplate(__CLASS__));
+
+                        $update->item_product_image = $name;
                     }
+                    
+                    $request['sales_order_payment_person'] = $request['payment_person'];
+                    $request['sales_order_payment_bank_to_id'] = $request['payment_bank'];
+                    $request['sales_order_payment_date'] = $request['payment_date'];
+                    $request['sales_order_payment_notes'] = $request['payment_notes'];
 
-                    $file = request()->file($file);
-                    $name = Helper::uploadImage($file, Helper::getTemplate(__CLASS__));
-
-                    $update->item_product_image = $name;
+                    $request['sales_order_term_top'] = 'CASH';
+                    $request['sales_order_payment_file'] = $name;
+                    $check = OrderFacades::updateRepository($request['code'], $request);
                 }
 
-                $request['sales_order_term_top'] = 'CASH';
-                $request['sales_order_payment_file'] = $name;
-                $check = OrderFacades::updateRepository($request['code'], $request);
+                if ($check['status']) {
+                    return redirect()->route('confirmation')->with('success', 'Data has been Success');
+                }
+            } else if (SubscribeFacades::find($request['code'])) {
+                $update = SubscribeFacades::showRepository($request['code']);
+                $check['status'] = false;
+                if ($update) {
+
+                    $file = 'files';
+                    $name = null;
+                    if (request()->has($file)) {
+
+                        $file = request()->file($file);
+                        $name = Helper::uploadImage($file, Helper::getTemplate(__CLASS__));
+
+                        $update->item_product_image = $name;
+                    }
+
+                    $request['sales_langganan_payment_person'] = $request['payment_person'];
+                    $request['sales_langganan_payment_bank_to_id'] = $request['payment_bank'];
+                    $request['sales_langganan_payment_date'] = $request['payment_date'];
+                    $request['sales_order_payment_notes'] = $request['payment_notes'];
+
+                    $request['sales_langganan_term_top'] = 'CASH';
+                    $request['sales_langganan_payment_file'] = $name;
+                    $check = SubscribeFacades::updateRepository($request['code'], $request);
+                }
+
+                if ($check['status']) {
+                    return redirect()->route('confirmation')->with('success', 'Data has been Success');
+                }
+            } else {
+                $validate->errors()->add('code', 'Nomer Order tidak Terdaftar !');
+                return redirect()->back()->withErrors($validate)->withInput();
             }
 
-            if ($check['status']) {
-                return redirect()->route('confirmation')->with('success', 'Data has been Success');
-            }
         }
 
         return View(Helper::setViewFrontend(__FUNCTION__))->with($this->share([
             'bank' => Helper::shareOption($bank, false, true)->pluck('finance_bank_name', 'finance_bank_name'),
         ]));
-    }
-
-    public function checkout2(EcommerceService $service)
-    {
-        $address = null;
-        $email = null;
-        $phone = null;
-        $notes = null;
-        $name = null;
-        $postcode = null;
-        $province = null;
-
-        $city = [];
-        $location = [];
-        $ongkir = [];
-
-        $list_city = [];
-        $list_location = [];
-        $order = new OrderRepository();
-        $account = Helper::shareOption((new BankRepository()), false, true);
-        $data_courier = Helper::shareOption((new CourierRepository()), false, true, false);
-        $courier = $data_courier->pluck('rajaongkir_courier_name', 'rajaongkir_courier_code')->prepend('- Select Courier -', '')->all();
-        if (Auth::check()) {
-            $address = Auth::user()->address;
-            $phone = Auth::user()->phone;
-            $email = Auth::user()->email;
-            $name = Auth::user()->name;
-            $postcode = Auth::user()->postcode;
-
-            $province = Auth::user()->province;
-            $city = Auth::user()->city;
-            $location = Auth::user()->location;
-        }
-
-        if ($province) {
-            $list_city = City::where('rajaongkir_city_province_id', $province)->get()->sortBy('rajaongkir_city_name')->pluck('rajaongkir_city_name', 'rajaongkir_city_id')->toArray();
-        }
-
-        if ($city) {
-            $list_location = Area::where('rajaongkir_area_city_id', $city)->get()->sortBy('rajaongkir_area_name')->pluck('rajaongkir_area_name', 'rajaongkir_area_id')->toArray();
-        }
-
-        if (Cache::has('province')) {
-            $list_province = Cache::get('province');
-        } else {
-            $list_province = Cache::rememberForever('province', function () {
-                return Province::get()->sortBy('province')->pluck('rajaongkir_province_name', 'rajaongkir_province_id')->prepend(' Choose Province', '0')->toArray();
-            });
-        }
-
-        $validate = [];
-        if (request()->isMethod('POST')) {
-            $discount = Cart::getConditions()->first();
-            $request = request()->all();
-            $validator1 = Validator::make($request, [
-                'sales_order_rajaongkir_courier' => 'required',
-                'sales_order_rajaongkir_ongkir' => 'required',
-                'sales_order_rajaongkir_city_id' => 'required',
-            ], [], [
-                'sales_order_rajaongkir_courier' => 'Expedition Harus Dipilih',
-                'sales_order_rajaongkir_ongkir' => 'Ongkir Harus Dipilih',
-                'sales_order_rajaongkir_city_id' => 'City Harus Dipilih',
-            ]);
-
-            $address = $request['sales_order_rajaongkir_address'];
-            $email = $request['sales_order_email'];
-            $name = $request['sales_order_rajaongkir_name'];
-            $phone = $request['sales_order_rajaongkir_phone'];
-            $postcode = $request['sales_order_rajaongkir_postcode'];
-
-            $province = $request['sales_order_rajaongkir_province_id'] ?? null;
-            $city = $request['sales_order_rajaongkir_city_id'] ?? null;
-            $location = $request['sales_order_rajaongkir_area_id'] ?? null;
-
-            if ($validator1->fails()) {
-                return View(Helper::setViewFrontend(__FUNCTION__))->with([
-                    'address' => $address,
-                    'email' => $email,
-                    'phone' => $phone,
-                    'name' => $name,
-                    'account' => $account,
-                    'postcode' => $postcode,
-                    'province' => $province,
-                    'city' => $city,
-                    'location' => $location,
-                    'list_city' => $list_city,
-                    'list_location' => $list_location,
-                    'list_province' => $list_province,
-                    'courier' => $courier,
-                    'ongkir' => $ongkir,
-                ])->withErrors($validator1);
-            }
-
-            $saveOngkir = 0;
-            if (request()->has('sales_order_rajaongkir_ongkir')) {
-                $post_to = $location;
-                $post_weight = request()->get('sales_order_rajaongkir_weight');
-                $post_courier = request()->get('sales_order_rajaongkir_courier');
-                $response = Curl::to(route('ongkir'))->withData([
-                    'to' => $post_to,
-                    'weight' => $post_weight,
-                    'courier' => $post_courier,
-                ])->post();
-                $json = json_decode($response);
-                if (isset($json) && !empty($json)) {
-                    $int = 0;
-                    $service = $request['sales_order_rajaongkir_ongkir'];
-                    $saveOngkir = collect($json)->where('service', $service)->first()->cost ?? 0;
-                    $ongkir[''] = 'Choose Ongkir';
-                    foreach ($json as $value) {
-                        $ongkir[$value->service] = $value->service . ' ( ' . $value->description . ' ) [ ' . $value->etd . ' ] - ' . $value->price;
-                    }
-                }
-            }
-
-            $request['sales_order_rajaongkir_ongkir'] = $saveOngkir;
-            if ($discount) {
-                $request['sales_order_marketing_promo_code'] = $discount->getName();
-                $request['sales_order_marketing_promo_name'] = $discount->getAttributes()['name'];
-                $request['sales_order_marketing_promo_value'] = abs($discount->getValue());
-            }
-
-            $rules = [
-                'sales_order_rajaongkir_province_id' => 'required',
-                'sales_order_rajaongkir_city_id' => 'required',
-                'sales_order_rajaongkir_area_id' => 'required',
-                'sales_order_rajaongkir_courier' => 'required',
-                'sales_order_rajaongkir_ongkir' => 'required|numeric',
-                'sales_order_rajaongkir_address' => 'required',
-                'sales_order_email' => 'required|email',
-                'sales_order_rajaongkir_name' => 'required',
-                'sales_order_rajaongkir_phone' => 'required',
-                'sales_order_rajaongkir_weight' => 'required',
-                'sales_order_rajaongkir_courier' => 'required',
-                'sales_order_rajaongkir_ongkir' => 'required',
-            ];
-            $request['sales_order_total'] = Cart::getTotal() + $saveOngkir;
-            $validate = Validator::make($request, $rules, $order->custom_attribute);
-            $check = $order->saveRepository($request);
-            $id = $check['data']->sales_order_id;
-            foreach (Cart::getContent() as $item) {
-                $stock = DB::table('view_stock_product')->where('id', $item->attributes['option'])->first();
-                $price_real = $item->price + $item->quantity;
-
-                $tax_name = $tax_value = null;
-                if (config('website.tax')) {
-                    $tax_name = $item->getConditions()->getName();
-                    $tax_value = $item->getConditions()->getValue() * $item->quantity;
-                    $price_real = ($item->price * $item->quantity) + $tax_value;
-                }
-
-                DB::table('sales_order_detail')->insert([
-                    'sales_order_detail_sales_order_id' => $id,
-                    'sales_order_detail_item_product_id' => $item->attributes['product'],
-                    'sales_order_detail_qty_order' => $item->quantity,
-                    'sales_order_detail_price_order' => $item->price,
-                    'sales_order_detail_total_order' => $price_real,
-                    'sales_order_detail_option' => $stock->id,
-                    'sales_order_detail_item_size' => $stock->size,
-                    'sales_order_detail_tax_name' => $tax_name,
-                    'sales_order_detail_tax_value' => $tax_value,
-                    'sales_order_detail_item_color' => $stock->color,
-                    'sales_order_detail_gram' => $item->attributes['gram'],
-                    'sales_order_detail_discount' => $item->attributes['discount'],
-                    'sales_order_detail_price_real' => $item->price + $item->attributes['discount'],
-                ]);
-
-                if (Cart::getContent()->contains('id', $item->id)) {
-                    Cart::remove($item->id);
-                    if (Cart::isEmpty()) {
-                        Cart::clearCartConditions();
-                    }
-                }
-            }
-
-            $data = $order->showRepository($id, ['customer', 'forwarder', 'detail', 'detail.product']);
-
-            return redirect()->back()->with(['success' => true]);
-        }
-
-        return View(Helper::setViewFrontend(__FUNCTION__))->with([
-            'address' => $address,
-            'email' => $email,
-            'phone' => $phone,
-            'name' => $name,
-            'account' => $account,
-            'postcode' => $postcode,
-            'province' => $province,
-            'city' => $city,
-            'location' => $location,
-            'list_province' => $list_province,
-            'list_city' => $list_city,
-            'list_location' => $list_location,
-            'courier' => $courier,
-            'ongkir' => $ongkir,
-        ])->withErrors($validate);
-    }
-
-    public function email($id)
-    {
-        // $order = new OrderRepository();
-        // $data = $order->showRepository($id, ['customer', 'forwarder', 'detail', 'detail.product']);
-        // return new CreateOrderEmail($data);
-
-        $order = new PurchasePrepareRepository();
-        $data = $order->showRepository($id, ['vendor', 'detail', 'detail.product']);
-        return new EmailsCreateOrderEmail($data);
-
-        // $prepare_order = new PurchasePrepareRepository();
-        // $prepare_order_data = $prepare_order->dataRepository()->where('purchase_status', 3)->whereNull('purchase_sent_date')->limit(1)->get();
-        // if ($prepare_order_data) {
-
-        //     foreach ($prepare_order_data as $prepare_order_item) {
-
-        //         $data = $prepare_order->showRepository($prepare_order_item->purchase_id, ['vendor', 'detail', 'detail.product']);
-        //         Mail::to([$data->vendor->procurement_vendor_email, config('website.warehouse')])->send(new EmailsCreateOrderEmail($data));
-        //         $data->purchase_sent_date = date('Y-m-d H:i:s');
-        //         $data->save();
-        //     }
-        // }
     }
 
     public function branch()

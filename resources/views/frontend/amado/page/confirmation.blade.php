@@ -68,15 +68,15 @@
 
                     <div class="row form-group">
                         <div class="col-md-6">
-                            <input class="form-control {{ $errors->has('sales_order_payment_person') ? 'error' : ''}}"
-                                name="sales_order_payment_person" type="text"
-                                value="{{ old('sales_order_payment_person') ?? '' }}" placeholder="Nama Pengirim">
+                            <input class="form-control {{ $errors->has('payment_person') ? 'error' : ''}}"
+                                name="payment_person" type="text"
+                                value="{{ old('payment_person') ?? '' }}" placeholder="Nama Pengirim">
 
-                            {!! $errors->first('sales_order_payment_person', '<p class="help-block">:message</p>') !!}
+                            {!! $errors->first('payment_person', '<p class="help-block">:message</p>') !!}
                         </div>
                         <div class="col-md-6">
-                            {{ Form::select('sales_order_to_area', $bank, null, ['id' => 'location','class'=> $errors->has('sales_order_to_area') ? 'form-control form-control-sm is-invalid' : 'form-control form-control-sm']) }}
-                            {!! $errors->first('finance_payment_email', '<p class="help-block">:message</p>') !!}
+                            {{ Form::select('payment_bank', $bank, null, ['id' => 'location','class'=> $errors->has('payment_bank') ? 'form-control form-control-sm is-invalid' : 'form-control form-control-sm']) }}
+                            {!! $errors->first('payment_bank', '<p class="help-block">:message</p>') !!}
                         </div>
 
                     </div>
@@ -85,19 +85,19 @@
 
                         <div class="col-md-6">
                             <input type="text"
-                                class="form-control {{ $errors->has('sales_order_payment_email') ? 'error' : ''}}"
-                                name="sales_order_payment_email" value="{{ old('sales_order_payment_email') ?? '' }}"
+                                class="form-control {{ $errors->has('payment_email') ? 'error' : ''}}"
+                                name="payment_email" value="{{ old('payment_email') ?? '' }}"
                                 placeholder="Email">
-                            {!! $errors->first('sales_order_payment_email', '<p class="help-block">:message</p>') !!}
+                            {!! $errors->first('payment_email', '<p class="help-block">:message</p>') !!}
                         </div>
 
                         <div class="col-md-6">
                             <input type="text"
-                                class="form-control {{ $errors->has('sales_order_payment_phone') ? 'error' : ''}}"
-                                name="sales_order_payment_phone"
-                                value="{{ old('sales_order_payment_phone') ?? $order->sales_order_email ?? '' }}"
+                                class="form-control {{ $errors->has('payment_phone') ? 'error' : ''}}"
+                                name="payment_phone"
+                                value="{{ old('payment_phone') ?? $order->email ?? '' }}"
                                 placeholder="Phone">
-                            {!! $errors->first('sales_order_payment_phone', '<p class="help-block">:message</p>') !!}
+                            {!! $errors->first('payment_phone', '<p class="help-block">:message</p>') !!}
                         </div>
 
 
@@ -109,16 +109,16 @@
 
                         <div class="col-md-6">
                             <input
-                                class="form-control date {{ $errors->has('sales_order_payment_date') ? 'error' : ''}}"
-                                name="sales_order_payment_date" type="text"
-                                value="{{ old('sales_order_payment_date') ?? date('Y-m-d') }}"
+                                class="form-control date {{ $errors->has('payment_date') ? 'error' : ''}}"
+                                name="payment_date" type="text"
+                                value="{{ old('payment_date') ?? date('Y-m-d') }}"
                                 placeholder="Payment Date">
-                            {!! $errors->first('sales_order_payment_date', '<p class="help-block">:message</p>') !!}
+                            {!! $errors->first('payment_date', '<p class="help-block">:message</p>') !!}
                         </div>
 
                         <div class="col-md-6">
                             <input class="form-control {{ $errors->has('code') ? 'error' : ''}}" name="code" type="text"
-                                value="{{ old('code') ?? $order->sales_order_id ?? '' }}" placeholder="Order No.">
+                                value="{{ old('code') ?? $order->id ?? '' }}" placeholder="Order No.">
                             {!! $errors->first('code', '<p class="help-block">:message</p>')
                             !!}
                         </div>
@@ -129,11 +129,11 @@
 
                         <div class="col-md-6">
                             <input type="text"
-                                class="form-control money {{ $errors->has('sales_order_payment_value') ? 'error' : ''}}"
-                                name="sales_order_payment_value"
-                                value="{{ old('sales_order_payment_value') ?? $order->sales_order_total ?? '' }}"
+                                class="form-control money {{ $errors->has('payment_value') ? 'error' : ''}}"
+                                name="payment_value"
+                                value="{{ old('payment_value') ?? $order->total ?? '' }}"
                                 placeholder="Payment Amount">
-                            {!! $errors->first('sales_order_payment_value', '<p class="help-block">:message</p>') !!}
+                            {!! $errors->first('payment_value', '<p class="help-block">:message</p>') !!}
                         </div>
 
                         <div class="col-md-6">
@@ -146,10 +146,10 @@
                     <div class="row form-group">
 
                         <div class="col-md-12">
-                            <textarea class="form-control {{ $errors->has('sales_order_payment_notes') ? 'error' : ''}}"
-                                name="sales_order_payment_notes" placeholder="Notes" cols="30"
-                                rows="2">{{ old('sales_order_payment_notes') ?? $order->sales_order_rajaongkir_notes ?? '' }}</textarea>
-                            {!! $errors->first('sales_order_payment_notes', '<p class="help-block">:message</p>') !!}
+                            <textarea class="form-control {{ $errors->has('payment_notes') ? 'error' : ''}}"
+                                name="payment_notes" placeholder="Notes" cols="30"
+                                rows="2">{{ old('payment_notes') ?? $order->rajaongkir_notes ?? '' }}</textarea>
+                            {!! $errors->first('payment_notes', '<p class="help-block">:message</p>') !!}
                         </div>
                     </div>
                     <hr>
