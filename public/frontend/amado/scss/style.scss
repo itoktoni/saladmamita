@@ -919,21 +919,24 @@ img {
             margin-bottom: 170px;
             .carousel-indicators {
                 margin: 0 7.5px;
-                bottom: -165px;
+                bottom: -80px;
+                margin-left: 0px;
+                padding-left: 0px;
+                justify-content: start;
+
                 @media #{$breakpoint-lg} {
-                    bottom: -105px;
+                    bottom: -80px;
                 }
                 @media #{$breakpoint-md} {
-                    bottom: -105px;
+                    bottom: -80px;
                 }
                 @media #{$breakpoint-xs} {
-                    bottom: -95px;
+                    bottom: -70px;
                 }
                 li {
-                    @include flex(0 0 25%);
-                    width: 25%;
-                    min-width: 25%;
-                    height: 140px;
+                    width: 50px;
+                    min-width: 50px;
+                    height: 50px;
                     background-position: center center;
                     background-size: cover;
                     border: 2px solid transparent;

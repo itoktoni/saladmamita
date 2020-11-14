@@ -1082,8 +1082,8 @@ class PublicController extends Controller
 
             $message = [
                 'detail.temp_product_qty.required' => 'Qty Harus Diisi !',
-                'detail.temp_product_qty.numeric' => 'Qty Harus Angka !',
                 'detail.temp_product_qty.min' => 'Qty Minimal ' . $product->item_product_min_order . ' !',
+                'detail.temp_product_qty.numeric' => 'Qty Harus Angka !',
             ];
 
             if (request()->exists('variant')) {
@@ -1123,9 +1123,10 @@ class PublicController extends Controller
         // $product->item_product_counter = $product->item_product_counter + 1;
         // $product->save();
         $product_image = $data_product->getImageDetail($product->item_product_id) ?? [];
-
+        $variants = $data_product->variant($product->item_product_id) ?? [];
         return View(Helper::setViewFrontend(__FUNCTION__))->with($this->share([
             'item' => $product,
+            'variants' => $variants,
             'images' => $product_image,
         ]));
     }

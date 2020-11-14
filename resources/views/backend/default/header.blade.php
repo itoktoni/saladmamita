@@ -121,7 +121,6 @@
                     Auth::user()->group_user)
                     @php
                     $open_route = route('route');
-                    $logout = route('logout');
                     @endphp
                     <li>
                         <div role="menuitem" tabindex="-1" class="header-menu"
@@ -132,7 +131,7 @@
                     @endif
                     <li>
                         <div id="logout" class="header-menu" role="menuitem" tabindex="-1"
-                            onclick="location.href ='{{ $logout }}';">&nbsp;<i class="fa fa-power-off"></i>
+                            onclick="location.href ='{{ route('logout') }}';">&nbsp;<i class="fa fa-power-off"></i>
                             &nbsp;
                             Logout</div>
                     </li>

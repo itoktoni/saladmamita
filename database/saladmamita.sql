@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50724
 File Encoding         : 65001
 
-Date: 2020-11-10 14:44:09
+Date: 2020-11-12 16:47:17
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -140,11 +140,6 @@ INSERT INTO `core_actions` VALUES ('finance_tax_update', 'finance_tax', 'Update 
 INSERT INTO `core_actions` VALUES ('finance_tax_delete', 'finance_tax', 'Delete Tax', null, 'finance_tax/delete', 'Tax', 'delete', '0', '0', '1', '\\Modules\\Finance\\Http\\Controllers\\TaxController', null);
 INSERT INTO `core_actions` VALUES ('finance_tax_data', 'finance_tax', 'Data Tax', null, 'finance_tax/data', 'Tax', 'data', '0', '1', '1', '\\Modules\\Finance\\Http\\Controllers\\TaxController', null);
 INSERT INTO `core_actions` VALUES ('finance_tax_show', 'finance_tax', 'Show Tax', null, 'finance_tax/show', 'Tax', 'show', '0', '0', '1', '\\Modules\\Finance\\Http\\Controllers\\TaxController', null);
-INSERT INTO `core_actions` VALUES ('company_create', 'company', 'Create Company', null, 'company/create', 'Company', 'create', '0', '1', '1', '\\App\\Http\\Controllers\\CompanyController', null);
-INSERT INTO `core_actions` VALUES ('company_update', 'company', 'Update Company', null, 'company/update', 'Company', 'update', '0', '0', '1', '\\App\\Http\\Controllers\\CompanyController', null);
-INSERT INTO `core_actions` VALUES ('company_delete', 'company', 'Delete Company', null, 'company/delete', 'Company', 'delete', '0', '0', '1', '\\App\\Http\\Controllers\\CompanyController', null);
-INSERT INTO `core_actions` VALUES ('company_data', 'company', 'Data Company', null, 'company/data', 'Company', 'data', '0', '1', '1', '\\App\\Http\\Controllers\\CompanyController', null);
-INSERT INTO `core_actions` VALUES ('company_show', 'company', 'Show Company', null, 'company/show', 'Company', 'show', '0', '0', '1', '\\App\\Http\\Controllers\\CompanyController', null);
 INSERT INTO `core_actions` VALUES ('crm_customer_create', 'crm_customer', 'Create Customer', null, 'crm_customer/create', 'Customer', 'create', '0', '1', '1', '\\Modules\\Crm\\Http\\Controllers\\CustomerController', null);
 INSERT INTO `core_actions` VALUES ('crm_customer_update', 'crm_customer', 'Update Customer', null, 'crm_customer/update', 'Customer', 'update', '0', '0', '1', '\\Modules\\Crm\\Http\\Controllers\\CustomerController', null);
 INSERT INTO `core_actions` VALUES ('crm_customer_delete', 'crm_customer', 'Delete Customer', null, 'crm_customer/delete', 'Customer', 'delete', '0', '0', '1', '\\Modules\\Crm\\Http\\Controllers\\CustomerController', null);
@@ -267,35 +262,11 @@ INSERT INTO `core_actions` VALUES ('sales_delivery_data', 'sales_delivery', 'Dat
 INSERT INTO `core_actions` VALUES ('sales_delivery_show', 'sales_delivery', 'Show Delivery', null, 'sales_delivery/show', 'Delivery', 'show', '0', '0', '1', '\\Modules\\Sales\\Http\\Controllers\\DeliveryController', null);
 INSERT INTO `core_actions` VALUES ('sales_delivery_print_do', 'sales_delivery', 'Print Do', null, 'sales_delivery/print_do', 'Delivery', 'print_do', '0', '0', '1', '\\Modules\\Sales\\Http\\Controllers\\DeliveryController', null);
 INSERT INTO `core_actions` VALUES ('sales_delivery_print_invoice', 'sales_delivery', 'Print Invoice', null, 'sales_delivery/print_invoice', 'Delivery', 'print_invoice', '0', '0', '1', '\\Modules\\Sales\\Http\\Controllers\\DeliveryController', null);
-INSERT INTO `core_actions` VALUES ('sales_order_create', 'sales_order', 'Create Order', null, 'sales_order/create', 'Order', 'create', '0', '1', '1', '\\Modules\\Sales\\Http\\Controllers\\OrderController', null);
-INSERT INTO `core_actions` VALUES ('sales_order_update', 'sales_order', 'Update Order', null, 'sales_order/update', 'Order', 'update', '0', '0', '1', '\\Modules\\Sales\\Http\\Controllers\\OrderController', null);
-INSERT INTO `core_actions` VALUES ('sales_order_delivery', 'sales_order', 'Delivery Order', null, 'sales_order/delivery', 'Order', 'delivery', '0', '0', '1', '\\Modules\\Sales\\Http\\Controllers\\OrderController', null);
-INSERT INTO `core_actions` VALUES ('sales_order_delete', 'sales_order', 'Delete Order', null, 'sales_order/delete', 'Order', 'delete', '0', '0', '1', '\\Modules\\Sales\\Http\\Controllers\\OrderController', null);
-INSERT INTO `core_actions` VALUES ('sales_order_data', 'sales_order', 'Data Order', null, 'sales_order/data', 'Order', 'data', '0', '1', '1', '\\Modules\\Sales\\Http\\Controllers\\OrderController', null);
-INSERT INTO `core_actions` VALUES ('sales_order_show', 'sales_order', 'Show Order', null, 'sales_order/show', 'Order', 'show', '0', '0', '1', '\\Modules\\Sales\\Http\\Controllers\\OrderController', null);
-INSERT INTO `core_actions` VALUES ('sales_order_print_order', 'sales_order', 'Print Order', null, 'sales_order/print_order', 'Order', 'print_order', '0', '0', '1', '\\Modules\\Sales\\Http\\Controllers\\OrderController', null);
-INSERT INTO `core_actions` VALUES ('sales_quotation_create', 'sales_quotation', 'Create Quotation', null, 'sales_quotation/create', 'Quotation', 'create', '0', '1', '1', '\\Modules\\Sales\\Http\\Controllers\\QuotationController', null);
-INSERT INTO `core_actions` VALUES ('sales_quotation_update', 'sales_quotation', 'Update Quotation', null, 'sales_quotation/update', 'Quotation', 'update', '0', '0', '1', '\\Modules\\Sales\\Http\\Controllers\\QuotationController', null);
-INSERT INTO `core_actions` VALUES ('sales_quotation_order', 'sales_quotation', 'Order Quotation', null, 'sales_quotation/order', 'Quotation', 'order', '0', '0', '1', '\\Modules\\Sales\\Http\\Controllers\\QuotationController', null);
-INSERT INTO `core_actions` VALUES ('sales_quotation_delete', 'sales_quotation', 'Delete Quotation', null, 'sales_quotation/delete', 'Quotation', 'delete', '0', '0', '1', '\\Modules\\Sales\\Http\\Controllers\\QuotationController', null);
-INSERT INTO `core_actions` VALUES ('sales_quotation_data', 'sales_quotation', 'Data Quotation', null, 'sales_quotation/data', 'Quotation', 'data', '0', '1', '1', '\\Modules\\Sales\\Http\\Controllers\\QuotationController', null);
-INSERT INTO `core_actions` VALUES ('sales_quotation_show', 'sales_quotation', 'Show Quotation', null, 'sales_quotation/show', 'Quotation', 'show', '0', '0', '1', '\\Modules\\Sales\\Http\\Controllers\\QuotationController', null);
-INSERT INTO `core_actions` VALUES ('sales_quotation_print_order', 'sales_quotation', 'Print Order', null, 'sales_quotation/print_order', 'Quotation', 'print_order', '0', '0', '1', '\\Modules\\Sales\\Http\\Controllers\\QuotationController', null);
 INSERT INTO `core_actions` VALUES ('marketing_benefit_create', 'marketing_benefit', 'Create Benefit', null, 'marketing_benefit/create', 'Benefit', 'create', '0', '1', '1', '\\Modules\\Marketing\\Http\\Controllers\\BenefitController', null);
 INSERT INTO `core_actions` VALUES ('marketing_benefit_update', 'marketing_benefit', 'Update Benefit', null, 'marketing_benefit/update', 'Benefit', 'update', '0', '0', '1', '\\Modules\\Marketing\\Http\\Controllers\\BenefitController', null);
 INSERT INTO `core_actions` VALUES ('marketing_benefit_delete', 'marketing_benefit', 'Delete Benefit', null, 'marketing_benefit/delete', 'Benefit', 'delete', '0', '0', '1', '\\Modules\\Marketing\\Http\\Controllers\\BenefitController', null);
 INSERT INTO `core_actions` VALUES ('marketing_benefit_data', 'marketing_benefit', 'Data Benefit', null, 'marketing_benefit/data', 'Benefit', 'data', '0', '1', '1', '\\Modules\\Marketing\\Http\\Controllers\\BenefitController', null);
 INSERT INTO `core_actions` VALUES ('marketing_benefit_show', 'marketing_benefit', 'Show Benefit', null, 'marketing_benefit/show', 'Benefit', 'show', '0', '0', '1', '\\Modules\\Marketing\\Http\\Controllers\\BenefitController', null);
-INSERT INTO `core_actions` VALUES ('marketing_holiday_create', 'marketing_holiday', 'Create Holiday', null, 'marketing_holiday/create', 'Holiday', 'create', '0', '1', '1', '\\Modules\\Marketing\\Http\\Controllers\\HolidayController', null);
-INSERT INTO `core_actions` VALUES ('marketing_holiday_update', 'marketing_holiday', 'Update Holiday', null, 'marketing_holiday/update', 'Holiday', 'update', '0', '0', '1', '\\Modules\\Marketing\\Http\\Controllers\\HolidayController', null);
-INSERT INTO `core_actions` VALUES ('marketing_holiday_delete', 'marketing_holiday', 'Delete Holiday', null, 'marketing_holiday/delete', 'Holiday', 'delete', '0', '0', '1', '\\Modules\\Marketing\\Http\\Controllers\\HolidayController', null);
-INSERT INTO `core_actions` VALUES ('marketing_holiday_data', 'marketing_holiday', 'Data Holiday', null, 'marketing_holiday/data', 'Holiday', 'data', '0', '1', '1', '\\Modules\\Marketing\\Http\\Controllers\\HolidayController', null);
-INSERT INTO `core_actions` VALUES ('marketing_holiday_show', 'marketing_holiday', 'Show Holiday', null, 'marketing_holiday/show', 'Holiday', 'show', '0', '0', '1', '\\Modules\\Marketing\\Http\\Controllers\\HolidayController', null);
-INSERT INTO `core_actions` VALUES ('marketing_page_create', 'marketing_page', 'Create Page', null, 'marketing_page/create', 'Page', 'create', '0', '1', '1', '\\Modules\\Marketing\\Http\\Controllers\\PageController', null);
-INSERT INTO `core_actions` VALUES ('marketing_page_update', 'marketing_page', 'Update Page', null, 'marketing_page/update', 'Page', 'update', '0', '0', '1', '\\Modules\\Marketing\\Http\\Controllers\\PageController', null);
-INSERT INTO `core_actions` VALUES ('marketing_page_delete', 'marketing_page', 'Delete Page', null, 'marketing_page/delete', 'Page', 'delete', '0', '0', '1', '\\Modules\\Marketing\\Http\\Controllers\\PageController', null);
-INSERT INTO `core_actions` VALUES ('marketing_page_data', 'marketing_page', 'Data Page', null, 'marketing_page/data', 'Page', 'data', '0', '1', '1', '\\Modules\\Marketing\\Http\\Controllers\\PageController', null);
-INSERT INTO `core_actions` VALUES ('marketing_page_show', 'marketing_page', 'Show Page', null, 'marketing_page/show', 'Page', 'show', '0', '0', '1', '\\Modules\\Marketing\\Http\\Controllers\\PageController', null);
 INSERT INTO `core_actions` VALUES ('marketing_process_create', 'marketing_process', 'Create Process', null, 'marketing_process/create', 'Process', 'create', '0', '1', '1', '\\Modules\\Marketing\\Http\\Controllers\\ProcessController', null);
 INSERT INTO `core_actions` VALUES ('marketing_process_update', 'marketing_process', 'Update Process', null, 'marketing_process/update', 'Process', 'update', '0', '0', '1', '\\Modules\\Marketing\\Http\\Controllers\\ProcessController', null);
 INSERT INTO `core_actions` VALUES ('marketing_process_delete', 'marketing_process', 'Delete Process', null, 'marketing_process/delete', 'Process', 'delete', '0', '0', '1', '\\Modules\\Marketing\\Http\\Controllers\\ProcessController', null);
@@ -311,11 +282,6 @@ INSERT INTO `core_actions` VALUES ('marketing_service_update', 'marketing_servic
 INSERT INTO `core_actions` VALUES ('marketing_service_delete', 'marketing_service', 'Delete Service', null, 'marketing_service/delete', 'Service', 'delete', '0', '0', '1', '\\Modules\\Marketing\\Http\\Controllers\\ServiceController', null);
 INSERT INTO `core_actions` VALUES ('marketing_service_data', 'marketing_service', 'Data Service', null, 'marketing_service/data', 'Service', 'data', '0', '1', '1', '\\Modules\\Marketing\\Http\\Controllers\\ServiceController', null);
 INSERT INTO `core_actions` VALUES ('marketing_service_show', 'marketing_service', 'Show Service', null, 'marketing_service/show', 'Service', 'show', '0', '0', '1', '\\Modules\\Marketing\\Http\\Controllers\\ServiceController', null);
-INSERT INTO `core_actions` VALUES ('marketing_slider_create', 'marketing_slider', 'Create Slider', null, 'marketing_slider/create', 'Slider', 'create', '0', '1', '1', '\\Modules\\Marketing\\Http\\Controllers\\SliderController', null);
-INSERT INTO `core_actions` VALUES ('marketing_slider_update', 'marketing_slider', 'Update Slider', null, 'marketing_slider/update', 'Slider', 'update', '0', '0', '1', '\\Modules\\Marketing\\Http\\Controllers\\SliderController', null);
-INSERT INTO `core_actions` VALUES ('marketing_slider_delete', 'marketing_slider', 'Delete Slider', null, 'marketing_slider/delete', 'Slider', 'delete', '0', '0', '1', '\\Modules\\Marketing\\Http\\Controllers\\SliderController', null);
-INSERT INTO `core_actions` VALUES ('marketing_slider_data', 'marketing_slider', 'Data Slider', null, 'marketing_slider/data', 'Slider', 'data', '0', '1', '1', '\\Modules\\Marketing\\Http\\Controllers\\SliderController', null);
-INSERT INTO `core_actions` VALUES ('marketing_slider_show', 'marketing_slider', 'Show Slider', null, 'marketing_slider/show', 'Slider', 'show', '0', '0', '1', '\\Modules\\Marketing\\Http\\Controllers\\SliderController', null);
 INSERT INTO `core_actions` VALUES ('marketing_sosmed_create', 'marketing_sosmed', 'Create Sosmed', null, 'marketing_sosmed/create', 'Sosmed', 'create', '0', '1', '1', '\\Modules\\Marketing\\Http\\Controllers\\SosmedController', null);
 INSERT INTO `core_actions` VALUES ('marketing_sosmed_update', 'marketing_sosmed', 'Update Sosmed', null, 'marketing_sosmed/update', 'Sosmed', 'update', '0', '0', '1', '\\Modules\\Marketing\\Http\\Controllers\\SosmedController', null);
 INSERT INTO `core_actions` VALUES ('marketing_sosmed_delete', 'marketing_sosmed', 'Delete Sosmed', null, 'marketing_sosmed/delete', 'Sosmed', 'delete', '0', '0', '1', '\\Modules\\Marketing\\Http\\Controllers\\SosmedController', null);
@@ -331,10 +297,50 @@ INSERT INTO `core_actions` VALUES ('marketing_langganan_update', 'marketing_lang
 INSERT INTO `core_actions` VALUES ('marketing_langganan_delete', 'marketing_langganan', 'Delete Langganan', null, 'marketing_langganan/delete', 'Langganan', 'delete', '0', '0', '1', '\\Modules\\Marketing\\Http\\Controllers\\LanggananController', null);
 INSERT INTO `core_actions` VALUES ('marketing_langganan_data', 'marketing_langganan', 'Data Langganan', null, 'marketing_langganan/data', 'Langganan', 'data', '0', '1', '1', '\\Modules\\Marketing\\Http\\Controllers\\LanggananController', null);
 INSERT INTO `core_actions` VALUES ('marketing_langganan_show', 'marketing_langganan', 'Show Langganan', null, 'marketing_langganan/show', 'Langganan', 'show', '0', '0', '1', '\\Modules\\Marketing\\Http\\Controllers\\LanggananController', null);
+INSERT INTO `core_actions` VALUES ('marketing_holiday_create', 'marketing_holiday', 'Create Holiday', null, 'marketing_holiday/create', 'Holiday', 'create', '0', '1', '1', '\\Modules\\Marketing\\Http\\Controllers\\HolidayController', null);
+INSERT INTO `core_actions` VALUES ('marketing_holiday_update', 'marketing_holiday', 'Update Holiday', null, 'marketing_holiday/update', 'Holiday', 'update', '0', '0', '1', '\\Modules\\Marketing\\Http\\Controllers\\HolidayController', null);
+INSERT INTO `core_actions` VALUES ('marketing_holiday_delete', 'marketing_holiday', 'Delete Holiday', null, 'marketing_holiday/delete', 'Holiday', 'delete', '0', '0', '1', '\\Modules\\Marketing\\Http\\Controllers\\HolidayController', null);
+INSERT INTO `core_actions` VALUES ('marketing_holiday_data', 'marketing_holiday', 'Data Holiday', null, 'marketing_holiday/data', 'Holiday', 'data', '0', '1', '1', '\\Modules\\Marketing\\Http\\Controllers\\HolidayController', null);
+INSERT INTO `core_actions` VALUES ('marketing_holiday_show', 'marketing_holiday', 'Show Holiday', null, 'marketing_holiday/show', 'Holiday', 'show', '0', '0', '1', '\\Modules\\Marketing\\Http\\Controllers\\HolidayController', null);
+INSERT INTO `core_actions` VALUES ('marketing_page_create', 'marketing_page', 'Create Page', null, 'marketing_page/create', 'Page', 'create', '0', '1', '1', '\\Modules\\Marketing\\Http\\Controllers\\PageController', null);
+INSERT INTO `core_actions` VALUES ('marketing_page_update', 'marketing_page', 'Update Page', null, 'marketing_page/update', 'Page', 'update', '0', '0', '1', '\\Modules\\Marketing\\Http\\Controllers\\PageController', null);
+INSERT INTO `core_actions` VALUES ('marketing_page_delete', 'marketing_page', 'Delete Page', null, 'marketing_page/delete', 'Page', 'delete', '0', '0', '1', '\\Modules\\Marketing\\Http\\Controllers\\PageController', null);
+INSERT INTO `core_actions` VALUES ('marketing_page_data', 'marketing_page', 'Data Page', null, 'marketing_page/data', 'Page', 'data', '0', '1', '1', '\\Modules\\Marketing\\Http\\Controllers\\PageController', null);
+INSERT INTO `core_actions` VALUES ('marketing_page_show', 'marketing_page', 'Show Page', null, 'marketing_page/show', 'Page', 'show', '0', '0', '1', '\\Modules\\Marketing\\Http\\Controllers\\PageController', null);
+INSERT INTO `core_actions` VALUES ('marketing_slider_create', 'marketing_slider', 'Create Slider', null, 'marketing_slider/create', 'Slider', 'create', '0', '1', '1', '\\Modules\\Marketing\\Http\\Controllers\\SliderController', null);
+INSERT INTO `core_actions` VALUES ('marketing_slider_update', 'marketing_slider', 'Update Slider', null, 'marketing_slider/update', 'Slider', 'update', '0', '0', '1', '\\Modules\\Marketing\\Http\\Controllers\\SliderController', null);
+INSERT INTO `core_actions` VALUES ('marketing_slider_delete', 'marketing_slider', 'Delete Slider', null, 'marketing_slider/delete', 'Slider', 'delete', '0', '0', '1', '\\Modules\\Marketing\\Http\\Controllers\\SliderController', null);
+INSERT INTO `core_actions` VALUES ('marketing_slider_data', 'marketing_slider', 'Data Slider', null, 'marketing_slider/data', 'Slider', 'data', '0', '1', '1', '\\Modules\\Marketing\\Http\\Controllers\\SliderController', null);
+INSERT INTO `core_actions` VALUES ('marketing_slider_show', 'marketing_slider', 'Show Slider', null, 'marketing_slider/show', 'Slider', 'show', '0', '0', '1', '\\Modules\\Marketing\\Http\\Controllers\\SliderController', null);
+INSERT INTO `core_actions` VALUES ('sales_order_create', 'sales_order', 'Create Order', null, 'sales_order/create', 'Order', 'create', '0', '1', '1', '\\Modules\\Sales\\Http\\Controllers\\OrderController', null);
+INSERT INTO `core_actions` VALUES ('sales_order_update', 'sales_order', 'Update Order', null, 'sales_order/update', 'Order', 'update', '0', '0', '1', '\\Modules\\Sales\\Http\\Controllers\\OrderController', null);
+INSERT INTO `core_actions` VALUES ('sales_order_delivery', 'sales_order', 'Delivery Order', null, 'sales_order/delivery', 'Order', 'delivery', '0', '0', '1', '\\Modules\\Sales\\Http\\Controllers\\OrderController', null);
+INSERT INTO `core_actions` VALUES ('sales_order_delete', 'sales_order', 'Delete Order', null, 'sales_order/delete', 'Order', 'delete', '0', '0', '1', '\\Modules\\Sales\\Http\\Controllers\\OrderController', null);
+INSERT INTO `core_actions` VALUES ('sales_order_data', 'sales_order', 'Data Order', null, 'sales_order/data', 'Order', 'data', '0', '1', '1', '\\Modules\\Sales\\Http\\Controllers\\OrderController', null);
+INSERT INTO `core_actions` VALUES ('sales_order_show', 'sales_order', 'Show Order', null, 'sales_order/show', 'Order', 'show', '0', '0', '1', '\\Modules\\Sales\\Http\\Controllers\\OrderController', null);
+INSERT INTO `core_actions` VALUES ('sales_order_print_order', 'sales_order', 'Print Order', null, 'sales_order/print_order', 'Order', 'print_order', '0', '0', '1', '\\Modules\\Sales\\Http\\Controllers\\OrderController', null);
+INSERT INTO `core_actions` VALUES ('sales_quotation_create', 'sales_quotation', 'Create Quotation', null, 'sales_quotation/create', 'Quotation', 'create', '0', '1', '1', '\\Modules\\Sales\\Http\\Controllers\\QuotationController', null);
+INSERT INTO `core_actions` VALUES ('sales_quotation_update', 'sales_quotation', 'Update Quotation', null, 'sales_quotation/update', 'Quotation', 'update', '0', '0', '1', '\\Modules\\Sales\\Http\\Controllers\\QuotationController', null);
+INSERT INTO `core_actions` VALUES ('sales_quotation_order', 'sales_quotation', 'Order Quotation', null, 'sales_quotation/order', 'Quotation', 'order', '0', '0', '1', '\\Modules\\Sales\\Http\\Controllers\\QuotationController', null);
+INSERT INTO `core_actions` VALUES ('sales_quotation_delete', 'sales_quotation', 'Delete Quotation', null, 'sales_quotation/delete', 'Quotation', 'delete', '0', '0', '1', '\\Modules\\Sales\\Http\\Controllers\\QuotationController', null);
+INSERT INTO `core_actions` VALUES ('sales_quotation_data', 'sales_quotation', 'Data Quotation', null, 'sales_quotation/data', 'Quotation', 'data', '0', '1', '1', '\\Modules\\Sales\\Http\\Controllers\\QuotationController', null);
+INSERT INTO `core_actions` VALUES ('sales_quotation_show', 'sales_quotation', 'Show Quotation', null, 'sales_quotation/show', 'Quotation', 'show', '0', '0', '1', '\\Modules\\Sales\\Http\\Controllers\\QuotationController', null);
+INSERT INTO `core_actions` VALUES ('sales_quotation_print_order', 'sales_quotation', 'Print Order', null, 'sales_quotation/print_order', 'Quotation', 'print_order', '0', '0', '1', '\\Modules\\Sales\\Http\\Controllers\\QuotationController', null);
 INSERT INTO `core_actions` VALUES ('sales_report_order_summary', 'sales_report', 'Order Summary', null, 'sales_report/order_summary', 'Report', 'order_summary', '0', '1', '1', '\\Modules\\Sales\\Http\\Controllers\\ReportController', null);
 INSERT INTO `core_actions` VALUES ('sales_report_order_detail', 'sales_report', 'Order Detail', null, 'sales_report/order_detail', 'Report', 'order_detail', '0', '1', '1', '\\Modules\\Sales\\Http\\Controllers\\ReportController', null);
 INSERT INTO `core_actions` VALUES ('sales_report_production', 'sales_report', 'Production Report', null, 'sales_report/production', 'Report', 'production', '0', '1', '1', '\\Modules\\Sales\\Http\\Controllers\\ReportController', null);
 INSERT INTO `core_actions` VALUES ('sales_report_delivery', 'sales_report', 'Delivery Report', null, 'sales_report/delivery', 'Report', 'delivery', '0', '1', '1', '\\Modules\\Sales\\Http\\Controllers\\ReportController', null);
+INSERT INTO `core_actions` VALUES ('sales_subscribe_update', 'sales_subscribe', 'Update Subscribe', null, 'sales_subscribe/update', 'Subscribe', 'update', '0', '0', '1', '\\Modules\\Sales\\Http\\Controllers\\SubscribeController', null);
+INSERT INTO `core_actions` VALUES ('sales_subscribe_delete', 'sales_subscribe', 'Delete Subscribe', null, 'sales_subscribe/delete', 'Subscribe', 'delete', '0', '0', '1', '\\Modules\\Sales\\Http\\Controllers\\SubscribeController', null);
+INSERT INTO `core_actions` VALUES ('sales_subscribe_data', 'sales_subscribe', 'Data Subscribe', null, 'sales_subscribe/data', 'Subscribe', 'data', '0', '1', '1', '\\Modules\\Sales\\Http\\Controllers\\SubscribeController', null);
+INSERT INTO `core_actions` VALUES ('sales_subscribe_show', 'sales_subscribe', 'Show Subscribe', null, 'sales_subscribe/show', 'Subscribe', 'show', '0', '0', '1', '\\Modules\\Sales\\Http\\Controllers\\SubscribeController', null);
+INSERT INTO `core_actions` VALUES ('sales_subscribe_print_do', 'sales_subscribe', 'Print Do', null, 'sales_subscribe/print_do', 'Subscribe', 'print_do', '0', '0', '1', '\\Modules\\Sales\\Http\\Controllers\\SubscribeController', null);
+INSERT INTO `core_actions` VALUES ('sales_subscribe_print_invoice', 'sales_subscribe', 'Print Invoice', null, 'sales_subscribe/print_invoice', 'Subscribe', 'print_invoice', '0', '0', '1', '\\Modules\\Sales\\Http\\Controllers\\SubscribeController', null);
+INSERT INTO `core_actions` VALUES ('company_create', 'company', 'Create Company', null, 'company/create', 'Company', 'create', '0', '1', '1', '\\App\\Http\\Controllers\\CompanyController', null);
+INSERT INTO `core_actions` VALUES ('company_update', 'company', 'Update Company', null, 'company/update', 'Company', 'update', '0', '0', '1', '\\App\\Http\\Controllers\\CompanyController', null);
+INSERT INTO `core_actions` VALUES ('company_delete', 'company', 'Delete Company', null, 'company/delete', 'Company', 'delete', '0', '0', '1', '\\App\\Http\\Controllers\\CompanyController', null);
+INSERT INTO `core_actions` VALUES ('company_data', 'company', 'Data Company', null, 'company/data', 'Company', 'data', '0', '1', '1', '\\App\\Http\\Controllers\\CompanyController', null);
+INSERT INTO `core_actions` VALUES ('company_show', 'company', 'Show Company', null, 'company/show', 'Company', 'show', '0', '0', '1', '\\App\\Http\\Controllers\\CompanyController', null);
 
 -- ----------------------------
 -- Table structure for core_branch
@@ -505,9 +511,10 @@ INSERT INTO `core_group_module_connection_module` VALUES ('item', 'item_tag');
 INSERT INTO `core_group_module_connection_module` VALUES ('item', 'item_tax');
 INSERT INTO `core_group_module_connection_module` VALUES ('item', 'item_unit');
 INSERT INTO `core_group_module_connection_module` VALUES ('marketing', 'crm_customer');
-INSERT INTO `core_group_module_connection_module` VALUES ('marketing', 'marketing_holiday');
 INSERT INTO `core_group_module_connection_module` VALUES ('marketing', 'marketing_langganan');
+INSERT INTO `core_group_module_connection_module` VALUES ('marketing', 'marketing_page');
 INSERT INTO `core_group_module_connection_module` VALUES ('marketing', 'marketing_promo');
+INSERT INTO `core_group_module_connection_module` VALUES ('marketing', 'marketing_slider');
 INSERT INTO `core_group_module_connection_module` VALUES ('marketing', 'marketing_sosmed');
 INSERT INTO `core_group_module_connection_module` VALUES ('master', 'agent_bank');
 INSERT INTO `core_group_module_connection_module` VALUES ('master', 'agent_category');
@@ -523,7 +530,6 @@ INSERT INTO `core_group_module_connection_module` VALUES ('master', 'agent_wareh
 INSERT INTO `core_group_module_connection_module` VALUES ('master', 'blog_blog');
 INSERT INTO `core_group_module_connection_module` VALUES ('master', 'blog_category');
 INSERT INTO `core_group_module_connection_module` VALUES ('master', 'branch');
-INSERT INTO `core_group_module_connection_module` VALUES ('master', 'company');
 INSERT INTO `core_group_module_connection_module` VALUES ('master', 'contact');
 INSERT INTO `core_group_module_connection_module` VALUES ('master', 'crm_customer');
 INSERT INTO `core_group_module_connection_module` VALUES ('master', 'finance_bank');
@@ -543,7 +549,6 @@ INSERT INTO `core_group_module_connection_module` VALUES ('master', 'item_tag');
 INSERT INTO `core_group_module_connection_module` VALUES ('master', 'item_tax');
 INSERT INTO `core_group_module_connection_module` VALUES ('master', 'item_unit');
 INSERT INTO `core_group_module_connection_module` VALUES ('master', 'item_variant');
-INSERT INTO `core_group_module_connection_module` VALUES ('master', 'marketing_slider');
 INSERT INTO `core_group_module_connection_module` VALUES ('master', 'master_team');
 INSERT INTO `core_group_module_connection_module` VALUES ('master', 'procurement_packaging');
 INSERT INTO `core_group_module_connection_module` VALUES ('master', 'product');
@@ -565,9 +570,9 @@ INSERT INTO `core_group_module_connection_module` VALUES ('rajaongkir', 'rajaong
 INSERT INTO `core_group_module_connection_module` VALUES ('report', 'sales_report');
 INSERT INTO `core_group_module_connection_module` VALUES ('sales', 'sales_delivery');
 INSERT INTO `core_group_module_connection_module` VALUES ('sales', 'sales_order');
+INSERT INTO `core_group_module_connection_module` VALUES ('sales', 'sales_subscribe');
 INSERT INTO `core_group_module_connection_module` VALUES ('system', 'action');
 INSERT INTO `core_group_module_connection_module` VALUES ('system', 'branch');
-INSERT INTO `core_group_module_connection_module` VALUES ('system', 'company');
 INSERT INTO `core_group_module_connection_module` VALUES ('system', 'group_module');
 INSERT INTO `core_group_module_connection_module` VALUES ('system', 'group_user');
 INSERT INTO `core_group_module_connection_module` VALUES ('system', 'module');
@@ -702,13 +707,13 @@ INSERT INTO `core_modules` VALUES ('item_tax', 'Tax', null, 'item_tax', 'Item', 
 INSERT INTO `core_modules` VALUES ('item_unit', 'Unit', null, 'item_unit', 'Item', 'Unit', null, '1', '0', '1', '0', '1');
 INSERT INTO `core_modules` VALUES ('item_variant', 'Variant', '', 'item_variant', 'Item', 'Variant', null, '1', '0', '1', '1', '1');
 INSERT INTO `core_modules` VALUES ('marketing_benefit', 'Benefit', null, 'marketing_benefit', 'Marketing', 'Benefit', null, '1', '0', '1', '1', '1');
-INSERT INTO `core_modules` VALUES ('marketing_holiday', 'Holiday', null, 'marketing_holiday', 'Marketing', 'Holiday', null, '1', '0', '1', '1', '1');
+INSERT INTO `core_modules` VALUES ('marketing_holiday', 'Holiday', '', 'marketing_holiday', 'Marketing', 'Holiday', null, '1', '0', '1', '1', '1');
 INSERT INTO `core_modules` VALUES ('marketing_langganan', 'Langganan', '', 'marketing_langganan', 'Marketing', 'Langganan', null, '1', '0', '1', '1', '1');
-INSERT INTO `core_modules` VALUES ('marketing_page', 'Page', null, 'marketing_page', 'Marketing', 'Page', null, '1', '0', '1', '1', '1');
+INSERT INTO `core_modules` VALUES ('marketing_page', 'Page', '', 'marketing_page', 'Marketing', 'Page', null, '1', '0', '1', '1', '1');
 INSERT INTO `core_modules` VALUES ('marketing_process', 'Process', null, 'marketing_process', 'Marketing', 'Process', null, '1', '0', '1', '1', '1');
 INSERT INTO `core_modules` VALUES ('marketing_promo', 'Promo', null, 'marketing_promo', 'Marketing', 'Promo', null, '1', '0', '1', '1', '1');
 INSERT INTO `core_modules` VALUES ('marketing_service', 'Service', null, 'marketing_service', 'Marketing', 'Service', null, '1', '0', '1', '1', '1');
-INSERT INTO `core_modules` VALUES ('marketing_slider', 'Slider', null, 'marketing_slider', 'Marketing', 'Slider', null, '1', '0', '1', '1', '1');
+INSERT INTO `core_modules` VALUES ('marketing_slider', 'Slider', '', 'marketing_slider', 'Marketing', 'Slider', null, '1', '0', '1', '1', '1');
 INSERT INTO `core_modules` VALUES ('marketing_sosmed', 'Sosmed', null, 'marketing_sosmed', 'Marketing', 'Sosmed', null, '1', '0', '1', '1', '1');
 INSERT INTO `core_modules` VALUES ('marketing_testimony', 'Testimony', null, 'marketing_testimony', 'Marketing', 'Testimony', null, '1', '0', '1', '1', '1');
 INSERT INTO `core_modules` VALUES ('master_team', 'Master Team', 'ini digunakan oleh data master', 'master_team', '', 'Team', null, '0', '0', '1', '1', '0');
@@ -722,10 +727,10 @@ INSERT INTO `core_modules` VALUES ('rajaongkir_delivery', 'Delivery', '', 'rajao
 INSERT INTO `core_modules` VALUES ('rajaongkir_paket', 'Paket', null, 'rajaongkir_paket', 'Rajaongkir', 'Paket', null, '1', '0', '1', '0', '1');
 INSERT INTO `core_modules` VALUES ('rajaongkir_price', 'Price', null, 'rajaongkir_price', 'Rajaongkir', 'Price', null, '1', '0', '1', '0', '1');
 INSERT INTO `core_modules` VALUES ('rajaongkir_province', 'Province', null, 'rajaongkir_province', 'Rajaongkir', 'Province', null, '1', '0', '1', '1', '1');
-INSERT INTO `core_modules` VALUES ('sales_delivery', 'Delivery', null, 'sales_delivery', 'Sales', 'Delivery', null, '1', '0', '1', '1', '1');
 INSERT INTO `core_modules` VALUES ('sales_order', 'Order', null, 'sales_order', 'Sales', 'Order', null, '1', '0', '1', '1', '1');
 INSERT INTO `core_modules` VALUES ('sales_quotation', 'Quotation', null, 'sales_quotation', 'Sales', 'Quotation', null, '1', '0', '1', '1', '1');
-INSERT INTO `core_modules` VALUES ('sales_report', 'Report', '', 'sales_report', 'Sales', 'Report', null, '1', '0', '1', '1', '1');
+INSERT INTO `core_modules` VALUES ('sales_report', 'Report', null, 'sales_report', 'Sales', 'Report', null, '1', '0', '1', '1', '1');
+INSERT INTO `core_modules` VALUES ('sales_subscribe', 'Subscribe', '', 'sales_subscribe', 'Sales', 'Subscribe', null, '1', '0', '1', '1', '1');
 INSERT INTO `core_modules` VALUES ('team', 'Team', null, 'team', null, 'Team', null, null, '0', '1', '1', '0');
 
 -- ----------------------------
@@ -964,11 +969,6 @@ INSERT INTO `core_module_connection_action` VALUES ('finance_tax', 'finance_tax_
 INSERT INTO `core_module_connection_action` VALUES ('finance_tax', 'finance_tax_delete');
 INSERT INTO `core_module_connection_action` VALUES ('finance_tax', 'finance_tax_data');
 INSERT INTO `core_module_connection_action` VALUES ('finance_tax', 'finance_tax_show');
-INSERT INTO `core_module_connection_action` VALUES ('company', 'company_create');
-INSERT INTO `core_module_connection_action` VALUES ('company', 'company_update');
-INSERT INTO `core_module_connection_action` VALUES ('company', 'company_delete');
-INSERT INTO `core_module_connection_action` VALUES ('company', 'company_data');
-INSERT INTO `core_module_connection_action` VALUES ('company', 'company_show');
 INSERT INTO `core_module_connection_action` VALUES ('crm_customer', 'crm_customer_create');
 INSERT INTO `core_module_connection_action` VALUES ('crm_customer', 'crm_customer_update');
 INSERT INTO `core_module_connection_action` VALUES ('crm_customer', 'crm_customer_delete');
@@ -1071,35 +1071,11 @@ INSERT INTO `core_module_connection_action` VALUES ('sales_delivery', 'sales_del
 INSERT INTO `core_module_connection_action` VALUES ('sales_delivery', 'sales_delivery_show');
 INSERT INTO `core_module_connection_action` VALUES ('sales_delivery', 'sales_delivery_print_do');
 INSERT INTO `core_module_connection_action` VALUES ('sales_delivery', 'sales_delivery_print_invoice');
-INSERT INTO `core_module_connection_action` VALUES ('sales_order', 'sales_order_create');
-INSERT INTO `core_module_connection_action` VALUES ('sales_order', 'sales_order_update');
-INSERT INTO `core_module_connection_action` VALUES ('sales_order', 'sales_order_delivery');
-INSERT INTO `core_module_connection_action` VALUES ('sales_order', 'sales_order_delete');
-INSERT INTO `core_module_connection_action` VALUES ('sales_order', 'sales_order_data');
-INSERT INTO `core_module_connection_action` VALUES ('sales_order', 'sales_order_show');
-INSERT INTO `core_module_connection_action` VALUES ('sales_order', 'sales_order_print_order');
-INSERT INTO `core_module_connection_action` VALUES ('sales_quotation', 'sales_quotation_create');
-INSERT INTO `core_module_connection_action` VALUES ('sales_quotation', 'sales_quotation_update');
-INSERT INTO `core_module_connection_action` VALUES ('sales_quotation', 'sales_quotation_order');
-INSERT INTO `core_module_connection_action` VALUES ('sales_quotation', 'sales_quotation_delete');
-INSERT INTO `core_module_connection_action` VALUES ('sales_quotation', 'sales_quotation_data');
-INSERT INTO `core_module_connection_action` VALUES ('sales_quotation', 'sales_quotation_show');
-INSERT INTO `core_module_connection_action` VALUES ('sales_quotation', 'sales_quotation_print_order');
 INSERT INTO `core_module_connection_action` VALUES ('marketing_benefit', 'marketing_benefit_create');
 INSERT INTO `core_module_connection_action` VALUES ('marketing_benefit', 'marketing_benefit_update');
 INSERT INTO `core_module_connection_action` VALUES ('marketing_benefit', 'marketing_benefit_delete');
 INSERT INTO `core_module_connection_action` VALUES ('marketing_benefit', 'marketing_benefit_data');
 INSERT INTO `core_module_connection_action` VALUES ('marketing_benefit', 'marketing_benefit_show');
-INSERT INTO `core_module_connection_action` VALUES ('marketing_holiday', 'marketing_holiday_create');
-INSERT INTO `core_module_connection_action` VALUES ('marketing_holiday', 'marketing_holiday_update');
-INSERT INTO `core_module_connection_action` VALUES ('marketing_holiday', 'marketing_holiday_delete');
-INSERT INTO `core_module_connection_action` VALUES ('marketing_holiday', 'marketing_holiday_data');
-INSERT INTO `core_module_connection_action` VALUES ('marketing_holiday', 'marketing_holiday_show');
-INSERT INTO `core_module_connection_action` VALUES ('marketing_page', 'marketing_page_create');
-INSERT INTO `core_module_connection_action` VALUES ('marketing_page', 'marketing_page_update');
-INSERT INTO `core_module_connection_action` VALUES ('marketing_page', 'marketing_page_delete');
-INSERT INTO `core_module_connection_action` VALUES ('marketing_page', 'marketing_page_data');
-INSERT INTO `core_module_connection_action` VALUES ('marketing_page', 'marketing_page_show');
 INSERT INTO `core_module_connection_action` VALUES ('marketing_process', 'marketing_process_create');
 INSERT INTO `core_module_connection_action` VALUES ('marketing_process', 'marketing_process_update');
 INSERT INTO `core_module_connection_action` VALUES ('marketing_process', 'marketing_process_delete');
@@ -1115,11 +1091,6 @@ INSERT INTO `core_module_connection_action` VALUES ('marketing_service', 'market
 INSERT INTO `core_module_connection_action` VALUES ('marketing_service', 'marketing_service_delete');
 INSERT INTO `core_module_connection_action` VALUES ('marketing_service', 'marketing_service_data');
 INSERT INTO `core_module_connection_action` VALUES ('marketing_service', 'marketing_service_show');
-INSERT INTO `core_module_connection_action` VALUES ('marketing_slider', 'marketing_slider_create');
-INSERT INTO `core_module_connection_action` VALUES ('marketing_slider', 'marketing_slider_update');
-INSERT INTO `core_module_connection_action` VALUES ('marketing_slider', 'marketing_slider_delete');
-INSERT INTO `core_module_connection_action` VALUES ('marketing_slider', 'marketing_slider_data');
-INSERT INTO `core_module_connection_action` VALUES ('marketing_slider', 'marketing_slider_show');
 INSERT INTO `core_module_connection_action` VALUES ('marketing_sosmed', 'marketing_sosmed_create');
 INSERT INTO `core_module_connection_action` VALUES ('marketing_sosmed', 'marketing_sosmed_update');
 INSERT INTO `core_module_connection_action` VALUES ('marketing_sosmed', 'marketing_sosmed_delete');
@@ -1135,10 +1106,50 @@ INSERT INTO `core_module_connection_action` VALUES ('marketing_langganan', 'mark
 INSERT INTO `core_module_connection_action` VALUES ('marketing_langganan', 'marketing_langganan_delete');
 INSERT INTO `core_module_connection_action` VALUES ('marketing_langganan', 'marketing_langganan_data');
 INSERT INTO `core_module_connection_action` VALUES ('marketing_langganan', 'marketing_langganan_show');
+INSERT INTO `core_module_connection_action` VALUES ('marketing_holiday', 'marketing_holiday_create');
+INSERT INTO `core_module_connection_action` VALUES ('marketing_holiday', 'marketing_holiday_update');
+INSERT INTO `core_module_connection_action` VALUES ('marketing_holiday', 'marketing_holiday_delete');
+INSERT INTO `core_module_connection_action` VALUES ('marketing_holiday', 'marketing_holiday_data');
+INSERT INTO `core_module_connection_action` VALUES ('marketing_holiday', 'marketing_holiday_show');
+INSERT INTO `core_module_connection_action` VALUES ('marketing_page', 'marketing_page_create');
+INSERT INTO `core_module_connection_action` VALUES ('marketing_page', 'marketing_page_update');
+INSERT INTO `core_module_connection_action` VALUES ('marketing_page', 'marketing_page_delete');
+INSERT INTO `core_module_connection_action` VALUES ('marketing_page', 'marketing_page_data');
+INSERT INTO `core_module_connection_action` VALUES ('marketing_page', 'marketing_page_show');
+INSERT INTO `core_module_connection_action` VALUES ('marketing_slider', 'marketing_slider_create');
+INSERT INTO `core_module_connection_action` VALUES ('marketing_slider', 'marketing_slider_update');
+INSERT INTO `core_module_connection_action` VALUES ('marketing_slider', 'marketing_slider_delete');
+INSERT INTO `core_module_connection_action` VALUES ('marketing_slider', 'marketing_slider_data');
+INSERT INTO `core_module_connection_action` VALUES ('marketing_slider', 'marketing_slider_show');
+INSERT INTO `core_module_connection_action` VALUES ('sales_order', 'sales_order_create');
+INSERT INTO `core_module_connection_action` VALUES ('sales_order', 'sales_order_update');
+INSERT INTO `core_module_connection_action` VALUES ('sales_order', 'sales_order_delivery');
+INSERT INTO `core_module_connection_action` VALUES ('sales_order', 'sales_order_delete');
+INSERT INTO `core_module_connection_action` VALUES ('sales_order', 'sales_order_data');
+INSERT INTO `core_module_connection_action` VALUES ('sales_order', 'sales_order_show');
+INSERT INTO `core_module_connection_action` VALUES ('sales_order', 'sales_order_print_order');
+INSERT INTO `core_module_connection_action` VALUES ('sales_quotation', 'sales_quotation_create');
+INSERT INTO `core_module_connection_action` VALUES ('sales_quotation', 'sales_quotation_update');
+INSERT INTO `core_module_connection_action` VALUES ('sales_quotation', 'sales_quotation_order');
+INSERT INTO `core_module_connection_action` VALUES ('sales_quotation', 'sales_quotation_delete');
+INSERT INTO `core_module_connection_action` VALUES ('sales_quotation', 'sales_quotation_data');
+INSERT INTO `core_module_connection_action` VALUES ('sales_quotation', 'sales_quotation_show');
+INSERT INTO `core_module_connection_action` VALUES ('sales_quotation', 'sales_quotation_print_order');
 INSERT INTO `core_module_connection_action` VALUES ('sales_report', 'sales_report_order_summary');
 INSERT INTO `core_module_connection_action` VALUES ('sales_report', 'sales_report_order_detail');
 INSERT INTO `core_module_connection_action` VALUES ('sales_report', 'sales_report_production');
 INSERT INTO `core_module_connection_action` VALUES ('sales_report', 'sales_report_delivery');
+INSERT INTO `core_module_connection_action` VALUES ('sales_subscribe', 'sales_subscribe_update');
+INSERT INTO `core_module_connection_action` VALUES ('sales_subscribe', 'sales_subscribe_delete');
+INSERT INTO `core_module_connection_action` VALUES ('sales_subscribe', 'sales_subscribe_data');
+INSERT INTO `core_module_connection_action` VALUES ('sales_subscribe', 'sales_subscribe_show');
+INSERT INTO `core_module_connection_action` VALUES ('sales_subscribe', 'sales_subscribe_print_do');
+INSERT INTO `core_module_connection_action` VALUES ('sales_subscribe', 'sales_subscribe_print_invoice');
+INSERT INTO `core_module_connection_action` VALUES ('company', 'company_create');
+INSERT INTO `core_module_connection_action` VALUES ('company', 'company_update');
+INSERT INTO `core_module_connection_action` VALUES ('company', 'company_delete');
+INSERT INTO `core_module_connection_action` VALUES ('company', 'company_data');
+INSERT INTO `core_module_connection_action` VALUES ('company', 'company_show');
 
 -- ----------------------------
 -- Table structure for core_sites
@@ -2075,17 +2086,12 @@ CREATE TABLE `marketing_page` (
   `marketing_page_image` varchar(150) COLLATE utf8mb4_unicode_ci NOT NULL,
   `marketing_page_button` varchar(150) COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`marketing_page_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ----------------------------
 -- Records of marketing_page
 -- ----------------------------
-INSERT INTO `marketing_page` VALUES ('22', 'service', 'service', '<p><span class=\"subheading \" style=\"font-size: 12px; display: block; font-weight: 700; color: rgb(92, 194, 207); text-transform: uppercase; letter-spacing: 2px; font-family: Poppins, Arial, sans-serif; text-align: center;\">WE OFFER SERVICES</span></p><h2 style=\"margin-top: 0px; margin-bottom: 0.5rem; font-family: Poppins, Arial, sans-serif; font-weight: 700; line-height: 1.5; color: rgba(0, 0, 0, 0.8); font-size: 24px; letter-spacing: normal; text-align: center;\">Our laundry services</h2>', null, '2020-10-02 06:02:52', '2020-10-02 06:02:52', null, '', '', '');
-INSERT INTO `marketing_page` VALUES ('23', 'statement', 'statement', '<h2 style=\"text-align: center;\">Ayo Percayakan Laundry Anda pada Kami</h2><p style=\"text-align: center; \">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.<br></p>', null, '2020-10-02 06:05:35', '2020-10-02 06:16:23', null, '', '', '');
-INSERT INTO `marketing_page` VALUES ('24', 'benefit', 'benefit', '<h2 class=\"mb-3\" style=\"margin-top: 0px; font-family: Poppins, Arial, sans-serif; font-weight: 700; line-height: 1.5; color: rgba(0, 0, 0, 0.8); font-size: 24px; letter-spacing: normal; text-align: center; margin-bottom: 1rem !important;\">Alasan Memilih Laundry Ditempat Kami</h2>', null, '2020-10-02 06:06:01', '2020-10-02 06:06:01', null, '', '', '');
-INSERT INTO `marketing_page` VALUES ('25', 'testimony', 'testimony', '<p><span class=\"subheading\" style=\"font-size: 12px; display: block; font-weight: 700; color: rgb(92, 194, 207); text-transform: uppercase; letter-spacing: 2px; font-family: Poppins, Arial, sans-serif; background-color: rgb(248, 249, 253);\">TESTIMONY</span></p><h2 class=\"mb-0\" style=\"margin-top: 0px; font-family: Poppins, Arial, sans-serif; font-weight: 700; line-height: 1.5; color: rgba(0, 0, 0, 0.8); font-size: 24px; letter-spacing: normal; background-color: rgb(248, 249, 253); margin-bottom: 0px !important;\">Happy Customer</h2>', null, '2020-10-02 06:06:58', '2020-10-02 06:06:58', null, '', '1601593617.jpg', '');
-INSERT INTO `marketing_page` VALUES ('26', 'About us', 'about-us', '<h2>Ingin Tahun Lebih Dekat ?</h2><p>A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences fly into your mouth.</p><p>On her way she met a copy. The copy warned the Little Blind Text, that where it came from it would have been rewritten a thousand times and everything that was left from its origin would be the word \"and\" and the Little Blind Text should turn around and return to its own, safe country.<br></p>', null, '2020-10-02 06:08:28', '2020-10-02 06:08:28', null, 'https://www.youtube.com/watch?v=IE4QGkkudu0', '1601593707.jpg', 'Lihat Prosesnya disini');
-INSERT INTO `marketing_page` VALUES ('27', 'process', 'process', '<p><span class=\"subheading \" style=\"font-size: 12px; display: block; font-weight: 700; color: rgb(92, 194, 207); text-transform: uppercase; letter-spacing: 2px; font-family: Poppins, Arial, sans-serif; text-align: center; background-color: rgb(248, 249, 253);\">PROCESS</span></p><h2 style=\"margin-top: 0px; margin-bottom: 0.5rem; font-family: Poppins, Arial, sans-serif; font-weight: 700; line-height: 1.5; color: rgba(0, 0, 0, 0.8); font-size: 24px; letter-spacing: normal; text-align: center; background-color: rgb(248, 249, 253);\">Proses Pengerjaan Laundry di Showroom Kami</h2>', null, '2020-10-02 06:10:12', '2020-10-02 06:10:12', null, '', '', '');
+INSERT INTO `marketing_page` VALUES ('28', 'Cara Order di website salad mamita', 'cara-order-di-website-salad-mamita', '<p>What is Lorem Ipsum?</p><p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p><p>Why do we use it?<br></p><p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using \'Content here, content here\', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for \'lorem ipsum\' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).</p><p><br></p><p><br></p><p><br></p><p>Where does it come from?</p><p>Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of \"de Finibus Bonorum et Malorum\" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, \"Lorem ipsum dolor sit amet..\", comes from a line in section 1.10.32.</p><p><br></p><p>The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from \"de Finibus Bonorum et Malorum\" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham</p>', '1', '2020-11-11 14:53:40', '2020-11-11 14:56:31', null, '', '', '');
 
 -- ----------------------------
 -- Table structure for marketing_process
@@ -2187,7 +2193,7 @@ CREATE TABLE `marketing_slider` (
 -- ----------------------------
 -- Records of marketing_slider
 -- ----------------------------
-INSERT INTO `marketing_slider` VALUES ('12', 'We care about your laundry', 'we-care-about-your-laundry', 'Make your laundry Clean', '', '', '1603969031.jpeg', '2020-10-01 17:09:13', '2020-10-29 17:57:11', '');
+INSERT INTO `marketing_slider` VALUES ('12', 'We care about your laundry', 'we-care-about-your-laundry', 'Make your laundry Clean', '<h2><strong style=\"margin: 0px; padding: 0px; color: rgb(0, 0, 0); font-size: 14px; letter-spacing: normal; text-align: justify;\">Lorem Ipsum</strong><span style=\"color: rgb(0, 0, 0); font-size: 14px; letter-spacing: normal; text-align: justify;\">&nbsp;is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum</span><br></h2>', 'https://saladmamita.local/loyal-customer', '1603969031.jpeg', '2020-10-01 17:09:13', '2020-11-11 14:03:01', '');
 INSERT INTO `marketing_slider` VALUES ('13', 'We are best Laundry Rent Service', 'we-are-best-laundry-rent-service', 'Rent your linen with us', '', '', '1603969046.jpg', '2020-10-01 17:19:33', '2020-10-29 17:57:26', '');
 INSERT INTO `marketing_slider` VALUES ('14', 'testing', 'testing', '', '', '', '1603969012.jpg', '2020-10-29 17:56:52', '2020-10-29 17:56:52', '');
 INSERT INTO `marketing_slider` VALUES ('15', 'test 2', 'test-2', '', '', '', '1603969020.jpg', '2020-10-29 17:57:00', '2020-10-29 17:57:00', '');
@@ -10561,11 +10567,6 @@ CREATE TABLE `sales_berlangganan` (
 -- ----------------------------
 -- Records of sales_berlangganan
 -- ----------------------------
-INSERT INTO `sales_berlangganan` VALUES ('SB2020110001', '2020-11-07 07:47:58', null, '2020-11-07 07:47:58', null, null, null, '2020-11-07 00:00:00', '1', 'Salad Mamita Pusat', '0590832705972', 'itok.toni@gmail.com', 'jalan tanah koja RT. 001/02 No. 65', '2087', null, 'itok toni laksono', '08111040159', 'itok.toni@gmail.com', 'Jl tanah koja RT.001/02 No. 65 Duri kosambi, Cengkareng, Jakarta Barat', '2087', '1', null, null, null, null, '', null, null, null, null, '3010000', null, null, null, '3010000', null, null, null, null, null, null, '', null, null, null, null, null, null, '1', '30c36a26-1bf8-4e43-91fa-a83ac01b7749');
-INSERT INTO `sales_berlangganan` VALUES ('SB2020110002', '2020-11-07 09:24:16', null, '2020-11-07 09:24:17', null, null, null, '2020-11-07 00:00:00', '1', 'Salad Mamita Pusat', '0590832705972', 'itok.toni@gmail.com', 'jalan tanah koja RT. 001/02 No. 65', '2087', null, 'itok toni laksono', '08111040159', 'itok.toni@gmail.com', 'Jl tanah koja RT.001/02 No. 65 Duri kosambi, Cengkareng, Jakarta Barat', '2087', '1', null, null, null, null, '', null, null, null, null, '1445000', null, null, null, '1445000', null, null, null, null, null, null, '', null, null, null, null, null, null, '1', '1455d219-1c1f-4dcd-ae84-9eb64c938c52');
-INSERT INTO `sales_berlangganan` VALUES ('SB2020110003', '2020-11-07 10:07:02', null, '2020-11-07 10:07:03', null, null, null, '2020-11-07 00:00:00', '1', 'Salad Mamita Pusat', '0590832705972', 'itok.toni@gmail.com', 'jalan tanah koja RT. 001/02 No. 65', '2087', null, 'itok toni laksono', '08111040159', 'itok.toni@gmail.com', 'Jl tanah koja RT.001/02 No. 65 Duri kosambi, Cengkareng, Jakarta Barat', '2087', '1', null, null, null, null, '', null, null, null, null, '820000', null, null, null, '820000', null, null, null, null, null, null, '', null, null, null, null, null, null, '1', 'fe500bdf-e7c0-4686-b32c-922592ade8c7');
-INSERT INTO `sales_berlangganan` VALUES ('SB2020110004', '2020-11-07 13:33:20', null, '2020-11-07 13:33:20', null, null, null, '2020-11-07 00:00:00', '1', 'Salad Mamita Pusat', '0590832705972', 'itok.toni@gmail.com', 'jalan tanah koja RT. 001/02 No. 65', '2087', null, 'itok toni laksono', '08111040159', 'itok.toni@gmail.com', 'Jl tanah koja RT.001/02 No. 65 Duri kosambi, Cengkareng, Jakarta Barat', '3308', '1', null, null, null, null, '', null, null, null, null, '1040000', null, null, null, '1040000', null, null, null, null, null, null, '', null, null, null, null, null, null, '1', 'd09a2b00-167a-4dda-bc73-974b1571c7c5');
-INSERT INTO `sales_berlangganan` VALUES ('SB2020110005', '2020-11-07 15:52:16', null, '2020-11-07 15:52:16', null, null, null, '2020-11-07 00:00:00', '1', 'Salad Mamita Pusat', '0590832705972', 'itok.toni@gmail.com', 'jalan tanah koja RT. 001/02 No. 65', '2087', null, 'itok toni laksono', '08111040159', 'itok.toni@gmail.com', 'Jl tanah koja RT.001/02 No. 65 Duri kosambi, Cengkareng, Jakarta Barat', '3308', '1', null, null, null, null, '', null, null, null, null, '2675000', null, null, null, '2675000', null, null, null, null, null, null, '', null, null, null, null, null, null, '1', '51318658-1ea0-41a1-989d-d03565f9e8b5');
 
 -- ----------------------------
 -- Table structure for sales_delivery
@@ -10705,51 +10706,6 @@ CREATE TABLE `sales_order` (
 -- ----------------------------
 -- Records of sales_order
 -- ----------------------------
-INSERT INTO `sales_order` VALUES ('SO2020110001', '2020-11-07 07:47:58', 'itoktoni', '2020-11-07 07:47:58', null, null, null, 'SB2020110001', null, null, '2020-11-07 00:00:00', null, null, '1', 'Salad Mamita Pusat', '0590832705972', 'itok.toni@gmail.com', 'jalan tanah koja RT. 001/02 No. 65', '2087', '42', 'itok toni laksono', '08111040159', 'itok.toni@gmail.com', 'Jl tanah koja RT.001/02 No. 65 Duri kosambi, Cengkareng, Jakarta Barat', '2087', '1', null, null, null, null, null, null, null, null, null, null, null, null, '235000', null, null, null, '235000', null, null, null, null, null, null, null, '', null, null, null, null, null, null, null);
-INSERT INTO `sales_order` VALUES ('SO2020110002', '2020-11-07 07:47:58', 'itoktoni', '2020-11-07 07:47:58', null, null, null, 'SB2020110001', null, null, '2020-11-08 00:00:00', null, null, '1', 'Salad Mamita Pusat', '0590832705972', 'itok.toni@gmail.com', 'jalan tanah koja RT. 001/02 No. 65', '2087', '42', 'itok toni laksono', '08111040159', 'itok.toni@gmail.com', 'Jl tanah koja RT.001/02 No. 65 Duri kosambi, Cengkareng, Jakarta Barat', '2087', '1', null, null, null, null, null, null, null, null, null, null, null, null, '275000', null, null, null, '275000', null, null, null, null, null, null, null, '', null, null, null, null, null, null, null);
-INSERT INTO `sales_order` VALUES ('SO2020110003', '2020-11-07 07:47:58', 'itoktoni', '2020-11-07 07:47:58', null, null, null, 'SB2020110001', null, null, '2020-11-09 00:00:00', null, null, '1', 'Salad Mamita Pusat', '0590832705972', 'itok.toni@gmail.com', 'jalan tanah koja RT. 001/02 No. 65', '2087', '42', 'itok toni laksono', '08111040159', 'itok.toni@gmail.com', 'Jl tanah koja RT.001/02 No. 65 Duri kosambi, Cengkareng, Jakarta Barat', '2087', '1', null, null, null, null, null, null, null, null, null, null, null, null, '340000', null, null, null, '340000', null, null, null, null, null, null, null, '', null, null, null, null, null, null, null);
-INSERT INTO `sales_order` VALUES ('SO2020110004', '2020-11-07 07:47:58', 'itoktoni', '2020-11-07 07:47:58', null, null, null, 'SB2020110001', null, null, '2020-11-10 00:00:00', null, null, '1', 'Salad Mamita Pusat', '0590832705972', 'itok.toni@gmail.com', 'jalan tanah koja RT. 001/02 No. 65', '2087', '42', 'itok toni laksono', '08111040159', 'itok.toni@gmail.com', 'Jl tanah koja RT.001/02 No. 65 Duri kosambi, Cengkareng, Jakarta Barat', '2087', '1', null, null, null, null, null, null, null, null, null, null, null, null, '600000', null, null, null, '600000', null, null, null, null, null, null, null, '', null, null, null, null, null, null, null);
-INSERT INTO `sales_order` VALUES ('SO2020110005', '2020-11-07 07:47:58', 'itoktoni', '2020-11-07 07:47:58', null, null, null, 'SB2020110001', null, null, '2020-11-11 00:00:00', null, null, '1', 'Salad Mamita Pusat', '0590832705972', 'itok.toni@gmail.com', 'jalan tanah koja RT. 001/02 No. 65', '2087', '42', 'itok toni laksono', '08111040159', 'itok.toni@gmail.com', 'Jl tanah koja RT.001/02 No. 65 Duri kosambi, Cengkareng, Jakarta Barat', '2087', '1', null, null, null, null, null, null, null, null, null, null, null, null, '520000', null, null, null, '520000', null, null, null, null, null, null, null, '', null, null, null, null, null, null, null);
-INSERT INTO `sales_order` VALUES ('SO2020110006', '2020-11-07 07:47:58', 'itoktoni', '2020-11-07 07:47:58', null, null, null, 'SB2020110001', null, null, '2020-11-12 00:00:00', null, null, '1', 'Salad Mamita Pusat', '0590832705972', 'itok.toni@gmail.com', 'jalan tanah koja RT. 001/02 No. 65', '2087', '42', 'itok toni laksono', '08111040159', 'itok.toni@gmail.com', 'Jl tanah koja RT.001/02 No. 65 Duri kosambi, Cengkareng, Jakarta Barat', '2087', '1', null, null, null, null, null, null, null, null, null, null, null, null, '520000', null, null, null, '520000', null, null, null, null, null, null, null, '', null, null, null, null, null, null, null);
-INSERT INTO `sales_order` VALUES ('SO2020110007', '2020-11-07 07:47:58', 'itoktoni', '2020-11-07 07:47:58', null, null, null, 'SB2020110001', null, null, '2020-11-13 00:00:00', null, null, '1', 'Salad Mamita Pusat', '0590832705972', 'itok.toni@gmail.com', 'jalan tanah koja RT. 001/02 No. 65', '2087', '42', 'itok toni laksono', '08111040159', 'itok.toni@gmail.com', 'Jl tanah koja RT.001/02 No. 65 Duri kosambi, Cengkareng, Jakarta Barat', '2087', '1', null, null, null, null, null, null, null, null, null, null, null, null, '520000', null, null, null, '520000', null, null, null, null, null, null, null, '', null, null, null, null, null, null, null);
-INSERT INTO `sales_order` VALUES ('SO2020110008', '2020-11-07 09:24:16', 'itoktoni', '2020-11-07 09:24:16', null, null, null, 'SB2020110002', null, null, '2020-11-07 00:00:00', null, null, '1', 'Salad Mamita Pusat', '0590832705972', 'itok.toni@gmail.com', 'jalan tanah koja RT. 001/02 No. 65', '2087', '42', 'itok toni laksono', '08111040159', 'itok.toni@gmail.com', 'Jl tanah koja RT.001/02 No. 65 Duri kosambi, Cengkareng, Jakarta Barat', '2087', '1', null, null, null, null, null, null, null, null, null, null, null, null, '625000', null, null, null, '625000', null, null, null, null, null, null, null, '', null, null, null, null, null, null, null);
-INSERT INTO `sales_order` VALUES ('SO2020110009', '2020-11-07 09:24:16', 'itoktoni', '2020-11-07 09:24:16', null, null, null, 'SB2020110002', null, null, '2020-11-08 00:00:00', null, null, '1', 'Salad Mamita Pusat', '0590832705972', 'itok.toni@gmail.com', 'jalan tanah koja RT. 001/02 No. 65', '2087', '42', 'itok toni laksono', '08111040159', 'itok.toni@gmail.com', 'Jl tanah koja RT.001/02 No. 65 Duri kosambi, Cengkareng, Jakarta Barat', '2087', '1', null, null, null, null, null, null, null, null, null, null, null, null, '300000', null, null, null, '300000', null, null, null, null, null, null, null, '', null, null, null, null, null, null, null);
-INSERT INTO `sales_order` VALUES ('SO2020110010', '2020-11-07 09:24:16', 'itoktoni', '2020-11-07 09:24:16', null, null, null, 'SB2020110002', null, null, '2020-11-09 00:00:00', null, null, '1', 'Salad Mamita Pusat', '0590832705972', 'itok.toni@gmail.com', 'jalan tanah koja RT. 001/02 No. 65', '2087', '42', 'itok toni laksono', '08111040159', 'itok.toni@gmail.com', 'Jl tanah koja RT.001/02 No. 65 Duri kosambi, Cengkareng, Jakarta Barat', '2087', '1', null, null, null, null, null, null, null, null, null, null, null, null, '65000', null, null, null, '65000', null, null, null, null, null, null, null, '', null, null, null, null, null, null, null);
-INSERT INTO `sales_order` VALUES ('SO2020110011', '2020-11-07 09:24:16', 'itoktoni', '2020-11-07 09:24:16', null, null, null, 'SB2020110002', null, null, '2020-11-10 00:00:00', null, null, '1', 'Salad Mamita Pusat', '0590832705972', 'itok.toni@gmail.com', 'jalan tanah koja RT. 001/02 No. 65', '2087', '42', 'itok toni laksono', '08111040159', 'itok.toni@gmail.com', 'Jl tanah koja RT.001/02 No. 65 Duri kosambi, Cengkareng, Jakarta Barat', '2087', '1', null, null, null, null, null, null, null, null, null, null, null, null, '130000', null, null, null, '130000', null, null, null, null, null, null, null, '', null, null, null, null, null, null, null);
-INSERT INTO `sales_order` VALUES ('SO2020110012', '2020-11-07 09:24:16', 'itoktoni', '2020-11-07 09:24:17', null, null, null, 'SB2020110002', null, null, '2020-11-11 00:00:00', null, null, '1', 'Salad Mamita Pusat', '0590832705972', 'itok.toni@gmail.com', 'jalan tanah koja RT. 001/02 No. 65', '2087', '42', 'itok toni laksono', '08111040159', 'itok.toni@gmail.com', 'Jl tanah koja RT.001/02 No. 65 Duri kosambi, Cengkareng, Jakarta Barat', '2087', '1', null, null, null, null, null, null, null, null, null, null, null, null, '130000', null, null, null, '130000', null, null, null, null, null, null, null, '', null, null, null, null, null, null, null);
-INSERT INTO `sales_order` VALUES ('SO2020110013', '2020-11-07 09:24:17', 'itoktoni', '2020-11-07 09:24:17', null, null, null, 'SB2020110002', null, null, '2020-11-12 00:00:00', null, null, '1', 'Salad Mamita Pusat', '0590832705972', 'itok.toni@gmail.com', 'jalan tanah koja RT. 001/02 No. 65', '2087', '42', 'itok toni laksono', '08111040159', 'itok.toni@gmail.com', 'Jl tanah koja RT.001/02 No. 65 Duri kosambi, Cengkareng, Jakarta Barat', '2087', '1', null, null, null, null, null, null, null, null, null, null, null, null, '65000', null, null, null, '65000', null, null, null, null, null, null, null, '', null, null, null, null, null, null, null);
-INSERT INTO `sales_order` VALUES ('SO2020110014', '2020-11-07 09:24:17', 'itoktoni', '2020-11-07 09:24:17', null, null, null, 'SB2020110002', null, null, '2020-11-13 00:00:00', null, null, '1', 'Salad Mamita Pusat', '0590832705972', 'itok.toni@gmail.com', 'jalan tanah koja RT. 001/02 No. 65', '2087', '42', 'itok toni laksono', '08111040159', 'itok.toni@gmail.com', 'Jl tanah koja RT.001/02 No. 65 Duri kosambi, Cengkareng, Jakarta Barat', '2087', '1', null, null, null, null, null, null, null, null, null, null, null, null, '130000', null, null, null, '130000', null, null, null, null, null, null, null, '', null, null, null, null, null, null, null);
-INSERT INTO `sales_order` VALUES ('SO2020110015', '2020-11-07 10:07:02', 'itoktoni', '2020-11-07 10:07:03', null, null, null, 'SB2020110003', null, null, '2020-11-07 00:00:00', null, null, '1', 'Salad Mamita Pusat', '0590832705972', 'itok.toni@gmail.com', 'jalan tanah koja RT. 001/02 No. 65', '2087', '42', 'itok toni laksono', '08111040159', 'itok.toni@gmail.com', 'Jl tanah koja RT.001/02 No. 65 Duri kosambi, Cengkareng, Jakarta Barat', '2087', '1', null, null, null, null, null, null, null, null, null, null, null, null, '325000', null, null, null, '325000', null, null, null, null, null, null, null, '', null, null, null, null, null, null, null);
-INSERT INTO `sales_order` VALUES ('SO2020110016', '2020-11-07 10:07:03', 'itoktoni', '2020-11-07 10:07:03', null, null, null, 'SB2020110003', null, null, '2020-11-08 00:00:00', null, null, '1', 'Salad Mamita Pusat', '0590832705972', 'itok.toni@gmail.com', 'jalan tanah koja RT. 001/02 No. 65', '2087', '42', 'itok toni laksono', '08111040159', 'itok.toni@gmail.com', 'Jl tanah koja RT.001/02 No. 65 Duri kosambi, Cengkareng, Jakarta Barat', '2087', '1', null, null, null, null, null, null, null, null, null, null, null, null, '195000', null, null, null, '195000', null, null, null, null, null, null, null, '', null, null, null, null, null, null, null);
-INSERT INTO `sales_order` VALUES ('SO2020110017', '2020-11-07 10:07:03', 'itoktoni', '2020-11-07 10:07:03', null, null, null, 'SB2020110003', null, null, '2020-11-09 00:00:00', null, null, '1', 'Salad Mamita Pusat', '0590832705972', 'itok.toni@gmail.com', 'jalan tanah koja RT. 001/02 No. 65', '2087', '42', 'itok toni laksono', '08111040159', 'itok.toni@gmail.com', 'Jl tanah koja RT.001/02 No. 65 Duri kosambi, Cengkareng, Jakarta Barat', '2087', '1', null, null, null, null, null, null, null, null, null, null, null, null, '40000', null, null, null, '40000', null, null, null, null, null, null, null, '', null, null, null, null, null, null, null);
-INSERT INTO `sales_order` VALUES ('SO2020110018', '2020-11-07 10:07:03', 'itoktoni', '2020-11-07 10:07:03', null, null, null, 'SB2020110003', null, null, '2020-11-10 00:00:00', null, null, '1', 'Salad Mamita Pusat', '0590832705972', 'itok.toni@gmail.com', 'jalan tanah koja RT. 001/02 No. 65', '2087', '42', 'itok toni laksono', '08111040159', 'itok.toni@gmail.com', 'Jl tanah koja RT.001/02 No. 65 Duri kosambi, Cengkareng, Jakarta Barat', '2087', '1', null, null, null, null, null, null, null, null, null, null, null, null, '65000', null, null, null, '65000', null, null, null, null, null, null, null, '', null, null, null, null, null, null, null);
-INSERT INTO `sales_order` VALUES ('SO2020110019', '2020-11-07 10:07:03', 'itoktoni', '2020-11-07 10:07:03', null, null, null, 'SB2020110003', null, null, '2020-11-11 00:00:00', null, null, '1', 'Salad Mamita Pusat', '0590832705972', 'itok.toni@gmail.com', 'jalan tanah koja RT. 001/02 No. 65', '2087', '42', 'itok toni laksono', '08111040159', 'itok.toni@gmail.com', 'Jl tanah koja RT.001/02 No. 65 Duri kosambi, Cengkareng, Jakarta Barat', '2087', '1', null, null, null, null, null, null, null, null, null, null, null, null, '65000', null, null, null, '65000', null, null, null, null, null, null, null, '', null, null, null, null, null, null, null);
-INSERT INTO `sales_order` VALUES ('SO2020110020', '2020-11-07 10:07:03', 'itoktoni', '2020-11-07 10:07:03', null, null, null, 'SB2020110003', null, null, '2020-11-12 00:00:00', null, null, '1', 'Salad Mamita Pusat', '0590832705972', 'itok.toni@gmail.com', 'jalan tanah koja RT. 001/02 No. 65', '2087', '42', 'itok toni laksono', '08111040159', 'itok.toni@gmail.com', 'Jl tanah koja RT.001/02 No. 65 Duri kosambi, Cengkareng, Jakarta Barat', '2087', '1', null, null, null, null, null, null, null, null, null, null, null, null, '65000', null, null, null, '65000', null, null, null, null, null, null, null, '', null, null, null, null, null, null, null);
-INSERT INTO `sales_order` VALUES ('SO2020110021', '2020-11-07 10:07:03', 'itoktoni', '2020-11-07 10:07:03', null, null, null, 'SB2020110003', null, null, '2020-11-13 00:00:00', null, null, '1', 'Salad Mamita Pusat', '0590832705972', 'itok.toni@gmail.com', 'jalan tanah koja RT. 001/02 No. 65', '2087', '42', 'itok toni laksono', '08111040159', 'itok.toni@gmail.com', 'Jl tanah koja RT.001/02 No. 65 Duri kosambi, Cengkareng, Jakarta Barat', '2087', '1', null, null, null, null, null, null, null, null, null, null, null, null, '65000', null, null, null, '65000', null, null, null, null, null, null, null, '', null, null, null, null, null, null, null);
-INSERT INTO `sales_order` VALUES ('SO2020110022', '2020-11-07 13:33:20', 'itoktoni', '2020-11-07 13:33:20', null, null, null, 'SB2020110004', null, null, '2020-11-07 00:00:00', null, null, '1', 'Salad Mamita Pusat', '0590832705972', 'itok.toni@gmail.com', 'jalan tanah koja RT. 001/02 No. 65', '2087', '42', 'itok toni laksono', '08111040159', 'itok.toni@gmail.com', 'Jl tanah koja RT.001/02 No. 65 Duri kosambi, Cengkareng, Jakarta Barat', '3308', '1', null, null, null, null, null, null, null, null, null, null, null, null, '260000', null, null, null, '260000', null, null, null, null, null, null, null, '', null, null, null, null, null, null, null);
-INSERT INTO `sales_order` VALUES ('SO2020110023', '2020-11-07 13:33:20', 'itoktoni', '2020-11-07 13:33:20', null, null, null, 'SB2020110004', null, null, '2020-11-08 00:00:00', null, null, '1', 'Salad Mamita Pusat', '0590832705972', 'itok.toni@gmail.com', 'jalan tanah koja RT. 001/02 No. 65', '2087', '42', 'itok toni laksono', '08111040159', 'itok.toni@gmail.com', 'Jl tanah koja RT.001/02 No. 65 Duri kosambi, Cengkareng, Jakarta Barat', '3308', '1', null, null, null, null, null, null, null, null, null, null, null, null, '130000', null, null, null, '130000', null, null, null, null, null, null, null, '', null, null, null, null, null, null, null);
-INSERT INTO `sales_order` VALUES ('SO2020110024', '2020-11-07 13:33:20', 'itoktoni', '2020-11-07 13:33:20', null, null, null, 'SB2020110004', null, null, '2020-11-09 00:00:00', null, null, '1', 'Salad Mamita Pusat', '0590832705972', 'itok.toni@gmail.com', 'jalan tanah koja RT. 001/02 No. 65', '2087', '42', 'itok toni laksono', '08111040159', 'itok.toni@gmail.com', 'Jl tanah koja RT.001/02 No. 65 Duri kosambi, Cengkareng, Jakarta Barat', '3308', '1', null, null, null, null, null, null, null, null, null, null, null, null, '130000', null, null, null, '130000', null, null, null, null, null, null, null, '', null, null, null, null, null, null, null);
-INSERT INTO `sales_order` VALUES ('SO2020110025', '2020-11-07 13:33:20', 'itoktoni', '2020-11-07 13:33:20', null, null, null, 'SB2020110004', null, null, '2020-11-10 00:00:00', null, null, '1', 'Salad Mamita Pusat', '0590832705972', 'itok.toni@gmail.com', 'jalan tanah koja RT. 001/02 No. 65', '2087', '42', 'itok toni laksono', '08111040159', 'itok.toni@gmail.com', 'Jl tanah koja RT.001/02 No. 65 Duri kosambi, Cengkareng, Jakarta Barat', '3308', '1', null, null, null, null, null, null, null, null, null, null, null, null, '130000', null, null, null, '130000', null, null, null, null, null, null, null, '', null, null, null, null, null, null, null);
-INSERT INTO `sales_order` VALUES ('SO2020110026', '2020-11-07 13:33:20', 'itoktoni', '2020-11-07 13:33:20', null, null, null, 'SB2020110004', null, null, '2020-11-11 00:00:00', null, null, '1', 'Salad Mamita Pusat', '0590832705972', 'itok.toni@gmail.com', 'jalan tanah koja RT. 001/02 No. 65', '2087', '42', 'itok toni laksono', '08111040159', 'itok.toni@gmail.com', 'Jl tanah koja RT.001/02 No. 65 Duri kosambi, Cengkareng, Jakarta Barat', '3308', '1', null, null, null, null, null, null, null, null, null, null, null, null, '130000', null, null, null, '130000', null, null, null, null, null, null, null, '', null, null, null, null, null, null, null);
-INSERT INTO `sales_order` VALUES ('SO2020110027', '2020-11-07 13:33:20', 'itoktoni', '2020-11-07 13:33:20', null, null, null, 'SB2020110004', null, null, '2020-11-12 00:00:00', null, null, '1', 'Salad Mamita Pusat', '0590832705972', 'itok.toni@gmail.com', 'jalan tanah koja RT. 001/02 No. 65', '2087', '42', 'itok toni laksono', '08111040159', 'itok.toni@gmail.com', 'Jl tanah koja RT.001/02 No. 65 Duri kosambi, Cengkareng, Jakarta Barat', '3308', '1', null, null, null, null, null, null, null, null, null, null, null, null, '130000', null, null, null, '130000', null, null, null, null, null, null, null, '', null, null, null, null, null, null, null);
-INSERT INTO `sales_order` VALUES ('SO2020110028', '2020-11-07 13:33:20', 'itoktoni', '2020-11-07 13:33:20', null, null, null, 'SB2020110004', null, null, '2020-11-13 00:00:00', null, null, '1', 'Salad Mamita Pusat', '0590832705972', 'itok.toni@gmail.com', 'jalan tanah koja RT. 001/02 No. 65', '2087', '42', 'itok toni laksono', '08111040159', 'itok.toni@gmail.com', 'Jl tanah koja RT.001/02 No. 65 Duri kosambi, Cengkareng, Jakarta Barat', '3308', '1', null, null, null, null, null, null, null, null, null, null, null, null, '130000', null, null, null, '130000', null, null, null, null, null, null, null, '', null, null, null, null, null, null, null);
-INSERT INTO `sales_order` VALUES ('SO2020110029', '2020-11-07 15:52:16', 'itoktoni', '2020-11-07 15:52:16', null, null, null, 'SB2020110005', null, null, '2020-11-07 00:00:00', null, null, '1', 'Salad Mamita Pusat', '0590832705972', 'itok.toni@gmail.com', 'jalan tanah koja RT. 001/02 No. 65', '2087', '42', 'itok toni laksono', '08111040159', 'itok.toni@gmail.com', 'Jl tanah koja RT.001/02 No. 65 Duri kosambi, Cengkareng, Jakarta Barat', '3308', '1', null, null, null, null, null, null, null, null, null, null, null, null, '40000', null, null, null, '40000', null, null, null, null, null, null, null, '', null, null, null, null, null, null, null);
-INSERT INTO `sales_order` VALUES ('SO2020110030', '2020-11-07 15:52:16', 'itoktoni', '2020-11-07 15:52:16', null, null, null, 'SB2020110005', null, null, '2020-11-08 00:00:00', null, null, '1', 'Salad Mamita Pusat', '0590832705972', 'itok.toni@gmail.com', 'jalan tanah koja RT. 001/02 No. 65', '2087', '42', 'itok toni laksono', '08111040159', 'itok.toni@gmail.com', 'Jl tanah koja RT.001/02 No. 65 Duri kosambi, Cengkareng, Jakarta Barat', '3308', '1', null, null, null, null, null, null, null, null, null, null, null, null, '390000', null, null, null, '390000', null, null, null, null, null, null, null, '', null, null, null, null, null, null, null);
-INSERT INTO `sales_order` VALUES ('SO2020110031', '2020-11-07 15:52:16', 'itoktoni', '2020-11-07 15:52:16', null, null, null, 'SB2020110005', null, null, '2020-11-09 00:00:00', null, null, '1', 'Salad Mamita Pusat', '0590832705972', 'itok.toni@gmail.com', 'jalan tanah koja RT. 001/02 No. 65', '2087', '42', 'itok toni laksono', '08111040159', 'itok.toni@gmail.com', 'Jl tanah koja RT.001/02 No. 65 Duri kosambi, Cengkareng, Jakarta Barat', '3308', '1', null, null, null, null, null, null, null, null, null, null, null, null, '130000', null, null, null, '130000', null, null, null, null, null, null, null, '', null, null, null, null, null, null, null);
-INSERT INTO `sales_order` VALUES ('SO2020110032', '2020-11-07 15:52:16', 'itoktoni', '2020-11-07 15:52:16', null, null, null, 'SB2020110005', null, null, '2020-11-10 00:00:00', null, null, '1', 'Salad Mamita Pusat', '0590832705972', 'itok.toni@gmail.com', 'jalan tanah koja RT. 001/02 No. 65', '2087', '42', 'itok toni laksono', '08111040159', 'itok.toni@gmail.com', 'Jl tanah koja RT.001/02 No. 65 Duri kosambi, Cengkareng, Jakarta Barat', '3308', '1', null, null, null, null, null, null, null, null, null, null, null, null, '585000', null, null, null, '585000', null, null, null, null, null, null, null, '', null, null, null, null, null, null, null);
-INSERT INTO `sales_order` VALUES ('SO2020110033', '2020-11-07 15:52:16', 'itoktoni', '2020-11-07 15:52:16', null, null, null, 'SB2020110005', null, null, '2020-11-11 00:00:00', null, null, '1', 'Salad Mamita Pusat', '0590832705972', 'itok.toni@gmail.com', 'jalan tanah koja RT. 001/02 No. 65', '2087', '42', 'itok toni laksono', '08111040159', 'itok.toni@gmail.com', 'Jl tanah koja RT.001/02 No. 65 Duri kosambi, Cengkareng, Jakarta Barat', '3308', '1', null, null, null, null, null, null, null, null, null, null, null, null, '585000', null, null, null, '585000', null, null, null, null, null, null, null, '', null, null, null, null, null, null, null);
-INSERT INTO `sales_order` VALUES ('SO2020110034', '2020-11-07 15:52:16', 'itoktoni', '2020-11-07 15:52:16', null, null, null, 'SB2020110005', null, null, '2020-11-12 00:00:00', null, null, '1', 'Salad Mamita Pusat', '0590832705972', 'itok.toni@gmail.com', 'jalan tanah koja RT. 001/02 No. 65', '2087', '42', 'itok toni laksono', '08111040159', 'itok.toni@gmail.com', 'Jl tanah koja RT.001/02 No. 65 Duri kosambi, Cengkareng, Jakarta Barat', '3308', '1', null, null, null, null, null, null, null, null, null, null, null, null, '360000', null, null, null, '360000', null, null, null, null, null, null, null, '', null, null, null, null, null, null, null);
-INSERT INTO `sales_order` VALUES ('SO2020110035', '2020-11-07 15:52:16', 'itoktoni', '2020-11-07 16:05:17', null, null, null, 'SB2020110005', null, null, '2020-11-13 00:00:00', null, null, '1', 'Salad Mamita Pusat', '0590832705972', 'itok.toni@gmail.com', 'jalan tanah koja RT. 001/02 No. 65', '2087', '42', 'itok toni laksono', '08111040159', 'itok.toni@gmail.com', 'Jl tanah koja RT.001/02 No. 65 Duri kosambi, Cengkareng, Jakarta Barat', '3308', '1', null, null, null, null, null, null, null, null, null, null, null, null, '585000', null, null, null, '585000', null, null, null, null, null, null, null, '', null, null, null, null, '1', null, null);
-INSERT INTO `sales_order` VALUES ('SO2020110036', '2020-11-09 09:21:51', '', '2020-11-09 09:21:52', null, null, null, null, null, null, '2020-11-09 00:00:00', null, null, '1', 'Salad Mamita Pusat', '0590832705972', 'itok.toni@gmail.com', 'jalan tanah koja RT. 001/02 No. 65', '2087', '48', 'itok toni laksono', '08111040159', '', 'jalan tanah koja', '2087', '1', null, null, null, null, '', null, 'Loyal Customer 10%', null, '53000', null, null, null, '530000', '477000', null, null, '477000', null, null, null, null, null, null, null, '', null, null, '35', null, null, null, '6d4bda53-1cac-4f8a-ad7e-77aafea60267');
-INSERT INTO `sales_order` VALUES ('SO2020110037', '2020-11-09 10:08:17', 'itoktoni', '2020-11-09 10:08:17', null, null, null, null, null, null, '2020-11-09 00:00:00', null, null, '1', 'Salad Mamita Pusat', '0590832705972', 'itok.toni@gmail.com', 'jalan tanah koja RT. 001/02 No. 65', '2087', '42', 'itok toni laksono', '08111040159', 'itok.toni@gmail.com', 'Jl tanah koja RT.001/02 No. 65 Duri kosambi, Cengkareng, Jakarta Barat', '1051', '1', null, null, null, null, '', null, '', null, '0', null, null, null, '270000', '270000', null, null, '270000', null, null, null, null, null, null, null, '', null, null, '35', null, null, null, 'ef753e73-3a3c-46c8-9dad-961e9a56033f');
-INSERT INTO `sales_order` VALUES ('SO2020110038', '2020-11-09 10:08:22', 'itoktoni', '2020-11-09 10:08:22', null, null, null, null, null, null, '2020-11-09 00:00:00', null, null, '1', 'Salad Mamita Pusat', '0590832705972', 'itok.toni@gmail.com', 'jalan tanah koja RT. 001/02 No. 65', '2087', '42', 'itok toni laksono', '08111040159', 'itok.toni@gmail.com', 'Jl tanah koja RT.001/02 No. 65 Duri kosambi, Cengkareng, Jakarta Barat', '1051', '1', null, null, null, null, '', null, '', null, '0', null, null, null, '270000', '270000', null, null, '270000', null, null, null, null, null, null, null, '', null, null, '35', null, null, null, 'ebb28e09-f21a-4555-9cdb-08e8dc1804e6');
-INSERT INTO `sales_order` VALUES ('SO2020110039', '2020-11-10 09:53:01', '', '2020-11-10 09:53:02', null, null, null, null, null, null, '2020-11-10 00:00:00', null, null, '2', 'Gading Serpong', '523532532523352', '', 'jalan serpong raya No. 65', '6314', '45', 'itok toni laksono', '93850985908', 'itoktoni@gmail.com', 'jalan tanah koja', '2087', '1', null, null, null, null, '', null, 'Loyal Customer 10%', null, '540000', null, null, null, '5400000', '4860000', null, null, '4860000', null, null, null, null, null, null, null, '', null, null, '35', null, null, null, 'f218b37f-5919-4d78-9358-0293344ffd72');
-INSERT INTO `sales_order` VALUES ('SO2020110040', '2020-11-10 09:54:55', '', '2020-11-10 09:54:55', null, null, null, null, null, null, '2020-11-10 00:00:00', null, null, '1', 'Salad Mamita Pusat', '0590832705972', 'itok.toni@gmail.com', 'jalan tanah koja RT. 001/02 No. 65', '2087', '49', 'itok otni lalspono', '9809809', 'toktoni@gmail.com', 'krekghlrekhlk', '2087', '1', null, null, null, null, '', null, 'Loyal Customer 10%', null, '135000', null, null, null, '1350000', '1215000', null, null, '1215000', null, null, null, null, null, null, null, '', null, null, '35', null, null, null, 'be4c0455-6c4a-40d4-a728-3522c8ae78d7');
-INSERT INTO `sales_order` VALUES ('SO2020110041', '2020-11-10 09:58:51', '', '2020-11-10 09:58:51', null, null, null, null, null, null, '2020-11-10 00:00:00', null, null, '2', 'Gading Serpong', '523532532523352', '', 'jalan serpong raya No. 65', '6314', '50', 'itoktoni llr', '32532532', 'itoktokji@gmail.com', 'regregre', '2087', '1', null, null, null, null, '', null, 'Loyal Customer 10%', null, '27000', null, null, null, '270000', '243000', null, null, '243000', null, null, null, null, null, null, null, '', null, null, '35', null, null, null, '6c508e5f-a18e-4c3f-932a-87d8b50630a7');
-INSERT INTO `sales_order` VALUES ('SO2020110042', '2020-11-10 09:59:10', '', '2020-11-10 09:59:10', null, null, null, null, null, null, '2020-11-10 00:00:00', null, null, '2', 'Gading Serpong', '523532532523352', '', 'jalan serpong raya No. 65', '6314', '50', 'itoktoni llr', '32532532', 'itoktokji@gmail.com', 'regregre', '2087', '1', null, null, null, null, '', null, 'Loyal Customer 10%', null, '27000', null, null, null, '270000', '243000', null, null, '243000', null, null, null, null, null, null, null, '', null, null, '35', null, null, null, '0bc53d85-6da3-4e16-8064-c942f9d2d5dd');
-INSERT INTO `sales_order` VALUES ('SO2020110043', '2020-11-10 09:59:23', '', '2020-11-10 09:59:23', null, null, null, null, null, null, '2020-11-10 00:00:00', null, null, '2', 'Gading Serpong', '523532532523352', '', 'jalan serpong raya No. 65', '6314', '50', 'itoktoni llr', '32532532', 'itoktokji@gmail.com', 'regregre', '2087', '1', null, null, null, null, '', null, 'Loyal Customer 10%', null, '27000', null, null, null, '270000', '243000', null, null, '243000', null, null, null, null, null, null, null, '', null, null, '35', null, null, null, '000010dc-8e5b-44ed-8152-929d28e9fcdb');
-INSERT INTO `sales_order` VALUES ('SO2020110044', '2020-11-10 09:59:58', '', '2020-11-10 09:59:58', null, null, null, null, null, null, '2020-11-10 00:00:00', null, null, '1', 'Salad Mamita Pusat', '0590832705972', 'itok.toni@gmail.com', 'jalan tanah koja RT. 001/02 No. 65', '2087', '51', 'gegrgre', 'gregrge', 'rgrge@gmail.com', 'gregre', '2087', '1', null, null, null, null, '', null, 'Loyal Customer 10%', null, '27000', null, null, null, '270000', '243000', null, null, '243000', null, null, null, null, null, null, null, '', null, null, '35', null, null, null, '2a72d240-3e07-4352-9955-1e049a1b0683');
-INSERT INTO `sales_order` VALUES ('SO2020110045', '2020-11-10 10:01:53', '', '2020-11-10 10:01:54', null, null, null, null, null, null, '2020-11-10 00:00:00', null, null, '1', 'Salad Mamita Pusat', '0590832705972', 'itok.toni@gmail.com', 'jalan tanah koja RT. 001/02 No. 65', '2087', '51', 'gegrgre', 'gregrge', 'rgrge@gmail.com', 'gregre', '2087', '1', null, null, null, null, '', null, 'Loyal Customer 10%', null, '27000', null, null, null, '270000', '243000', null, null, '243000', null, null, null, null, null, null, null, '', null, null, '35', null, null, null, '59aaa330-afb1-445a-9221-dd7571357c4d');
 
 -- ----------------------------
 -- Table structure for sales_order_detail
@@ -10773,63 +10729,11 @@ CREATE TABLE `sales_order_detail` (
   `sales_order_detail_tax_value` double(15,3) DEFAULT NULL,
   `sales_order_detail_id` int(11) NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`sales_order_detail_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=357 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=358 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of sales_order_detail
 -- ----------------------------
-INSERT INTO `sales_order_detail` VALUES ('SO2020110001', '', 'P201022002', null, null, null, '1.000', '40000.000', '40000.000', null, null, null, null, null, null, '305');
-INSERT INTO `sales_order_detail` VALUES ('SO2020110001', '', 'P201022001', null, null, null, '3.000', '65000.000', '195000.000', null, null, null, null, null, null, '306');
-INSERT INTO `sales_order_detail` VALUES ('SO2020110002', '', 'P201022002', null, null, null, '2.000', '40000.000', '80000.000', null, null, null, null, null, null, '307');
-INSERT INTO `sales_order_detail` VALUES ('SO2020110002', '', 'P201022001', null, null, null, '3.000', '65000.000', '195000.000', null, null, null, null, null, null, '308');
-INSERT INTO `sales_order_detail` VALUES ('SO2020110003', '', 'P201022002', null, null, null, '2.000', '40000.000', '80000.000', null, null, null, null, null, null, '309');
-INSERT INTO `sales_order_detail` VALUES ('SO2020110003', '', 'P201022001', null, null, null, '4.000', '65000.000', '260000.000', null, null, null, null, null, null, '310');
-INSERT INTO `sales_order_detail` VALUES ('SO2020110004', '', 'P201022002', null, null, null, '2.000', '40000.000', '80000.000', null, null, null, null, null, null, '311');
-INSERT INTO `sales_order_detail` VALUES ('SO2020110004', '', 'P201022001', null, null, null, '8.000', '65000.000', '520000.000', null, null, null, null, null, null, '312');
-INSERT INTO `sales_order_detail` VALUES ('SO2020110005', '', 'P201022001', null, null, null, '8.000', '65000.000', '520000.000', null, null, null, null, null, null, '313');
-INSERT INTO `sales_order_detail` VALUES ('SO2020110006', '', 'P201022001', null, null, null, '8.000', '65000.000', '520000.000', null, null, null, null, null, null, '314');
-INSERT INTO `sales_order_detail` VALUES ('SO2020110007', '', 'P201022001', null, null, null, '8.000', '65000.000', '520000.000', null, null, null, null, null, null, '315');
-INSERT INTO `sales_order_detail` VALUES ('SO2020110008', '', 'P201022002', null, null, null, '1.000', '40000.000', '40000.000', null, null, null, null, null, null, '316');
-INSERT INTO `sales_order_detail` VALUES ('SO2020110008', '', 'P201022001', null, null, null, '9.000', '65000.000', '585000.000', null, null, null, null, null, null, '317');
-INSERT INTO `sales_order_detail` VALUES ('SO2020110009', '', 'P201022002', null, null, null, '1.000', '40000.000', '40000.000', null, null, null, null, null, null, '318');
-INSERT INTO `sales_order_detail` VALUES ('SO2020110009', '', 'P201022001', null, null, null, '4.000', '65000.000', '260000.000', null, null, null, null, null, null, '319');
-INSERT INTO `sales_order_detail` VALUES ('SO2020110010', '', 'P201022001', null, null, null, '1.000', '65000.000', '65000.000', null, null, null, null, null, null, '320');
-INSERT INTO `sales_order_detail` VALUES ('SO2020110011', '', 'P201022001', null, null, null, '2.000', '65000.000', '130000.000', null, null, null, null, null, null, '321');
-INSERT INTO `sales_order_detail` VALUES ('SO2020110012', '', 'P201022001', null, null, null, '2.000', '65000.000', '130000.000', null, null, null, null, null, null, '322');
-INSERT INTO `sales_order_detail` VALUES ('SO2020110013', '', 'P201022001', null, null, null, '1.000', '65000.000', '65000.000', null, null, null, null, null, null, '323');
-INSERT INTO `sales_order_detail` VALUES ('SO2020110014', '', 'P201022001', null, null, null, '2.000', '65000.000', '130000.000', null, null, null, null, null, null, '324');
-INSERT INTO `sales_order_detail` VALUES ('SO2020110015', '', 'P201022001', null, null, null, '5.000', '65000.000', '325000.000', null, null, null, null, null, null, '325');
-INSERT INTO `sales_order_detail` VALUES ('SO2020110016', '', 'P201022001', null, null, null, '3.000', '65000.000', '195000.000', null, null, null, null, null, null, '326');
-INSERT INTO `sales_order_detail` VALUES ('SO2020110017', '', 'P201022002', null, null, null, '1.000', '40000.000', '40000.000', null, null, null, null, null, null, '327');
-INSERT INTO `sales_order_detail` VALUES ('SO2020110018', '', 'P201022001', null, null, null, '1.000', '65000.000', '65000.000', null, null, null, null, null, null, '328');
-INSERT INTO `sales_order_detail` VALUES ('SO2020110019', '', 'P201022001', null, null, null, '1.000', '65000.000', '65000.000', null, null, null, null, null, null, '329');
-INSERT INTO `sales_order_detail` VALUES ('SO2020110020', '', 'P201022001', null, null, null, '1.000', '65000.000', '65000.000', null, null, null, null, null, null, '330');
-INSERT INTO `sales_order_detail` VALUES ('SO2020110021', '', 'P201022001', null, null, null, '1.000', '65000.000', '65000.000', null, null, null, null, null, null, '331');
-INSERT INTO `sales_order_detail` VALUES ('SO2020110022', '', 'P201022001', null, null, null, '4.000', '65000.000', '260000.000', null, null, null, null, null, null, '332');
-INSERT INTO `sales_order_detail` VALUES ('SO2020110023', '', 'P201022001', null, null, null, '2.000', '65000.000', '130000.000', null, null, null, null, null, null, '333');
-INSERT INTO `sales_order_detail` VALUES ('SO2020110024', '', 'P201022001', null, null, null, '2.000', '65000.000', '130000.000', null, null, null, null, null, null, '334');
-INSERT INTO `sales_order_detail` VALUES ('SO2020110025', '', 'P201022001', null, null, null, '2.000', '65000.000', '130000.000', null, null, null, null, null, null, '335');
-INSERT INTO `sales_order_detail` VALUES ('SO2020110026', '', 'P201022001', null, null, null, '2.000', '65000.000', '130000.000', null, null, null, null, null, null, '336');
-INSERT INTO `sales_order_detail` VALUES ('SO2020110027', '', 'P201022001', null, null, null, '2.000', '65000.000', '130000.000', null, null, null, null, null, null, '337');
-INSERT INTO `sales_order_detail` VALUES ('SO2020110028', '', 'P201022001', null, null, null, '2.000', '65000.000', '130000.000', null, null, null, null, null, null, '338');
-INSERT INTO `sales_order_detail` VALUES ('SO2020110029', '', 'P201022002', null, null, null, '1.000', '40000.000', '40000.000', null, null, null, null, null, null, '339');
-INSERT INTO `sales_order_detail` VALUES ('SO2020110030', '', 'P201022001', null, null, null, '6.000', '65000.000', '390000.000', null, null, null, null, null, null, '340');
-INSERT INTO `sales_order_detail` VALUES ('SO2020110031', '', 'P201022001', null, null, null, '2.000', '65000.000', '130000.000', null, null, null, null, null, null, '341');
-INSERT INTO `sales_order_detail` VALUES ('SO2020110032', '', 'P201022001', null, null, null, '9.000', '65000.000', '585000.000', null, null, null, null, null, null, '342');
-INSERT INTO `sales_order_detail` VALUES ('SO2020110033', '', 'P201022001', null, null, null, '9.000', '65000.000', '585000.000', null, null, null, null, null, null, '343');
-INSERT INTO `sales_order_detail` VALUES ('SO2020110034', '', 'P201022002', null, null, null, '9.000', '40000.000', '360000.000', null, null, null, null, null, null, '344');
-INSERT INTO `sales_order_detail` VALUES ('SO2020110035', '', 'P201022001', null, null, null, '9.000', '65000.000', '585000.000', null, null, null, null, null, null, '345');
-INSERT INTO `sales_order_detail` VALUES ('SO2020110036', '', 'P201022006', null, null, null, '1.000', '270000.000', '270000.000', null, null, null, null, null, null, '346');
-INSERT INTO `sales_order_detail` VALUES ('SO2020110036', '', 'P201022001', null, null, null, '4.000', '65000.000', '260000.000', null, null, null, null, null, null, '347');
-INSERT INTO `sales_order_detail` VALUES ('SO2020110037', '', 'P201022006', null, null, null, '1.000', '270000.000', '270000.000', null, null, null, null, null, null, '348');
-INSERT INTO `sales_order_detail` VALUES ('SO2020110038', '', 'P201022006', null, null, null, '1.000', '270000.000', '270000.000', null, null, null, null, null, null, '349');
-INSERT INTO `sales_order_detail` VALUES ('SO2020110039', '', 'P201022006', null, null, null, '20.000', '270000.000', '5400000.000', null, null, null, null, null, null, '350');
-INSERT INTO `sales_order_detail` VALUES ('SO2020110040', '', 'P201022006', null, null, null, '5.000', '270000.000', '1350000.000', null, null, null, null, null, null, '351');
-INSERT INTO `sales_order_detail` VALUES ('SO2020110041', '', 'P201022006', null, null, null, '1.000', '270000.000', '270000.000', null, null, null, null, null, null, '352');
-INSERT INTO `sales_order_detail` VALUES ('SO2020110042', '', 'P201022006', null, null, null, '1.000', '270000.000', '270000.000', null, null, null, null, null, null, '353');
-INSERT INTO `sales_order_detail` VALUES ('SO2020110043', '', 'P201022006', null, null, null, '1.000', '270000.000', '270000.000', null, null, null, null, null, null, '354');
-INSERT INTO `sales_order_detail` VALUES ('SO2020110044', '', 'P201022006', null, null, null, '1.000', '270000.000', '270000.000', null, null, null, null, null, null, '355');
-INSERT INTO `sales_order_detail` VALUES ('SO2020110045', '', 'P201022006', null, null, null, '1.000', '270000.000', '270000.000', null, null, null, null, null, null, '356');
 
 -- ----------------------------
 -- Table structure for sales_order_detail_variant
@@ -10846,204 +10750,6 @@ CREATE TABLE `sales_order_detail_variant` (
 -- ----------------------------
 -- Records of sales_order_detail_variant
 -- ----------------------------
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110001', 'P201022001', '1', '1', '306');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110001', 'P201022001', '2', '1', '306');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110001', 'P201022001', '4', '1', '306');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110001', 'P201022001', '8', '0', '306');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110001', 'P201022001', '9', '0', '306');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110001', 'P201022001', '10', '0', '306');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110002', 'P201022001', '1', '1', '308');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110002', 'P201022001', '2', '1', '308');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110002', 'P201022001', '4', '0', '308');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110002', 'P201022001', '8', '1', '308');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110002', 'P201022001', '9', '0', '308');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110002', 'P201022001', '10', '0', '308');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110003', 'P201022001', '1', '0', '310');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110003', 'P201022001', '2', '0', '310');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110003', 'P201022001', '4', '2', '310');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110003', 'P201022001', '8', '2', '310');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110003', 'P201022001', '9', '0', '310');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110003', 'P201022001', '10', '0', '310');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110004', 'P201022001', '1', '4', '312');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110004', 'P201022001', '2', '0', '312');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110004', 'P201022001', '4', '0', '312');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110004', 'P201022001', '8', '4', '312');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110004', 'P201022001', '9', '0', '312');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110004', 'P201022001', '10', '0', '312');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110005', 'P201022001', '1', '0', '313');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110005', 'P201022001', '2', '4', '313');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110005', 'P201022001', '4', '0', '313');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110005', 'P201022001', '8', '0', '313');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110005', 'P201022001', '9', '4', '313');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110005', 'P201022001', '10', '0', '313');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110006', 'P201022001', '1', '0', '314');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110006', 'P201022001', '2', '0', '314');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110006', 'P201022001', '4', '4', '314');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110006', 'P201022001', '8', '4', '314');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110006', 'P201022001', '9', '0', '314');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110006', 'P201022001', '10', '0', '314');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110007', 'P201022001', '1', '0', '315');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110007', 'P201022001', '2', '4', '315');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110007', 'P201022001', '4', '0', '315');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110007', 'P201022001', '8', '4', '315');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110007', 'P201022001', '9', '0', '315');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110007', 'P201022001', '10', '0', '315');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110008', 'P201022001', '1', '1', '317');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110008', 'P201022001', '2', '2', '317');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110008', 'P201022001', '4', '3', '317');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110008', 'P201022001', '8', '1', '317');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110008', 'P201022001', '9', '1', '317');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110008', 'P201022001', '10', '1', '317');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110009', 'P201022001', '1', '1', '319');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110009', 'P201022001', '2', '0', '319');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110009', 'P201022001', '4', '0', '319');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110009', 'P201022001', '8', '3', '319');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110009', 'P201022001', '9', '0', '319');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110009', 'P201022001', '10', '0', '319');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110010', 'P201022001', '1', '0', '320');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110010', 'P201022001', '2', '0', '320');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110010', 'P201022001', '4', '1', '320');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110010', 'P201022001', '8', '0', '320');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110010', 'P201022001', '9', '0', '320');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110010', 'P201022001', '10', '0', '320');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110011', 'P201022001', '1', '0', '321');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110011', 'P201022001', '2', '0', '321');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110011', 'P201022001', '4', '2', '321');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110011', 'P201022001', '8', '0', '321');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110011', 'P201022001', '9', '0', '321');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110011', 'P201022001', '10', '0', '321');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110012', 'P201022001', '1', '2', '322');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110012', 'P201022001', '2', '0', '322');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110012', 'P201022001', '4', '0', '322');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110012', 'P201022001', '8', '0', '322');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110012', 'P201022001', '9', '0', '322');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110012', 'P201022001', '10', '0', '322');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110013', 'P201022001', '1', '0', '323');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110013', 'P201022001', '2', '0', '323');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110013', 'P201022001', '4', '1', '323');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110013', 'P201022001', '8', '0', '323');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110013', 'P201022001', '9', '0', '323');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110013', 'P201022001', '10', '0', '323');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110014', 'P201022001', '1', '0', '324');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110014', 'P201022001', '2', '2', '324');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110014', 'P201022001', '4', '0', '324');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110014', 'P201022001', '8', '0', '324');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110014', 'P201022001', '9', '0', '324');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110014', 'P201022001', '10', '0', '324');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110015', 'P201022001', '1', '1', '325');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110015', 'P201022001', '2', '2', '325');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110015', 'P201022001', '4', '1', '325');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110015', 'P201022001', '8', '1', '325');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110015', 'P201022001', '9', '0', '325');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110015', 'P201022001', '10', '0', '325');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110016', 'P201022001', '1', '1', '326');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110016', 'P201022001', '2', '1', '326');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110016', 'P201022001', '4', '1', '326');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110016', 'P201022001', '8', '0', '326');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110016', 'P201022001', '9', '0', '326');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110016', 'P201022001', '10', '0', '326');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110018', 'P201022001', '1', '0', '328');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110018', 'P201022001', '2', '0', '328');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110018', 'P201022001', '4', '1', '328');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110018', 'P201022001', '8', '0', '328');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110018', 'P201022001', '9', '0', '328');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110018', 'P201022001', '10', '0', '328');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110019', 'P201022001', '1', '0', '329');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110019', 'P201022001', '2', '0', '329');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110019', 'P201022001', '4', '1', '329');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110019', 'P201022001', '8', '0', '329');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110019', 'P201022001', '9', '0', '329');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110019', 'P201022001', '10', '0', '329');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110020', 'P201022001', '1', '0', '330');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110020', 'P201022001', '2', '0', '330');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110020', 'P201022001', '4', '1', '330');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110020', 'P201022001', '8', '0', '330');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110020', 'P201022001', '9', '0', '330');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110020', 'P201022001', '10', '0', '330');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110021', 'P201022001', '1', '0', '331');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110021', 'P201022001', '2', '0', '331');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110021', 'P201022001', '4', '0', '331');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110021', 'P201022001', '8', '1', '331');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110021', 'P201022001', '9', '0', '331');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110021', 'P201022001', '10', '0', '331');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110022', 'P201022001', '1', '2', '332');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110022', 'P201022001', '2', '2', '332');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110022', 'P201022001', '4', '0', '332');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110022', 'P201022001', '8', '0', '332');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110022', 'P201022001', '9', '0', '332');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110022', 'P201022001', '10', '0', '332');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110023', 'P201022001', '1', '2', '333');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110023', 'P201022001', '2', '0', '333');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110023', 'P201022001', '4', '0', '333');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110023', 'P201022001', '8', '0', '333');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110023', 'P201022001', '9', '0', '333');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110023', 'P201022001', '10', '0', '333');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110024', 'P201022001', '1', '0', '334');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110024', 'P201022001', '2', '0', '334');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110024', 'P201022001', '4', '0', '334');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110024', 'P201022001', '8', '2', '334');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110024', 'P201022001', '9', '0', '334');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110024', 'P201022001', '10', '0', '334');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110025', 'P201022001', '1', '0', '335');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110025', 'P201022001', '2', '0', '335');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110025', 'P201022001', '4', '0', '335');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110025', 'P201022001', '8', '0', '335');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110025', 'P201022001', '9', '2', '335');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110025', 'P201022001', '10', '0', '335');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110026', 'P201022001', '1', '0', '336');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110026', 'P201022001', '2', '2', '336');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110026', 'P201022001', '4', '0', '336');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110026', 'P201022001', '8', '0', '336');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110026', 'P201022001', '9', '0', '336');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110026', 'P201022001', '10', '0', '336');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110027', 'P201022001', '1', '0', '337');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110027', 'P201022001', '2', '2', '337');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110027', 'P201022001', '4', '0', '337');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110027', 'P201022001', '8', '0', '337');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110027', 'P201022001', '9', '0', '337');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110027', 'P201022001', '10', '0', '337');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110028', 'P201022001', '1', '0', '338');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110028', 'P201022001', '2', '0', '338');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110028', 'P201022001', '4', '0', '338');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110028', 'P201022001', '8', '2', '338');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110028', 'P201022001', '9', '0', '338');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110028', 'P201022001', '10', '0', '338');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110030', 'P201022001', '1', '1', '340');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110030', 'P201022001', '2', '2', '340');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110030', 'P201022001', '4', '3', '340');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110030', 'P201022001', '8', '0', '340');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110030', 'P201022001', '9', '0', '340');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110030', 'P201022001', '10', '0', '340');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110031', 'P201022001', '1', '0', '341');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110031', 'P201022001', '2', '1', '341');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110031', 'P201022001', '4', '0', '341');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110031', 'P201022001', '8', '1', '341');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110031', 'P201022001', '9', '0', '341');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110031', 'P201022001', '10', '0', '341');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110032', 'P201022001', '1', '9', '342');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110032', 'P201022001', '2', '0', '342');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110032', 'P201022001', '4', '0', '342');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110032', 'P201022001', '8', '0', '342');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110032', 'P201022001', '9', '0', '342');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110032', 'P201022001', '10', '0', '342');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110033', 'P201022001', '1', '9', '343');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110033', 'P201022001', '2', '0', '343');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110033', 'P201022001', '4', '0', '343');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110033', 'P201022001', '8', '0', '343');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110033', 'P201022001', '9', '0', '343');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110033', 'P201022001', '10', '0', '343');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110035', 'P201022001', '1', '9', '345');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110035', 'P201022001', '2', '0', '345');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110035', 'P201022001', '4', '0', '345');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110035', 'P201022001', '8', '0', '345');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110035', 'P201022001', '9', '0', '345');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110035', 'P201022001', '10', '0', '345');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110036', 'P201022001', '1', '2', '347');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110036', 'P201022001', '2', '2', '347');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110036', 'P201022001', '4', '0', '347');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110036', 'P201022001', '8', '0', '347');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110036', 'P201022001', '9', '0', '347');
-INSERT INTO `sales_order_detail_variant` VALUES ('SO2020110036', 'P201022001', '10', '0', '347');
 
 -- ----------------------------
 -- Table structure for sales_quotation
@@ -11177,6 +10883,6 @@ CREATE TABLE `users` (
 -- ----------------------------
 -- Records of users
 -- ----------------------------
-INSERT INTO `users` VALUES ('1', 'itok toni laksono', 'itok.toni@gmail.com', '$2y$10$W1sDOE45BuiXL3g42lvhs.p6HISJynvw4HpZakHP0bIR/c1wyLuVu', 'itoktoni', 'itoktoni.jpeg', 'developer', 'RRbMgWjAFES4IXIVs9Ja77wGZVPMWZjVdOikvqA7JDIgEIRXkEPVq3K9s7qz', 'Jl tanah koja RT.001/02 No. 65 Duri kosambi, Cengkareng, Jakarta Barat', '1990-07-18', 'Blora', '', '08111040159', null, null, '2020-07-13 23:33:29', '1', 'gH9aT5USinNPXpTvxLaTu70uh1F2gQ3xEJzYg7pwwmtKrYjMR7Eu0d57zO47', null, '2020-03-01 23:13:44', '1051', '1', '3');
+INSERT INTO `users` VALUES ('1', 'itok toni laksono', 'itok.toni@gmail.com', '$2y$10$W1sDOE45BuiXL3g42lvhs.p6HISJynvw4HpZakHP0bIR/c1wyLuVu', 'itoktoni', 'itoktoni.jpeg', 'developer', 'ADfZ2Z9KNdqHIzcflON6rFFCCph0CuN1WgJ3tey5y9UWQX2q2r8oDqjUxmuo', 'Jl tanah koja RT.001/02 No. 65 Duri kosambi, Cengkareng, Jakarta Barat', '1990-07-18', 'Blora', '', '08111040159', null, null, '2020-07-13 23:33:29', '1', 'gH9aT5USinNPXpTvxLaTu70uh1F2gQ3xEJzYg7pwwmtKrYjMR7Eu0d57zO47', null, '2020-03-01 23:13:44', '1051', '1', '3');
 INSERT INTO `users` VALUES ('7', 'admin', 'admin@gmail.com', '$2y$10$W1sDOE45BuiXL3g42lvhs.p6HISJynvw4HpZakHP0bIR/c1wyLuVu', 'admin', null, 'admin', 'bNPCPdsA5y6zUd5DLKpGdq8WDqMdlAXGe20MpO4Rslv2FvKYd8w8Cab24Aqu', null, null, null, null, null, null, '2019-10-24 22:11:26', '2020-01-19 14:35:35', '1', 'gH9aT5USinNPXpTvxLaTu70uh1F2gQ3xEJzYg7pwwmtKrYjMR7Eu0d57zO47', null, '2020-03-01 23:13:44', null, null, null);
 INSERT INTO `users` VALUES ('8', 'itok toni laksno', 'itoktoni@gmail.com', '$2y$10$W8QqV2aORVBezKM/l/5l8egrK8EBeFAjWdKOvt5BF8aM.bif2uNtq', 'webitok', '', 'customer', '', '', null, '', '', '', null, '2020-10-31 23:45:02', '2020-10-31 23:45:02', '1', 'aXRva3RvbmlAZ21haWwuY29tOjAyMTU0NDMyOTQ=', '', null, null, null, null);

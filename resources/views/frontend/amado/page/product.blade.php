@@ -1,5 +1,22 @@
 @extends(Helper::setExtendFrontend())
 
+@push('javascript')
+<script>
+
+$(function() {
+    $('#product_details_slider').carousel({
+        interval: false
+    });
+});
+
+$('.carousel-indicators li').on('click', function(e) {
+    var text = $(this).attr('data-text');
+    var data = $('.short_overview').html('').append(text);
+    console.log(text);
+});
+</script>
+@endpush
+
 @section('content')
 
 <!-- Product Details Area Start -->
@@ -22,11 +39,23 @@
                 <div class="single_product_thumb">
                     <div id="product_details_slider" class="carousel slide" data-ride="carousel">
                         <ol class="carousel-indicators">
-                            <li class="active" data-target="#product_details_slider" data-slide-to="0"
+                            <li id="gettext" class="active" data-text="{{ $item->item_product_description }}" data-target="#product_details_slider" data-slide-to="0"
                                 style="background-image: url({{ Helper::files('product/'.$item->item_product_image) }});">
                             </li>
+
+                            @foreach($variants->where('item_variant_image', '!=', null) as $variant)
+                            <li id="gettext" data-text="{{ $variant->item_variant_description }}" data-target="#product_details_slider"
+                                data-slide-to="{{ $loop->iteration }}"
+                                style="background-image: url({{ Helper::files('variant/thumbnail_'.$variant->item_variant_image) }});">
+                            </li>
+                            @endforeach
+
+                            @php
+                            $total = $variants->where('item_variant_image', '!=', null)->count();
+                            @endphp
+
                             @foreach($images as $image)
-                            <li data-target="#product_details_slider" data-slide-to="{{ $loop->iteration }}"
+                            <li data-target="#product_details_slider" data-slide-to="{{ $total + $loop->iteration }}"
                                 style="background-image: url({{ Helper::files('product_detail/thumbnail_'.$image->item_product_image_file) }});">
                             </li>
                             @endforeach
@@ -34,15 +63,26 @@
                         <div class="carousel-inner">
                             <div class="carousel-item active">
                                 <a class="gallery_img" href="{{ Helper::files('product/'.$item->item_product_image) }}">
-                                    <img class="d-block w-100" data-src="{{ Helper::files('product/'.$item->item_product_image) }}"
+                                    <img class="" data-src="{{ Helper::files('product/'.$item->item_product_image) }}"
                                         src="{{ Helper::files('product/'.$item->item_product_image) }}">
                                 </a>
                             </div>
+                            @foreach($variants->where('item_variant_image', '!=', null) as $variant)
+                            <div class="carousel-item">
+                                <a class="gallery_img"
+                                    href="{{ Helper::files('variant/'.$variant->item_variant_image) }}">
+                                    <img class=""
+                                        data-src="{{ Helper::files('variant/'.$variant->item_variant_image) }}"
+                                        src="{{ Helper::files('variant/'.$variant->item_variant_image) }}" alt="">
+                                </a>
+                            </div>
+                            @endforeach
                             @foreach($images as $image)
                             <div class="carousel-item">
                                 <a class="gallery_img"
                                     href="{{ Helper::files('product_detail/'.$image->item_product_image_file) }}">
-                                    <img class="d-block w-100" data-src="{{ Helper::files('product_detail/'.$image->item_product_image_file) }}"
+                                    <img class=""
+                                        data-src="{{ Helper::files('product_detail/'.$image->item_product_image_file) }}"
                                         src="{{ Helper::files('product_detail/'.$image->item_product_image_file) }}"
                                         alt="">
                                 </a>

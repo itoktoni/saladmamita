@@ -4,7 +4,7 @@
 <script>
 $(function() {
     $('#carouselExampleIndicators').carousel({
-        interval: 5000
+        interval: false
     });
 });
 </script>
@@ -15,7 +15,7 @@ $(function() {
 <!-- Product Catagories Area Start -->
 <div class="container products-catagories-area mb-5 clearfix">
 
-    <div class="container">
+    <div class="col-md-12" style="padding:1vw">
 
         <div id="carouselExampleIndicators" class="carousel slide mt-5" data-ride="carousel">
             <ol class="carousel-indicators">
@@ -27,8 +27,10 @@ $(function() {
             <div class="carousel-inner">
                 @foreach($sliders as $slider)
                 <div class="carousel-item {{ $loop->first ? 'active' : '' }}">
-                    <a href="{{ $slider->marketing_slider_link ? route('single_slider' , ['slug' => $slider->marketing_slider_slug]) : '' }}">
-                        <img data-src="{{ Helper::files('slider/'.$slider->marketing_slider_image) }}" class="d-block h-100 w-100"
+                    <a
+                        href="{{ $slider->marketing_slider_link ? route('single_slider' , ['slug' => $slider->marketing_slider_slug]) : '' }}">
+                        <img data-src="{{ Helper::files('slider/'.$slider->marketing_slider_image) }}"
+                            class="d-block h-100 w-100"
                             src="{{ Helper::files('slider/'.$slider->marketing_slider_image) }}" alt="First slide">
                     </a>
                 </div>
@@ -53,7 +55,8 @@ $(function() {
                 <!-- Single Catagory -->
                 <div class="single-products-catagory-index">
                     <a href="{{ route('product', ['slug' => $item->item_product_slug]) }}">
-                        <img  data-src="{{ Helper::files('product/'.$item->item_product_image) }}"  src="{{ Helper::files('product/'.$item->item_product_image) }}" alt="">
+                        <img data-src="{{ Helper::files('product/'.$item->item_product_image) }}"
+                            src="{{ Helper::files('product/'.$item->item_product_image) }}" alt="">
                         <!-- Hover Content -->
                         <div class="hover-content">
                             <div class="line"></div>
