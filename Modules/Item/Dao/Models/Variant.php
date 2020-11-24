@@ -93,7 +93,7 @@ class Variant extends Model
                 if ($data) {
                     foreach ($data as $value) {
                         if ($value->item_variant_image) {
-                            Helper::removeImage($value->item_product_image, Helper::getTemplate(__CLASS__));
+                            // Helper::removeImage($value->item_product_image, Helper::getTemplate(__CLASS__));
                         }
                     }
                 }
