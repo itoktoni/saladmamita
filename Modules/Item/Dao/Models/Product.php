@@ -129,11 +129,13 @@ class Product extends Model
                 $model->item_product_min_order = 1;
             }
 
-            if (request()->isMethod('POST') && request()->has('variant')) {
+            if (request()->isMethod('POST')) {
                 $id = $model->item_product_id;
                 ProductFacades::deleteProductVariant($id);
-                foreach (request()->get('variant') as $variant) {
-                    ProductFacades::saveProductVariant($model->item_product_id, $variant);
+                if(request()->has('variant')){
+                    foreach (request()->get('variant') as $variant) {
+                        ProductFacades::saveProductVariant($model->item_product_id, $variant);
+                    }
                 }
             }
 

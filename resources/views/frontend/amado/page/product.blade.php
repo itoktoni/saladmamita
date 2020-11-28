@@ -42,22 +42,34 @@ $('.carousel-indicators li').on('click', function(e) {
                             <li id="gettext" class="active" data-text="{{ $item->item_product_description }}" data-target="#product_details_slider" data-slide-to="0"
                                 style="background-image: url({{ Helper::files('product/'.$item->item_product_image) }});">
                             </li>
-
+                            @php
+                            $counter = 0;
+                            @endphp
                             @foreach($variants->where('item_variant_image', '!=', null) as $variant)
-                            <li id="gettext" data-text="{{ $variant->item_variant_description }}" data-target="#product_details_slider"
+                            @php
+                            $counter++;
+                            @endphp
+                            @if($counter < 10)
+                            <li class="col-md-1" id="gettext" data-text="{{ $variant->item_variant_description }}" data-target="#product_details_slider"
                                 data-slide-to="{{ $loop->iteration }}"
                                 style="background-image: url({{ Helper::files('variant/thumbnail_'.$variant->item_variant_image) }});">
                             </li>
+                            @endif
                             @endforeach
-
+                            
                             @php
                             $total = $variants->where('item_variant_image', '!=', null)->count();
                             @endphp
-
+                            
                             @foreach($images as $image)
+                            @php
+                            $counter++;
+                            @endphp
+                            @if($counter < 10)
                             <li data-target="#product_details_slider" data-slide-to="{{ $total + $loop->iteration }}"
                                 style="background-image: url({{ Helper::files('product_detail/thumbnail_'.$image->item_product_image_file) }});">
                             </li>
+                            @endif
                             @endforeach
                         </ol>
                         <div class="carousel-inner">
