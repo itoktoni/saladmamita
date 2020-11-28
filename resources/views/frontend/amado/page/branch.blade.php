@@ -76,8 +76,9 @@ $(document).ready(function() {
                                 <tr>
                                     <td>{{ $branch->branch_name }}</td>
                                     <td>{{ $branch->branch_phone }}</td>
-                                    <td>{{ $branch->branch_address }} -
-                                        {{ Helper::getSingleArea($branch->branch_rajaongkir_area_id, true) }}</td>
+                                    <td>
+                                        {{ $branch->branch_address }} - {{ Helper::getSingleArea($branch->branch_rajaongkir_area_id, true) }}
+                                    </td>
                                 </tr>
                                 @endforeach
                             </tbody>

@@ -9,7 +9,7 @@
         <div class="row">
             <div class="col-6 col-lg-7">
                 <div class="single_product_thumb">
-                    {!! $branch->branch_map !!}
+                    {!! $branch->branch_map ?? '' !!}
                 </div>
             </div>
 

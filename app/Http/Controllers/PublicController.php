@@ -1000,7 +1000,7 @@ class PublicController extends Controller
             return redirect()->back()->withInput();
         }
 
-        $branch = BranchFacades::dataRepository()->get();
+        $branch = BranchFacades::dataRepository()->get()->sortBy('branch_id');
         return View(Helper::setViewFrontend(__FUNCTION__))->with($this->share([
             'branchs' => $branch,
         ]));
@@ -1025,7 +1025,7 @@ class PublicController extends Controller
             return redirect()->back()->withInput();
         }
 
-        $branch = BranchFacades::find(1)->first();
+        $branch = BranchFacades::find(1);
         return View(Helper::setViewFrontend(__FUNCTION__))->with($this->share([
             'branch' => $branch,
         ]));
