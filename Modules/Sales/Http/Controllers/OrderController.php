@@ -207,7 +207,7 @@ class OrderController extends Controller
             $pasing = [
                 'master' => $data,
                 'detail' => $data->detail,
-                'banks' => BankFacades::dataRepository()->get(),
+                'banks' => BankFacades::dataRepository()->first(),
             ];
             $pdf = PDF::loadView(Helper::setViewPrint(__FUNCTION__, $this->folder), $pasing)->setPaper('a6', 'potrait');
             // return $pdf->download();
