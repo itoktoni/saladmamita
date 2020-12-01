@@ -162,7 +162,7 @@ $('.carousel-indicators li').on('click', function(e) {
                             false;
                             $detail_variant = $item->variant($item->item_product_id);
                             @endphp
-                            @if($detail_variant->count() > 1)
+                            @if(isset($detail_variant[0]))
                             @foreach($detail_variant as $variant)
                             <tr>
                                 <td class="align-middle" width="75%">{{ $variant->item_variant_name }}</td>
