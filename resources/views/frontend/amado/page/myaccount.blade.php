@@ -77,10 +77,11 @@
                                     </td>
 
                                     <td data-header="Detail" align="center">
-                                        <button type="button" class="btn btn-primary btn-block btn-sm"
+                                        <button type="button" class="btn btn-primary btn-sm"
                                             data-toggle="modal" data-target="#{{ $item->sales_order_id ?? '' }}">
                                             Show
                                         </button>
+                                        <a target="_blank" style="padding:7.5px 11px" class="btn btn-danger btn-sm" href="{{ route('checkout', ['token' => $item->sales_order_token]) }}">Print</a>
                                     </td>
 
                                 </tr>

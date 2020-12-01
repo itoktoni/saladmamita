@@ -635,9 +635,6 @@
             <h4>
                 {{ config('website.address') }}
             </h4>
-            <p>
-                {{ Helper::getSingleArea($master->sales_order_from_area, true) }}
-            </p>
         </div>
         <div id="container">
             <table cellpadding="" 5 cellspacing="0" width="100%">
