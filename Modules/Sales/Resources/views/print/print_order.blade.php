@@ -757,10 +757,15 @@
                     </td>
                 </tr>
 
+                <tr>
+                    <td colspan="8">
+                        <span style="font-size: 10px;">
+                            Transfer ke :  {{ $banks->finance_bank_name ?? '' }} a.n {{ $banks->finance_bank_account_name ?? '' }} ( {{ $banks->finance_bank_account_number ?? '' }} )
+                        </span>
+                        
+                    </td>
+                </tr>
             </table>
-            <span style="font-size: 10px;">
-                *  {{ $banks->finance_bank_name ?? '' }} a.n {{ $banks->finance_bank_account_name ?? '' }} ( {{ $banks->finance_bank_account_number ?? '' }} )
-            </span>
         </div>
 
 </body>
