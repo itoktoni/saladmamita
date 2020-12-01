@@ -8,7 +8,9 @@
 <script src="//cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
 <script>
 $(document).ready(function() {
-    $('#table').DataTable();
+    $('#table').DataTable({
+        "order": [[ 1, "desc" ]]
+    });
 });
 </script>
 @endpush
@@ -66,7 +68,8 @@ $(document).ready(function() {
                         <table id="table" class="table stripe table-sm table-responsive">
                             <thead>
                                 <tr>
-                                    <td width="25%">Nama Cabang</td>
+                                    <td width="5%">No.</td>
+                                    <td width="20%">Nama Cabang</td>
                                     <td width="15%">Contact</td>
                                     <td width="60%">Alamat</td>
                                 </tr>
@@ -74,6 +77,7 @@ $(document).ready(function() {
                             <tbody>
                                 @foreach($branchs as $branch)
                                 <tr>
+                                    <td>{{ $loop->iteration }}</td>
                                     <td>{{ $branch->branch_name }}</td>
                                     <td>{{ $branch->branch_phone }}</td>
                                     <td>
