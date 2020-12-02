@@ -390,7 +390,7 @@
 
     #container {
         margin-right: 5px;
-        margin-top: 25px;
+        margin-top: 15px;
     }
 
     #container table {
