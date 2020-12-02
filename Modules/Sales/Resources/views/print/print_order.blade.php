@@ -642,7 +642,7 @@
         </div>
         <div id="address">
             <h4>
-                {{ config('website.address') }}
+                {!! config('website.address') !!}
             </h4>
             <p>
                 {{ Helper::getSingleArea($master->sales_order_from_area, true) }}

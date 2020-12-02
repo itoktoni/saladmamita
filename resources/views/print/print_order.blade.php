@@ -633,7 +633,7 @@
         </div>
         <div id="address">
             <h4>
-                {{ config('website.address') }}
+                {!! config('website.address') !!}
             </h4>
         </div>
         <div id="container">
