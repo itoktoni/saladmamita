@@ -23,7 +23,7 @@
         </div>
 
         <!-- checkout section  -->
-        <section class="row">
+        <section class="row" style="margin-top: -20px;">
             <div class="d-flex justify-content-center">
 
                 @foreach($product as $category)
