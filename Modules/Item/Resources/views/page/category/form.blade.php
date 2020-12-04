@@ -26,14 +26,10 @@
         {!! $errors->first($form.'file', '<p class="help-block">:message</p>') !!}
     </div>
 
-    {!! Form::label('name', 'Homepage & Active', ['class' => 'col-md-2 control-label']) !!}
-    <div class="col-md-2 {{ $errors->has($form.'homepage') ? 'has-error' : ''}}">
-        {{ Form::select($form.'homepage', ['0' => 'No', '1' => 'Yes'], $model->item_category_homepage ?? null, ['class'=> 'form-control']) }}
-        {!! $errors->first($form.'homepage', '<p class="help-block">:message</p>') !!}
-    </div>
-    <div class="col-md-2 {{ $errors->has($form.'status') ? 'has-error' : ''}}">
-        {{ Form::select($form.'status', ['1' => 'Yes', '0' => 'No'], $model->item_category_status ?? null, ['class'=> 'form-control']) }}
-        {!! $errors->first($form.'status', '<p class="help-block">:message</p>') !!}
+    {!! Form::label('name', 'Slug', ['class' => 'col-md-2 control-label']) !!}
+    <div class="col-md-4 {{ $errors->has($form.'slug') ? 'has-error' : ''}}">
+        {!! Form::text($form.'slug', null, ['class' => 'form-control']) !!}
+        {!! $errors->first($form.'slug', '<p class="help-block">:message</p>') !!}
     </div>
 </div>
 

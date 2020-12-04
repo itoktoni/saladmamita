@@ -61,7 +61,7 @@ class Category extends Model
       if (request()->has($file)) {
         $image = $model->item_category_image;
         if ($image) {
-          Helper::removeImage($image, Helper::getTemplate(__CLASS__));
+          // Helper::removeImage($image, Helper::getTemplate(__CLASS__));
         }
 
         $file = request()->file($file);
@@ -73,9 +73,6 @@ class Category extends Model
         $model->item_category_slug = Str::slug($model->item_category_name);
       }
 
-      if (Cache::has('item_category_api')) {
-        Cache::forget('item_category_api');
-      }
     });
 
     parent::deleting(function ($model) {
@@ -85,7 +82,7 @@ class Category extends Model
           Cache::forget('item_category_api');
           foreach ($data as $value) {
             if ($value->item_category_image) {
-              Helper::removeImage($value->item_category_image, Helper::getTemplate(__CLASS__));
+              // Helper::removeImage($value->item_category_image, Helper::getTemplate(__CLASS__));
             }
           }
         }

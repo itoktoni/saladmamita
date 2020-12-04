@@ -15,9 +15,9 @@ $(function() {
 <!-- Product Catagories Area Start -->
 <div class="container products-catagories-area mb-5 clearfix">
 
-    <div class="col-md-12">
+    <div class="col-md-12" style="padding:1vw">
 
-        <div id="carouselExampleIndicators" class="carousel slide mt-4" data-ride="carousel">
+        <div id="carouselExampleIndicators" class="carousel slide mt-5" data-ride="carousel">
             <ol class="carousel-indicators">
                 @foreach($sliders as $slider)
                 <li data-target="#carouselExampleIndicators" data-slide-to="{{ $loop->index }}"
@@ -48,6 +48,27 @@ $(function() {
 
     </div>
 
+    <div class="row mt-2">
+        <div class="col-md-12 clearfix">
+            <div class="row flex justify-content-lg-center">
+                @foreach($product->where('item_product_display', 1)->take(3) as $item)
+                <!-- Single Catagory -->
+                <div class="single-products-catagory-index">
+                    <a href="{{ route('product', ['slug' => $item->item_product_slug]) }}">
+                        <img data-src="{{ Helper::files('product/'.$item->item_product_image) }}"
+                            src="{{ Helper::files('product/'.$item->item_product_image) }}" alt="">
+                        <!-- Hover Content -->
+                        <div class="hover-content">
+                            <div class="line"></div>
+                            <p>Harga {{ Helper::createRupiah($item->item_product_sell) }}</p>
+                            <h4>{{ $item->item_product_name }}</h4>
+                        </div>
+                    </a>
+                </div>
+                @endforeach
+            </div>
+        </div>
+    </div>
 </div>
 <!-- Product Catagories Area End -->
 

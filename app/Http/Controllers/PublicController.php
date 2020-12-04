@@ -100,133 +100,27 @@ class PublicController extends Controller
 
     public function shop($type = null, $slug = null)
     {
-        // session()->forget('filter');
-        // if (request()->isMethod('POST')) {
-        //     if (empty(request()->get('search'))) {
-        //         session()->forget('filter.item_product_name');
-        //     } else {
-        //         session()->put('filter.item_product_name', request()->get('search'));
-        //     }
-        // }
-
-        // $color = Helper::createOption(new ColorRepository(), false, true);
-        // $size = Helper::createOption(new SizeRepository(), false, true)->pluck('item_size_code');
-        // $tag = Helper::createOption(new TagRepository(), false, true)->pluck('item_tag_slug');
-        // $brand = Helper::createOption(new BrandRepository(), false, true)->pluck('item_brand_slug', 'item_brand_name');
-
         $object_product = new ProductRepository();
         $product = $object_product->dataRepository();
-        $session = [];
-        // session()->flush();
-        // if ($type == 'add' && is_numeric($slug)) {
-        //     $item = $object_product->showRepository($slug);
-        //     $additional = [];
+        
+        if(request()->has('type')){
+            if(request()->get('type') == 'category'){
+                $data = Helper::shareOption(new CategoryRepository(), false, true);
+                return View(Helper::setViewFrontend(__FUNCTION__.'_category'))->with($this->share([
+                    'product' => $data,
+                ]));
+            }
+            else{
+                $data = $product->where('item_category_slug', request()->get('type'))->get();
+                return View(Helper::setViewFrontend(__FUNCTION__))->with($this->share([
+                    'product' => $data,
+                ]));
+            }
+        }
 
-        //     $discount = 0;
-        //     if ($item->item_product_discount_type == 1) {
-        //         $discount = $item->item_product_sell * $item->item_product_discount_value;
-        //     } elseif ($item->item_product_discount_type == 2) {
-        //         $discount = $item->item_product_discount_value;
-        //     }
-
-        //     $stock = DB::table('view_stock_product')->where('product', $item->item_product_id)->get();
-        //     $option_stock = $stock->mapWithKeys(function ($item) {
-        //         $size = $item->size ? $item->size . ' - ' : '';
-        //         $color = $item->hex ? $item->hex . ' - ' : '';
-        //         $stock = 'Stock ( ' . $item->qty . ' )';
-
-        //         return [$item->id => $size . $color . $stock];
-        //     })->toArray();
-
-        //     $additional = [
-        //         'image' => $item->item_product_image,
-        //         'list_option' => $option_stock,
-        //         'option' => $stock->first()->id ?? null,
-        //         'product' => $item->item_product_id ?? null,
-        //         'size' => $stock->first()->size ?? null,
-        //         'color' => $stock->first()->hex ?? null,
-        //         'stock' => $stock->first()->qty ?? null,
-        //         'discount' => $discount,
-        //         'gram' => $item->item_product_gram,
-        //     ];
-
-        //     $price = $item->item_product_sell - $discount;
-        //     Cart::add($stock->first()->id, $item->item_product_name, $price, 1, $additional);
-        // } elseif ($type == 'love' && is_string($slug)) {
-        //     $love = DB::table('item_wishlist')->where([
-        //         'item_wishlist_item_product_id' => $slug,
-        //         'item_wishlist_user_id' => Auth::user()->id,
-        //     ]);
-
-        //     if ($love->count() > 0) {
-        //         $love->delete();
-        //     } else {
-        //         $love = DB::table('item_wishlist')->insert([
-        //             'item_wishlist_item_product_id' => $slug,
-        //             'item_wishlist_user_id' => Auth::user()->id,
-        //             'item_wishlist_created_at' => date('Y-m-d H:i:s'),
-        //         ]);
-        //     }
-        // } else {
-        //     switch ($type) {
-        //         case 'brand':
-        //             if (!session()->has('filter.item_brand_slug.' . $slug)) {
-        //                 session()->put('filter.item_brand_slug.' . $slug, $slug);
-        //             }
-        //             break;
-        //         case 'category':
-        //             if (!session()->has('filter.item_category_slug.' . $slug)) {
-        //                 session()->put('filter.item_category_slug.' . $slug, $slug);
-        //             }
-        //             break;
-        //         case 'size':
-        //             if (!session()->has('filter.item_product_item_size_json.' . $slug)) {
-        //                 session()->put('filter.item_product_item_size_json.' . $slug, $slug);
-        //             }
-        //             break;
-        //         case 'color':
-        //             if (!session()->has('filter.item_product_item_color_json.' . $slug)) {
-        //                 session()->put('filter.item_product_item_color_json.' . $slug, $slug);
-        //             }
-        //             break;
-        //         case 'tag':
-        //             if (!session()->has('filter.item_product_item_tag_json.' . $slug)) {
-        //                 session()->put('filter.item_product_item_tag_json.' . $slug, $slug);
-        //             }
-        //             break;
-        //         case 'reset':
-        //             session()->forget('filter');
-        //             break;
-        //         case 'remove_filter':
-        //             session()->forget('filter.' . $slug);
-        //             foreach (session()->get('filter') as $rmv => $remove) {
-        //                 if (empty($remove)) {
-        //                     session()->forget('filter.' . $rmv);
-        //                 }
-        //             }
-        //             break;
-        //     }
-        // }
-        // if (session()->has('filter')) {
-        //     foreach (session()->get('filter') as $key => $value) {
-        //         if ($key == 'item_product_item_tag_json') {
-        //             foreach ($value as $filter) {
-        //                 $product->where($key, 'like', '%' . $filter . '%');
-        //             }
-        //         } elseif ($key == 'item_product_name') {
-        //             $product->where($key, 'like', '%' . $value . '%');
-        //         } else {
-        //             $product->whereIn($key, array_values($value));
-        //         }
-        //     }
-        // }
-
+        $data = $product->get();
         return View(Helper::setViewFrontend(__FUNCTION__))->with($this->share([
-            // 'color' => $color,
-            // 'size' => $size,
-            // 'tag' => $tag,
-            // 'brand' => $brand,
-            'product' => $product->get(),
+            'product' => $data,
         ]));
     }
 

@@ -7,7 +7,7 @@
                 <div class="single_widget_area">
                     <!-- Footer Menu -->
                     <div class="footer_menu">
-                        {{ config('website.address') }}
+                        {!! config('website.address') !!}
                     </div>
                 </div>
             </div>
