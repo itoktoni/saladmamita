@@ -49,6 +49,10 @@
         $('#table').DataTable();
         const observer = lozad(); // lazy loads elements with default selector as '.lozad'
         observer.observe();
+
+        $('.carousel').carousel({
+          interval: 5000
+        })
     });
     </script>
     @stack('javascript')
