@@ -76,6 +76,7 @@ class Subscribe extends Model
         'sales_langganan_core_user_id',
         'sales_langganan_marketing_langganan_id',
         'sales_langganan_token',
+        'sales_langganan_date_email',
     ];
 
     public $timestamps = true;

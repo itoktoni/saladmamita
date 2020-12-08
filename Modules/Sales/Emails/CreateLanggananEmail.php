@@ -5,12 +5,11 @@ namespace Modules\Sales\Emails;
 use Plugin\Helper;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
-use Modules\Sales\Models\Order;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Modules\Finance\Dao\Repositories\BankRepository;
 
-class CreateOrderEmail extends Mailable
+class CreateLanggananEmail extends Mailable
 {
     use SerializesModels;
 
@@ -30,7 +29,7 @@ class CreateOrderEmail extends Mailable
     {
         $this->master = $order;
         $this->customer = $order->customer;
-        $this->detail = $order->detail;
+        $this->detail = $order->order;
         $account = new BankRepository();
         $this->account = $account->dataRepository()->get();
     }
@@ -42,6 +41,6 @@ class CreateOrderEmail extends Mailable
      */
     public function build()
     {
-        return $this->view(Helper::setViewEmail('create_order_email', 'sales'));
+        return $this->view(Helper::setViewEmail('create_langganan_email', 'sales'));
     }
 }

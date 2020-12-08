@@ -38,7 +38,7 @@
                                                                     bgcolor="#{{ config('website.color') }}">
                                                                     <h2
                                                                         style="font-family:Arial,sans-serif;color:#ffffff;line-height:1.5;font-size:15px;font-weight:bold;margin:0;padding:5px 0">
-                                                                        No. Order : {{ $master->sales_order_id }}
+                                                                        No. Order : {{ $master->sales_langganan_id }}
                                                                     </h2>
                                                                 </th>
                                                             </tr>
@@ -54,7 +54,7 @@
                                                                     style="border-collapse:collapse;border-spacing:0;font-family:Arial,sans-serif;color:#555;line-height:1.5;border-bottom-color:#cccccc;border-bottom-width:1px;border-bottom-style:solid;margin:0;padding:5px 10px"
                                                                     bgcolor="#FFFFFF">
                                                                     <span
-                                                                        style="text-align: right;font-family:Arial,sans-serif;color:#555;line-height:1.5;font-size:13px;margin:0;padding:0">{{ $master->sales_order_created_at->format('d M Y H:i:s') }}</span>
+                                                                        style="text-align: right;font-family:Arial,sans-serif;color:#555;line-height:1.5;font-size:13px;margin:0;padding:0">{{ $master->sales_langganan_created_at->format('d M Y H:i:s') }}</span>
                                                                 </td>
                                                             </tr>
                                                             <tr>
@@ -71,7 +71,7 @@
 
                                                                     <span
                                                                         style="font-family:Arial,sans-serif;color:#555;line-height:1.5;font-size:13px;margin:0;padding:0">
-                                                                        {{ $master->sales_order_to_name ?? '' }}
+                                                                        {{ $master->sales_langganan_to_name ?? '' }}
                                                                     </span>
                                                                 </td>
                                                             </tr>
@@ -87,7 +87,7 @@
                                                                     bgcolor="#FFFFFF">
                                                                     <a
                                                                         style="text-align: right;color:#{{ config('website.color') }}!important;font-family:Arial,sans-serif;line-height:1.5;text-decoration:none;font-size:13px;margin:0;padding:0">
-                                                                        {{ $master->sales_order_to_email ?? '' }}
+                                                                        {{ $master->sales_langganan_to_email ?? '' }}
                                                                     </a>
                                                                 </td>
                                                             </tr>
@@ -103,7 +103,7 @@
                                                                     bgcolor="#FFFFFF">
                                                                     <span
                                                                         style="text-align: right;font-family:Arial,sans-serif;color:#555;line-height:1.5;font-size:13px;margin:0;padding:0">
-                                                                        {{ $master->sales_order_to_phone ?? '' }}
+                                                                        {{ $master->sales_langganan_to_phone ?? '' }}
                                                                     </span>
                                                                 </td>
                                                             </tr>
@@ -120,8 +120,9 @@
                                                                     bgcolor="#FFFFFF">
                                                                     <span
                                                                         style="font-family:Arial,sans-serif;color:#555;line-height:1.5;font-size:13px;margin:0;padding:0">
-                                                                        {{ $master->sales_order_to_address ?? '' }} /
-                                                                        {{ Helper::getSingleArea($master->sales_order_to_area, true) ?? '' }}
+                                                                        {{ $master->sales_langganan_to_address ?? '' }}
+                                                                        /
+                                                                        {{ Helper::getSingleArea($master->sales_langganan_to_area, true) ?? '' }}
                                                                     </span>
                                                                 </td>
                                                             </tr>
@@ -131,17 +132,30 @@
                                                                     style="border-bottom-style:none;color:#ffffff;padding-left:10px;padding-right:10px"
                                                                     bgcolor="#{{ config('website.color') }}"></th>
                                                             </tr>
+
+
+                                                            @foreach($detail as $order)
+                                                            <tr class="header">
+                                                                <td class="no" colspan="4">
+                                                                    No. <strong>{{ $order->sales_order_id }}</strong> :
+                                                                    <strong>Hari {{ $loop->iteration }} - Tanggal Kirim
+                                                                        {{ $order->sales_order_date_order->format('d F Y') }}</strong>
+                                                                </td>
+                                                            </tr>
+
+                                                            @foreach($order->detail as $item)
+
                                                             <tr>
                                                                 <td align="left"
                                                                     class="m_-3784408755349078820headingList"
-                                                                    valign="top" width="65%"
+                                                                    valign="top"
                                                                     style="border-collapse:collapse;border-spacing:0;font-family:Arial,sans-serif;color:#555;line-height:1.5;border-bottom-color:#cccccc;border-bottom-width:1px;border-bottom-style:solid;font-size:11px;margin:0;padding:5px 10px"
                                                                     bgcolor="#F0F0F0">
                                                                     <strong style="color:#555;font-size:13px">
                                                                         Product Name
                                                                     </strong>
                                                                 </td>
-                                                                <td align="center"
+                                                                <td align="right"
                                                                     class="m_-3784408755349078820headingList"
                                                                     valign="top" width="10%"
                                                                     style="border-collapse:collapse;border-spacing:0;font-family:Arial,sans-serif;color:#555;line-height:1.5;border-bottom-color:#cccccc;border-bottom-width:1px;border-bottom-style:solid;font-size:11px;margin:0;padding:5px 10px"
@@ -149,7 +163,7 @@
                                                                     <strong
                                                                         style="color:#555;font-size:13px">Qty</strong>
                                                                 </td>
-                                                                <td align="center"
+                                                                <td align="right"
                                                                     class="m_-3784408755349078820headingList"
                                                                     valign="top" width="10%"
                                                                     style="border-collapse:collapse;border-spacing:0;font-family:Arial,sans-serif;color:#555;line-height:1.5;border-bottom-color:#cccccc;border-bottom-width:1px;border-bottom-style:solid;font-size:11px;margin:0;padding:5px 10px"
@@ -167,103 +181,86 @@
                                                                 </td>
                                                             </tr>
 
-                                                            <?php
-                                                            $sub = 0;
-                                                            $total = 0;
-                                                            ?>
-                                                            @foreach ($detail as $item)
-                                                            <?php
-                                                            $sub = $item->sales_order_detail_qty_order * $item->sales_order_detail_price_order;
-                                                            $total = $total + $sub;
-                                                            ?>
-
-                                                            <tr>
-                                                                <td align="left" valign="middle" width="50%"
-                                                                    style="border-collapse:collapse;border-spacing:0;font-family:Arial,sans-serif;color:#555;line-height:1.5;border-bottom-color:#cccccc;border-bottom-width:1px;border-bottom-style:solid;margin:0;padding:5px 10px"
-                                                                    bgcolor="#FFFFFF">
+                                                            <tr class="item">
+                                                                <td class="product">
                                                                     {{ $item->product->item_product_name ?? '' }}
-                                                                    @foreach($item->variant->where('sales_order_detail_variant_qty','>',0) as $variant)
-                                                                    <p>
-                                                                        -
-                                                                        |{{ $variant->sales_order_detail_variant_qty }}|
-                                                                        {{ $variant->variant->item_variant_name }}
-                                                                    </p>
-                                                                    @endforeach
+                                                                    @if(!empty($item->variant))
+                                                                    <i style="text-transform: lowercase;">
+                                                                        @foreach($item->variant->where('sales_order_detail_variant_qty',
+                                                                        '>', 0) as $variant)
+                                                                        @if($loop->first)
+                                                                        ( {{ $variant->sales_order_detail_variant_qty }}
+                                                                        )
+                                                                        {{ $variant->variant->item_variant_name ?? '' }}
+                                                                        @else
+                                                                        , (
+                                                                        {{ $variant->sales_order_detail_variant_qty }} )
+                                                                        {{ $variant->variant->item_variant_name ?? '' }}
+                                                                        @endif
+                                                                        @endforeach
+                                                                        @endif
+                                                                    </i>
+
                                                                 </td>
-                                                                <td align="center" valign="middle" width="10%"
-                                                                    style="border-collapse:collapse;border-spacing:0;font-family:Arial,sans-serif;color:#555;line-height:1.5;border-bottom-color:#cccccc;border-bottom-width:1px;border-bottom-style:solid;margin:0;padding:5px 10px"
-                                                                    bgcolor="#FFFFFF">
-                                                                    {{ Helper::createRupiah($item->sales_order_detail_qty) ?? '' }}
+                                                                <td class="qty" align="right">
+                                                                    {{ $item->sales_order_detail_qty ?? '' }}
                                                                 </td>
-                                                                <td align="center" valign="middle" width="15%"
-                                                                    style="border-collapse:collapse;border-spacing:0;font-family:Arial,sans-serif;color:#555;line-height:1.5;border-bottom-color:#cccccc;border-bottom-width:1px;border-bottom-style:solid;margin:0;padding:5px 10px"
-                                                                    bgcolor="#FFFFFF">
-                                                                    {{ Helper::createRupiah($item->sales_order_detail_price) ?? '' }}
+                                                                <td class="price" align="right">
+                                                                    {{ !empty($item->sales_order_detail_price) ? Helper::createRupiah($item->sales_order_detail_price) : '' }}
                                                                 </td>
-                                                                <td align="right" valign="middle" width="25%"
-                                                                    style="border-collapse:collapse;border-spacing:0;font-family:Arial,sans-serif;color:#555;line-height:1.5;border-bottom-color:#cccccc;border-bottom-width:1px;border-bottom-style:solid;margin:0;padding:5px 10px"
-                                                                    bgcolor="#FFFFFF">
-                                                                    <span
-                                                                        style="font-family:Arial,sans-serif;color:#555;line-height:1.5;font-size:13px;margin:0;padding:0"></span><span
-                                                                        style="font-family:Arial,sans-serif;color:#555;line-height:1.5;font-size:13px;margin:0;padding:0">
-                                                                        {{ Helper::createRupiah($item->sales_order_detail_total) ?? '' }}
-                                                                    </span>
+                                                                <td class="total" align="right">
+                                                                    {{ !empty($item->sales_order_detail_total) ? Helper::createRupiah($item->sales_order_detail_total) : '' }}
                                                                 </td>
                                                             </tr>
                                                             @endforeach
+                                                            @endforeach
 
-                                                            <tr>
-                                                                <th colspan="4"
-                                                                    style="border-bottom-style:none;color:#ffffff;padding-left:10px;padding-right:10px"
-                                                                    bgcolor="#{{ config('website.color') }}"></th>
-                                                            </tr>
-                                                            @if (!empty($master->sales_order_discount_value))
-                                                            <tr>
-                                                                <td align="left" colspan="2" valign="top"
-                                                                    style="border-collapse:collapse;border-spacing:0;font-family:Arial,sans-serif;color:#555;line-height:1.5;border-bottom-color:#cccccc;border-bottom-width:1px;border-bottom-style:solid;margin:0;padding:5px 10px"
-                                                                    bgcolor="#f0f0f0">
-                                                                    <span
-                                                                        style="font-family:Arial,sans-serif;color:#555;line-height:1.5;font-size:13px;margin:0;padding:0">
-                                                                        {{ ucfirst($master->sales_order_discount_name) ?? '' }}
-                                                                        : =
-                                                                        Total Discount
-                                                                    </span>
+                                                            @if (!empty($master->sales_langganan_discount_value))
+                                                            <tr class="total_discount">
+                                                                <td class="product" colspan="2">
+                                                                    {{ ucfirst($master->sales_langganan_discount_name) ?? '' }}
+                                                                    : =
+                                                                    Total Discount
                                                                 </td>
-                                                                <td align="right" valign="top" colspan="2"
-                                                                    style="border-collapse:collapse;border-spacing:0;font-family:Arial,sans-serif;color:#555;line-height:1.5;border-bottom-color:#cccccc;border-bottom-width:1px;border-bottom-style:solid;margin:0;padding:5px 10px"
-                                                                    bgcolor="#f0f0f0">
-                                                                    <span
-                                                                        style="text-align: right;font-family:Arial,sans-serif;color:#555;line-height:1.5;font-size:13px;margin:0;padding:0">
-                                                                        -{{ Helper::createRupiah($master->sales_order_discount_value) ?? '' }}
-                                                                    </span>
+                                                                <td class="qty">
+                                                                    {{ Helper::createRupiah($master->sales_langganan_discount_value) ?? '' }}
+                                                                </td>
+                                                                <td class="total">
+                                                                    -{{ Helper::createRupiah($total_discount) ?? '' }}
+                                                                </td>
+                                                            </tr>
+                                                            @endif
+                                                            @if (!empty($master->sales_langganan_sum_ongkir))
+                                                            <tr class="total_discount">
+                                                                <td class="product" colspan="3">
+                                                                    Ongkir
+                                                                </td>
+                                                                <td class="total">
+                                                                    {{ Helper::createRupiah($master->sales_langganan_sum_ongkir) ?? '' }}
                                                                 </td>
                                                             </tr>
                                                             @endif
 
                                                             @php
-                                                            $total_delivery = $master->sales_order_sum_product;
-                                                            $total_discount = $master->sales_order_sum_discount;
-                                                            $grand_total = $master->sales_order_sum_total;
+                                                            $total_delivery = $master->sales_langganan_sum_product;
+                                                            $total_discount = $master->sales_langganan_sum_discount;
+                                                            $grand_total = $master->sales_langganan_sum_total;
                                                             @endphp
 
-                                                            <tr>
-                                                                <th colspan="1"
-                                                                    style="text-align: left;border-bottom-style:none;color:#ffffff;padding-left:10px;padding-right:10px"
-                                                                    bgcolor="#{{ config('website.color') }}">
-                                                                    <h2
-                                                                        style="font-family:Arial,sans-serif;color:#ffffff;line-height:1.5;font-size:13px;margin:0;padding:5px 0">
-                                                                        Total
-                                                                    </h2>
-                                                                </th>
-                                                                <th colspan="3"
-                                                                    style="text-align: right;border-bottom-style:none;color:#ffffff;padding-left:10px;padding-right:10px"
-                                                                    bgcolor="#{{ config('website.color') }}">
-                                                                    <h2
-                                                                        style="text-align: right;font-family:Arial,sans-serif;color:#ffffff;line-height:1.5;font-size:13px;margin:0;padding:5px 0">
-                                                                        {{ Helper::createRupiah($grand_total) ?? '' }}
-                                                                    </h2>
-                                                                </th>
+                                                            <tr class="total_sumary">
+                                                                <td class="product" colspan="3" style="background-color:#555;color:white;font-size:14px">
+                                                                    <strong style="font-size: 14px;">
+                                                                        Total Amount : Rp
+                                                                        {{ Helper::createRupiah($grand_total) }} ( <span
+                                                                            style="font-style: italic;">{{ Helper::terbilang($grand_total) }}
+                                                                            rupiah. </span>)
+                                                                    </strong>
+                                                                </td>
+                                                                <td class="total" align="right" style="background-color:#555;color:white;font-size:14px">
+                                                                    {{ Helper::createRupiah($grand_total) ?? '' }}
+                                                                </td>
                                                             </tr>
+
 
                                                         </tbody>
                                                     </table>

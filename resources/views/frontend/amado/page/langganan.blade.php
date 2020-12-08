@@ -169,18 +169,17 @@ $location = $area['area'] ?? [];
                         </div>
                     </div>
 
-
-                    <div class="row">
+                    <div class="row" style="clear: both;">
                         <div class="container">
-                            <div class="col-md-12">
-                                @if(!empty($langganan_data))
-                                @for ($i = 0; $i < $langganan_data->marketing_langganan_day; $i++)
-                                    @php
-                                    $tanggal = request()->get('date');
-                                    $date = \Carbon\Carbon::createFromFormat('Y-m-d', $tanggal, 'Asia/Jakarta');
-                                    @endphp
+                            @if(!empty($langganan_data))
+                            @for ($i = 0; $i < $langganan_data->marketing_langganan_day; $i++)
+                                @php
+                                $tanggal = request()->get('date');
+                                $date = \Carbon\Carbon::createFromFormat('Y-m-d', $tanggal, 'Asia/Jakarta');
+                                @endphp
 
-                                    <table class="table table-bordered table-responsive">
+                                <div class="col-md-12">
+                                    <table class="table table-bordered">
                                         <thead>
                                             <tr class="{{ $errors->has('hari.'.$i.'.qty') ? 'table-danger' : '' }}"
                                                 style="background-color: whitesmoke;">
@@ -188,7 +187,7 @@ $location = $area['area'] ?? [];
                                                     Hari ke {{ $i+1 }}
                                                     {{ $errors->has('hari.'.$i.'.qty') ? '- Error : Qty Harus Diisi' : '' }}
                                                 </td>
-                                                <td width="50%" class="align-middle align-items-center">
+                                                <td width="0%" class="align-middle align-items-center">
                                                     <div class="input-group input-group-sm">
                                                         <div class="input-group-prepend">
                                                             <span class="btn btn-secondary" id="inputGroup-sizing-sm">
@@ -260,22 +259,23 @@ $location = $area['area'] ?? [];
                                         </tbody>
 
                                     </table>
+                                </div>
 
-                                    @endfor
-                                    @endif
 
-                                    @if(!empty($langganan_data))
-                                    <div class="row form-group">
-                                        <div class="col-md-12">
-                                            <p class="text-right">
-                                                <button type="submit" class="btn btn-primary btn-sm">
-                                                    Berlangganan
-                                                </button>
-                                            </p>
-                                        </div>
+                                @endfor
+                                @endif
+
+                                @if(!empty($langganan_data))
+                                <div class="row form-group">
+                                    <div class="col-md-12">
+                                        <p class="text-right">
+                                            <button type="submit" class="btn btn-primary btn-sm">
+                                                Berlangganan
+                                            </button>
+                                        </p>
                                     </div>
-                                    @endif
-                            </div>
+                                </div>
+                                @endif
                         </div>
                     </div>
                     {!! Form::close() !!}

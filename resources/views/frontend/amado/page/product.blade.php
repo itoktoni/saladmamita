@@ -27,7 +27,7 @@ $('.carousel-indicators li').on('click', function(e) {
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb mt-50">
                         <li class="breadcrumb-item"><a href="{{ url('') }}">Home</a></li>
-                        <li class="breadcrumb-item"><a href="#">{{ $item->category->item_category_name ?? '' }}</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('shop', ['type' => $item->category->item_category_slug]) }}">{{ $item->category->item_category_name ?? '' }}</a></li>
                         <li class="breadcrumb-item active" aria-current="page">{{ $item->item_product_name ?? '' }}</li>
                     </ol>
                 </nav>

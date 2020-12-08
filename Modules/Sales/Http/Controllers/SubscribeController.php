@@ -171,6 +171,7 @@ class SubscribeController extends Controller
         if (request()->has('code')) {
             $data = $service->show(self::$model, ['detail', 'company']);
             $id = request()->get('code');
+            
             $pasing = [
                 'master' => $data,
                 'detail' => $data->detail,

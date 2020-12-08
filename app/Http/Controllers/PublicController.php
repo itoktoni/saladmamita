@@ -574,10 +574,10 @@ class PublicController extends Controller
             $carbon = Carbon::createFromFormat('Y-m-d', $date);
         }
 
-        // if (request()->has('area')) {
-        //     $area_id = request()->get('area');
-        //     $area = Helper::getSingleArea($area_id, false, true);
-        // }
+        if (request()->has('area')) {
+            $area_id = request()->get('area');
+            $area = Helper::getSingleArea($area_id, false, true);
+        }
 
         if (request()->has('code')) {
             $code = request()->get('code');
@@ -586,12 +586,12 @@ class PublicController extends Controller
 
         if (request()->isMethod('POST')) {
             $request = request()->all();
-
+            
             if (request()->has('sales_langganan_to_area')) {
                 $area_id = request()->get('sales_langganan_to_area');
                 session()->put('area', Helper::getSingleArea($area_id, false, true));
             }
-
+            
             $rules = [
                 'sales_langganan_to_name' => 'required',
                 'sales_langganan_to_phone' => 'required',
@@ -603,7 +603,7 @@ class PublicController extends Controller
                 'sales_langganan_marketing_langganan_id' => 'required',
                 // 'sales_langganan_discount_code' => 'sometimes|exists:marketing_promo,marketing_promo_code',
             ];
-
+            
             $message = [
                 'sales_langganan_to_name.required' => 'Nama Customer Harus Diisi',
                 'sales_langganan_marketing_langganan_id.required' => 'Paket Langganan Harus Diisi',
@@ -616,12 +616,12 @@ class PublicController extends Controller
                 'sales_langganan_marketing_langganan_id.required' => 'Paket Berlangganan Harus Diisi',
                 // 'sales_langganan_discount_code.exists' => 'Voucher Not Valid !',
             ];
-
+            
             $validate = Validator::make($request, $rules, $message);
             if ($validate->fails()) {
                 return redirect()->back()->withErrors($validate)->withInput();
             }
-
+            
             if (request()->has('pilih')) {
                 return redirect()->route('langganan', ['code' => request()->get('sales_langganan_marketing_langganan_id'), 'area' => request()->get('sales_langganan_to_area'), 'date' => $date])->withInput();
             }
@@ -689,10 +689,9 @@ class PublicController extends Controller
                 if ($validate2->fails()) {
                     return redirect()->back()->withErrors($validate2)->withInput();
                 }
-
+                
                 $repo = new SubscribeRepository();
                 $check = $service->save($repo, $request);
-
                 if (isset($check['status']) && $check['status']) {
                     return redirect()->route('langganan', ['token' => $check['data']->sales_langganan_token->toString()]);
                 }
@@ -835,6 +834,7 @@ class PublicController extends Controller
                 if ($check['status']) {
                     return redirect()->route('confirmation')->with('success', 'Data has been Success');
                 }
+
             } else if (SubscribeFacades::find($request['code'])) {
                 $update = SubscribeFacades::showRepository($request['code']);
                 $check['status'] = false;

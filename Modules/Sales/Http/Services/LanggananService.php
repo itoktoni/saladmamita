@@ -44,7 +44,7 @@ class LanggananService extends MasterService
             $phone = request()->get('sales_langganan_to_phone');
             $area = request()->get('sales_langganan_to_area');
 
-            if ($customer = CustomerFacades::where('crm_customer_contact_person', $name)->where('sales_langganan_to_phone', $phone)->first()) {
+            if ($customer = CustomerFacades::where('crm_customer_contact_person', $name)->where('crm_customer_contact_phone', $phone)->first()) {
                 $customer_id = $customer->crm_customer_id;
 
             } else {
@@ -83,6 +83,7 @@ class LanggananService extends MasterService
                 $order['sales_order_id'] = $order_id;
                 $order['sales_order_status'] = 1;
                 $order['sales_order_date_order'] = $order['langganan_date'];
+                $order['sales_langganan_date_email'] = date('Y-m-d H:i:s');
                 $order['sales_order_code_reference'] = $autonumber;
 
                 $order['sales_order_from_id'] = $branch->branch_id;

@@ -665,7 +665,6 @@
                     <td colspan="8">
                         <p>
                             @php
-
                             $total_delivery = $master->sales_order_sum_product;
                             $total_discount = $master->sales_order_sum_discount;
                             $grand_total = $master->sales_order_sum_total;

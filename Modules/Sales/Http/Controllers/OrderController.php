@@ -199,10 +199,12 @@ class OrderController extends Controller
     public function print_order(MasterService $service)
     {
         if (request()->has('code')) {
+
+            $id = request()->get('code');
+
             $data = $service->show(self::$model, ['detail','detail', 'company']);
             $data->sales_order_print_counter++;
             $data->save();
-            $id = request()->get('code');
             // dd($data->deliveryRepository($id)->get());
             $pasing = [
                 'master' => $data,
