@@ -651,7 +651,7 @@ $grand_total = $master->sales_langganan_sum_total;
         </div>
         <div id="address">
             <h4>
-                {{ config('website.address') }}
+                {!! config('website.address') !!}
             </h4>
             <p>
                 {{ Helper::getSingleArea($master->sales_langganan_from_area, true) }}
@@ -688,7 +688,7 @@ $grand_total = $master->sales_langganan_sum_total;
 
                     <td class="address" colspan='4'>
                         <p>
-                            {{ $master->sales_langganan_to_address ?? '' }} |  {{ Helper::getSingleArea($master->sales_langganan_to_area, true) ?? '' }}
+                            {!! $master->sales_langganan_to_address ?? '' !!} |  {{ Helper::getSingleArea($master->sales_langganan_to_area, true) ?? '' }}
                         </p>
                     </td>
                 </tr>
