@@ -751,7 +751,7 @@
                 @if (!empty($master->sales_order_sum_ongkir))
                 <tr class="total_discount">
                     <td class="product" colspan="7">
-                        Ongkir
+                        Ongkir ({{ $master->sales_order_delivery_name ?? '' }})
                     </td>
                     <td class="total">
                         {{ Helper::createRupiah($master->sales_order_sum_ongkir) ?? '' }}

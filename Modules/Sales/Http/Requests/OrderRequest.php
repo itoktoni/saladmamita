@@ -51,9 +51,9 @@ class OrderRequest extends FormRequest
             // $data['sales_order_detail_discount_percent'] = Helper::filterInput($item['temp_disc']) ?? 0;
             // $data['sales_order_detail_discount_value'] = $discount_total ?? 0;
 
-            if ($data_product->variant()->count() > 0) {
+            if ($data_product->variant($item['temp_id'])->count() > 0) {
 
-                foreach ($data_product->variant() as $variants) {
+                foreach ($data_product->variant($item['temp_id']) as $variants) {
                     $variant[] = [
                         'sales_order_detail_variant_order_id' => $autonumber,
                         'sales_order_detail_variant_item_product_id' => $item['temp_id'],

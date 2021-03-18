@@ -2,12 +2,16 @@
 
 namespace Modules\Marketing\Http\Controllers;
 
+use App\Http\Controllers\Controller;
+use App\Http\Requests\GeneralRequest;
+use App\Http\Services\MasterService;
+use Illuminate\Support\Facades\DB;
+use Modules\Item\Dao\Facades\ProductFacades;
+use Modules\Item\Dao\Repositories\ProductRepository;
+use Modules\Marketing\Dao\Models\LanggananDetail;
+use Modules\Marketing\Dao\Repositories\LanggananRepository;
 use Plugin\Helper;
 use Plugin\Response;
-use App\Http\Controllers\Controller;
-use App\Http\Services\MasterService;
-use App\Http\Requests\GeneralRequest;
-use Modules\Marketing\Dao\Repositories\LanggananRepository;
 
 class LanggananController extends Controller
 {
@@ -19,7 +23,7 @@ class LanggananController extends Controller
         if (self::$model == null) {
             self::$model = new LanggananRepository();
         }
-        $this->template  = Helper::getTemplate(__CLASS__);
+        $this->template = Helper::getTemplate(__CLASS__);
     }
 
     public function index()
@@ -29,8 +33,10 @@ class LanggananController extends Controller
 
     private function share($data = [])
     {
+        $product = Helper::shareOption(new ProductRepository());
         $view = [
             'template' => $this->template,
+            'product' => $product,
         ];
 
         return array_merge($view, $data);
@@ -48,7 +54,17 @@ class LanggananController extends Controller
     public function update(MasterService $service, GeneralRequest $request)
     {
         if (request()->isMethod('POST')) {
-
+            $code = request()->get('code');
+            $detail = request()->get('temp_id');
+            if (!empty($detail)) {
+                LanggananDetail::where('marketing_langganan_detail_langganan_id', $code)->delete();
+                foreach ($detail as $insert) {
+                    LanggananDetail::create([
+                        'marketing_langganan_detail_langganan_id' => $code,
+                        'marketing_langganan_detail_product_id' => $insert,
+                    ]);
+                }
+            }
             $service->update(self::$model, $request->all());
             return redirect()->route($this->getModule() . '_data');
         }
@@ -56,18 +72,29 @@ class LanggananController extends Controller
         if (request()->has('code')) {
 
             $data = $service->show(self::$model);
+            $detail = DB::table((new LanggananDetail())->getTable())
+                ->where('marketing_langganan_detail_langganan_id', request()->get('code'))
+                ->leftJoin(ProductFacades::getTable(), ProductFacades::getKeyName(), 'marketing_langganan_detail_product_id')
+                ->get();
 
             return view(Helper::setViewUpdate())->with($this->share([
-                'model'        => $data,
-                'key'          => self::$model->getKeyName()
+                'model' => $data,
+                'key' => self::$model->getKeyName(),
+                'detail' => $detail,
             ]));
         }
     }
 
     public function delete(MasterService $service)
     {
+        if ($detail = request()->get('detail')) {
+            $check = true;
+            $check = DB::table((new LanggananDetail())->getTable())->where('marketing_langganan_detail_id', request()->get('detail'))->delete();
+            return $check ? $detail : false;
+        }
+
         $service->delete(self::$model);
-        return Response::redirectBack();;
+        return Response::redirectBack();
     }
 
     public function data(MasterService $service)
@@ -77,7 +104,7 @@ class LanggananController extends Controller
         }
 
         return view(Helper::setViewData())->with([
-            'fields'   => Helper::listData(self::$model->datatable),
+            'fields' => Helper::listData(self::$model->datatable),
             'template' => $this->template,
         ]);
     }
@@ -88,8 +115,8 @@ class LanggananController extends Controller
             $data = $service->show(self::$model);
             return view(Helper::setViewShow())->with($this->share([
                 'fields' => Helper::listData(self::$model->datatable),
-                'model'   => $data,
-                'key'   => self::$model->getKeyName()
+                'model' => $data,
+                'key' => self::$model->getKeyName(),
             ]));
         }
     }

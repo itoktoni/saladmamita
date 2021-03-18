@@ -103,6 +103,7 @@ class Order extends Model
         'sales_order_from_name' => [true => 'Pickup'],
         'sales_order_to_name' => [true => 'Contact'],
         'sales_order_to_phone' => [true => 'Phone'],
+        'sales_order_delivery_name' => [false => 'Phone'],
         'sales_order_status' => [true => 'Status'],
     ];
 

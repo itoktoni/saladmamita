@@ -9,13 +9,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Services\MasterService;
 use App\Http\Requests\GeneralRequest;
 use App\Dao\Repositories\BranchRepository;
-use App\Dao\Repositories\CompanyRepository;
 use Modules\Finance\Dao\Facades\BankFacades;
-use Modules\Sales\Dao\Models\OrderSubscribe;
-use Modules\Sales\Http\Requests\OrderRequest;
-use Modules\Sales\Http\Services\OrderService;
-use Modules\Sales\Dao\Facades\SubscribeFacades;
-use Modules\Sales\Http\Requests\SubscribeRequest;
 use Modules\Finance\Dao\Repositories\TaxRepository;
 use Modules\Finance\Dao\Repositories\TopRepository;
 use Modules\Sales\Dao\Repositories\OrderRepository;
@@ -23,7 +17,6 @@ use Modules\Crm\Dao\Repositories\CustomerRepository;
 use Modules\Finance\Dao\Repositories\BankRepository;
 use Modules\Item\Dao\Repositories\ProductRepository;
 use Modules\Item\Dao\Repositories\VariantRepository;
-use Modules\Finance\Dao\Repositories\PaymentRepository;
 use Modules\Marketing\Dao\Repositories\PromoRepository;
 use Modules\Sales\Dao\Repositories\SubscribeRepository;
 use Modules\Rajaongkir\Dao\Repositories\DeliveryRepository;
@@ -76,6 +69,7 @@ class SubscribeController extends Controller
             'status' => $status,
             'promo' => $promo,
             'from' => $from,
+            'product' => $product,
             'to' => $to,
             'branch' => $branch,
             'bank' => $bank,

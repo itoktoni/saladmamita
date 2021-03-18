@@ -8,6 +8,8 @@ use App\Http\Services\MasterService;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Modules\Crm\Dao\Facades\CustomerFacades;
+use Modules\Item\Dao\Facades\ProductFacades;
+use Modules\Marketing\Dao\Facades\LanggananFacades;
 use Modules\Sales\Dao\Facades\DeliveryDetailFacades;
 use Modules\Sales\Dao\Facades\OrderDetailFacades;
 use Modules\Sales\Dao\Facades\OrderDetailVariantFacades;
@@ -43,6 +45,10 @@ class LanggananService extends MasterService
             $email = request()->get('sales_langganan_to_email');
             $phone = request()->get('sales_langganan_to_phone');
             $area = request()->get('sales_langganan_to_area');
+
+            $langganan_id = request()->get('sales_langganan_marketing_langganan_id');
+            $langganan = LanggananFacades::showRepository($langganan_id);
+            $harga = $langganan->marketing_langganan_price / $langganan->marketing_langganan_day;
 
             if ($customer = CustomerFacades::where('crm_customer_contact_person', $name)->where('crm_customer_contact_phone', $phone)->first()) {
                 $customer_id = $customer->crm_customer_id;
@@ -105,46 +111,84 @@ class LanggananService extends MasterService
 
                 foreach ($order['product'] as $detail) {
 
-                    if (isset($detail['variant'])) {
-                        $quantity = collect($detail['variant'])->map(function ($item) {
-                            return $item['sales_order_detail_variant_qty'] ? intval($item['sales_order_detail_variant_qty']) : 0;
-                        })->sum();
-                    } else {
-                        $quantity = intval($detail['sales_order_detail_qty']);
-                    }
+                    // if (isset($detail['variant'])) {
+                    //     $quantity = collect($detail['variant'])->map(function ($item) {
+                    //         return $item['sales_order_detail_variant_qty'] ? intval($item['sales_order_detail_variant_qty']) : 0;
+                    //     })->sum();
+                    // } else {
+                    //     $quantity = intval($detail['sales_order_detail_qty']);
+                    // }
+
+                    $product_id = $detail['sales_order_detail_item_product_id'];
+                    $data_product = ProductFacades::showRepository($product_id);
+                    $data_price = $data_product->item_product_sell;
+
+                    $quantity = 1;
 
                     if ($quantity > 0) {
 
-                        $price = $detail['sales_order_detail_price'];
+                        $price = $data_price;
+                        $product_notes = $detail['sales_order_detail_notes'];
                         $total = $quantity * $price;
                         $detail['sales_order_detail_order_id'] = $order_id;
                         $detail['sales_order_detail_qty'] = $quantity;
+                        $detail['sales_order_detail_price'] = $price;
                         $detail['sales_order_detail_total'] = $total;
+                        $detail['sales_order_detail_notes'] = $product_notes;
+
                         OrderDetailFacades::saveRepository($detail);
 
                         $detail_id = DB::getPdo()->lastInsertId();
-                        if (isset($detail['variant'])) {
-                            foreach ($detail['variant'] as $variants) {
-                                $variants['sales_order_detail_variant_order_id'] = $order_id;
-                                $variants['sales_order_detail_variant_item_product_id'] = $detail['sales_order_detail_item_product_id'];
-                                $variants['sales_order_detail_variant_order_detail_id'] = $detail_id;
-                                OrderDetailVariantFacades::insert($variants);
-                            }
+
+                        // if (isset($detail['variant'])) {
+                        //     foreach ($detail['variant'] as $variants) {
+                        //         $variants['sales_order_detail_variant_order_id'] = $order_id;
+                        //         $variants['sales_order_detail_variant_item_product_id'] = $detail['sales_order_detail_item_product_id'];
+                        //         $variants['sales_order_detail_variant_order_detail_id'] = $detail_id;
+                        //         OrderDetailVariantFacades::insert($variants);
+                        //     }
+                        // }
+                        if (isset($detail['sales_order_detail_variant'])) {
+                            $variants['sales_order_detail_variant_order_id'] = $order_id;
+                            $variants['sales_order_detail_variant_item_product_id'] = $product_id;
+                            $variants['sales_order_detail_variant_item_variant_id'] = $detail['sales_order_detail_variant'];
+                            $variants['sales_order_detail_variant_qty'] = 1;
+                            $variants['sales_order_detail_variant_order_detail_id'] = $detail_id;
+                            OrderDetailVariantFacades::insert($variants);
                         }
                     }
                 }
 
                 $ord = OrderFacades::find($order_id);
                 $sub_ord = $ord->detail->sum('sales_order_detail_total');
+                // $ord->sales_order_sum_product = $sub_ord;
+                // $ord->sales_order_sum_total = $sub_ord;
+
+                $discount = $sub_ord - $harga;
+
+                $ord->sales_order_discount_code = $langganan->marketing_langganan_id;
+                $ord->sales_order_discount_name = $langganan->marketing_langganan_name;
+                $ord->sales_order_discount_value = $discount;
+
                 $ord->sales_order_sum_product = $sub_ord;
-                $ord->sales_order_sum_total = $sub_ord;
+                $ord->sales_order_sum_discount = $discount;
+                $ord->sales_order_sum_total = $harga;
+
                 $ord->save();
             }
 
             $lang = SubscribeFacades::find($autonumber);
-            $sum_lang = $lang->order->sum('sales_order_sum_total');
-            $lang->sales_langganan_sum_product = $sum_lang;
-            $lang->sales_langganan_sum_total = $sum_lang;
+            $sum_lang_product = $lang->order->sum('sales_order_sum_product');
+            $sum_lang_total = $langganan->marketing_langganan_price;
+            $sum_lang_discount = $sum_lang_product - $sum_lang_total;
+
+            $lang->sales_langganan_discount_code = $langganan->marketing_langganan_id;
+            $lang->sales_langganan_discount_name = $langganan->marketing_langganan_name;
+            $lang->sales_langganan_discount_value = $sum_lang_discount;
+
+            $lang->sales_langganan_sum_product = $sum_lang_product;
+            $lang->sales_langganan_sum_discount = $sum_lang_discount;
+            $lang->sales_langganan_sum_total = $sum_lang_total;
             $lang->save();
 
         } catch (\Throwable $th) {

@@ -631,25 +631,25 @@ class PublicController extends Controller
 
                 $grand_total = $discount_total = 0;
                 $discount_name = null;
-                foreach ($request['detail'] as $detail) {
-                    $qty = $int = 0;
-                    foreach ($detail['product'] as $product) {
-                        if (!isset($product['variant'])) {
-                            $quantity = intval($product['sales_order_detail_qty']);
-                        } else {
-                            $quantity = collect($product['variant'])->map(function ($item) {
-                                return intval($item['sales_order_detail_variant_qty']);
-                            })->sum();
-                        }
-                        $qty = $qty + intval($quantity);
-                    }
-                    // $price = $product['sales_order_detail_price'];
-                    // $total = ($qty * $price);
-                    // $grand_total = $grand_total + $total;
-                    // $int++;
-                    $validasi[]['qty'] = $qty;
-                    // $validasi[]['total'] = $qty;
-                }
+                // foreach ($request['detail'] as $detail) {
+                //     $qty = $int = 0;
+                //     foreach ($detail['product'] as $product) {
+                //         if (!isset($product['variant'])) {
+                //             $quantity = intval($product['sales_order_detail_qty']);
+                //         } else {
+                //             $quantity = collect($product['variant'])->map(function ($item) {
+                //                 return intval($item['sales_order_detail_variant_qty']);
+                //             })->sum();
+                //         }
+                //         $qty = $qty + intval($quantity);
+                //     }
+                //     // $price = $product['sales_order_detail_price'];
+                //     // $total = ($qty * $price);
+                //     // $grand_total = $grand_total + $total;
+                //     // $int++;
+                //     $validasi[]['qty'] = $qty;
+                //     // $validasi[]['total'] = $qty;
+                // }
 
                 // $promo = new PromoRepository();
                 // $promo_code = request()->get('sales_langganan_discount_code');
@@ -684,11 +684,11 @@ class PublicController extends Controller
                 // $request['discount'] = $discount_total;
                 // $request['discount_name'] = $discount_name;
 
-                $request['hari'] = $validasi;
-                $validate2 = Validator::make($request, ['hari.*.qty' => 'not_in:0']);
-                if ($validate2->fails()) {
-                    return redirect()->back()->withErrors($validate2)->withInput();
-                }
+                // $request['hari'] = $validasi;
+                // $validate2 = Validator::make($request, ['hari.*.qty' => 'not_in:0']);
+                // if ($validate2->fails()) {
+                //     return redirect()->back()->withErrors($validate2)->withInput();
+                // }
                 
                 $repo = new SubscribeRepository();
                 $check = $service->save($repo, $request);
@@ -709,7 +709,7 @@ class PublicController extends Controller
         $user = Auth::user() ?? [];
         $metode = Helper::createOption(new DeliveryRepository());
         $langganan = Helper::createOption(new LanggananRepository());
-        $product = Helper::createOption(new ProductRepository(), false, true, true)->where('item_product_langganan', 1);
+        // $product = Helper::createOption(new ProductRepository(), false, true, true)->where('item_product_langganan', 1);
         $holiday = Helper::createOption(new HolidayRepository(), false, true, true)->where('item_product_langganan', 1);
 
         return View(Helper::setViewFrontend(__FUNCTION__))->with($this->share([
@@ -721,7 +721,7 @@ class PublicController extends Controller
             'metode' => $metode,
             'langganan' => $langganan,
             'langganan_data' => $langganan_data,
-            'product' => $product,
+            // 'product' => $product,
             'holiday' => $holiday,
         ]));
     }

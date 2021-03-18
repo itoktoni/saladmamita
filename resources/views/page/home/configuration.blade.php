@@ -369,13 +369,6 @@
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label class="col-md-2 control-label">Checkout</label>
-                                            <div class="col-md-10">
-                                                <textarea class="form-control editor" rows="7" name="header"
-                                                    cols="50"></textarea>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
                                             <label class="col-md-2 control-label">Description</label>
                                             <div class="col-md-10" style="margin-bottom: 5px;">
                                                 <textarea class="form-control editor" rows="2"
@@ -385,7 +378,7 @@
                                         <div class="form-group">
                                             <label class="col-md-2 control-label">Footer</label>
                                             <div class="col-md-10">
-                                                <textarea class="form-control" rows="3" name="footer"
+                                                <textarea class="form-control editor" rows="3" name="footer"
                                                     cols="50">{{ config('website.footer') }}</textarea>
                                             </div>
                                         </div>

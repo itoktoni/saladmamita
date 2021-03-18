@@ -34,18 +34,16 @@ $location = $area['area'] ?? [];
 
         <div class="row">
             <div class="col-12 col-lg-12">
-                <div class="single_product_desc">
-                    <!-- Product Meta Data -->
+                <div class="single_product_desc container">
                     {!!Form::open(['route' => 'langganan', 'class' => 'checkout-form', 'files' => true]) !!}
 
-                    <div class="product-meta-data">
+                    <div class="product-meta-data col-md-12">
                         <div class="line"></div>
                         <a chref="{{ route('langganan') }}">
                             <h6>Berlangganan</h6>
                         </a>
+                        <hr>
                     </div>
-
-                    <hr>
 
                     <div class="col-md-12">
                         <div class="single_product_desc">
@@ -155,7 +153,9 @@ $location = $area['area'] ?? [];
                                 <div class="row form-group">
                                     <div class="col-md-12">
                                         <p class="text-right">
+                                            @guest
                                             <a class="btn btn-warning btn-sm" href="{{ route('login') }}">Login</a>
+                                            @endguest
 
                                             <button type="submit" name="pilih" value="pilih"
                                                 class="btn btn-primary btn-sm">
@@ -172,22 +172,42 @@ $location = $area['area'] ?? [];
                     <div class="row" style="clear: both;">
                         <div class="container">
                             @if(!empty($langganan_data))
+
+                            <div class="container">
+                                <table class="table table-borded">
+                                    <thead>
+                                        <th>Penjelasan</th>
+                                        <th class="text-right">Durasi</th>
+                                        <th class="text-right">Harga Paket</th>
+                                    </thead>
+                                    <tr>
+                                        <td>{{ $langganan_data->marketing_langganan_description ?? '' }}</td>
+                                        <td class="text-right">{{ $langganan_data->marketing_langganan_day ?? '' }} Hari
+                                        </td>
+                                        <td class="text-right">
+                                            {{ $langganan_data->marketing_langganan_price ? Helper::createRupiah($langganan_data->marketing_langganan_price) : '' }}
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+
                             @for ($i = 0; $i < $langganan_data->marketing_langganan_day; $i++)
                                 @php
                                 $tanggal = request()->get('date');
+                                $data_product = $langganan_data->detail;
                                 $date = \Carbon\Carbon::createFromFormat('Y-m-d', $tanggal, 'Asia/Jakarta');
                                 @endphp
 
-                                <div class="col-md-12">
+                                <div class="container">
                                     <table class="table table-bordered">
                                         <thead>
                                             <tr class="{{ $errors->has('hari.'.$i.'.qty') ? 'table-danger' : '' }}"
                                                 style="background-color: whitesmoke;">
-                                                <td width="60%" class="align-middle align-items-center">
+                                                <td class="align-middle align-items-center">
                                                     Hari ke {{ $i+1 }}
                                                     {{ $errors->has('hari.'.$i.'.qty') ? '- Error : Qty Harus Diisi' : '' }}
                                                 </td>
-                                                <td width="0%" class="align-middle align-items-center">
+                                                <td width="60%" class="align-middle align-items-center">
                                                     <div class="input-group input-group-sm">
                                                         <div class="input-group-prepend">
                                                             <span class="btn btn-secondary" id="inputGroup-sizing-sm">
@@ -205,53 +225,36 @@ $location = $area['area'] ?? [];
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach($product as $item)
+                                            @foreach($data_product as $data_product)
+                                            @php
+                                            $item = $data_product->product;
+                                            @endphp
                                             <tr>
+
+                                                <td class="align-middle align-items-center">
+                                                    <span class="mb-3">{{ $item->item_product_name }}</span>
+
+                                                    @if($item->variant($item->item_product_id)->count() > 0)
+                                                    : <select
+                                                        name="detail[{{ $i }}][product][{{ $loop->index }}][sales_order_detail_variant]"
+                                                        class="mt-5">
+                                                        @foreach($item->variant($item->item_product_id) as $var)
+                                                        <option value="{{ $var->item_variant_id ?? '' }}">
+                                                            {{ $var->item_variant_name ?? '' }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                    @endif
+                                                </td>
+
                                                 <td class="align-middle">
-                                                    {{ $item->item_product_name }}
-                                                    ( Harga : {{ Helper::createRupiah($item->item_product_sell) }} )
+                                                    <input type="hidden"
+                                                        name="detail[{{ $i }}][product][{{ $loop->index }}][sales_order_detail_item_product_id]"
+                                                        value="{{ $item->item_product_id }}">
+
                                                     <textarea placeholder="Catatan Pesanan"
                                                         name="detail[{{ $i }}][product][{{ $loop->index }}][sales_order_detail_notes]"
                                                         class="form-control mt-2"
                                                         rows="2">{{ old('detail.'.$i.'.product.'.$loop->index.'.sales_order_detail_notes') ?? '' }}</textarea>
-                                                </td>
-
-                                                <td class="align-middle align-items-center">
-                                                    @if($item->variant($item->item_product_id)->count() > 0)
-
-                                                    @foreach($item->variant($item->item_product_id) as $var)
-
-                                                    <div class="row mt-2 align-items-center">
-                                                        <div class="col-md-8">
-                                                            <small>{{ $var->item_variant_name ?? '' }}</small>
-                                                        </div>
-                                                        <div class="col-md-4 pull-right">
-                                                            <input type="text" placeholder="Qty"
-                                                                value="{{ old('detail.'.$i.'.product.'.$loop->parent->index.'.variant.'.$loop->index.'.sales_order_detail_variant_qty') ?? '' }}"
-                                                                class="form-control form-control-sm text-right"
-                                                                name="detail[{{ $i }}][product][{{ $loop->parent->index }}][variant][{{ $loop->index }}][sales_order_detail_variant_qty]">
-                                                        </div>
-                                                    </div>
-
-                                                    <input type="hidden" value="{{ $item->item_product_id }}"
-                                                        name="detail[{{ $i }}][product][{{ $loop->parent->index }}][variant][{{ $loop->index }}][sales_order_detail_variant_item_product_id]">
-                                                    <input type="hidden" value="{{ $var->item_variant_id ?? '' }}"
-                                                        name="detail[{{ $i }}][product][{{ $loop->parent->index }}][variant][{{ $loop->index }}][sales_order_detail_variant_item_variant_id]">
-
-                                                    @endforeach
-                                                    @else
-                                                    <input placeholder="Input Quantity" type="text"
-                                                        class="form-control form-control-sm text-right"
-                                                        value="{{ old('detail.'.$i.'.product.'.$loop->index.'.sales_order_detail_qty') ?? '' }}"
-                                                        name="detail[{{ $i }}][product][{{ $loop->index }}][sales_order_detail_qty]">
-                                                    @endif
-
-                                                    <input type="hidden" value="{{ $item->item_product_id }}"
-                                                        name="detail[{{ $i }}][product][{{ $loop->index }}][sales_order_detail_item_product_id]">
-
-                                                    <input type="hidden" value="{{ $item->item_product_sell }}"
-                                                        name="detail[{{ $i }}][product][{{ $loop->index }}][sales_order_detail_price]">
-
                                                 </td>
 
                                             </tr>
