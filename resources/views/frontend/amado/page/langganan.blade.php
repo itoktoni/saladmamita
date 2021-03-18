@@ -18,7 +18,7 @@ $location = $area['area'] ?? [];
 @endphp
 
 <!-- Product Details Area Start -->
-<div class="single-product-area clearfix" style="margin-bottom: 5rem;">
+<div class="single-product-area clearfix" style="margin-bottom: 10rem;">
     <div class="container-fluid">
 
         <div class="row">
