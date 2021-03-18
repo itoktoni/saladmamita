@@ -117,7 +117,7 @@ $location = $area['area'] ?? [];
                                         <select class="{{ $errors->has('sales_langganan_marketing_langganan_id') ? 'form-control form-control-sm is-invalid' : 'form-control form-control-sm' }}" name="sales_langganan_marketing_langganan_id" id="">
                                             <option value="">Select Paket</option>
                                             @foreach($langganan as $lang)
-                                            <option {{ old('sales_langganan_marketing_langganan_id') ? 'selected' : '' }} value="{{ $lang->marketing_langganan_id }}">{{ $lang->marketing_langganan_name }} - Rp.{{ Helper::createRupiah($lang->marketing_langganan_price) }}</option>
+                                            <option {{ request()->get('code') == $lang->marketing_langganan_id ? 'selected' : '' }} value="{{ $lang->marketing_langganan_id }}">{{ $lang->marketing_langganan_name }} - Rp.{{ Helper::createRupiah($lang->marketing_langganan_price) }}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -137,7 +137,7 @@ $location = $area['area'] ?? [];
                                         </div>
                                     </div>
                                     <div class="col-md-4">
-                                        {{ Form::select('sales_langganan_from_id', $branch ?? [], null, ['class'=> $errors->has('sales_langganan_from_id') ? 'form-control form-control-sm is-invalid' : 'form-control form-control-sm']) }}
+                                        {{ Form::select('sales_langganan_from_id', $branch ?? [], request()->get('branch') ?? '', ['class'=> $errors->has('sales_langganan_from_id') ? 'form-control form-control-sm is-invalid' : 'form-control form-control-sm']) }}
                                     </div>
                                 </div>
                                 <div class="row form-group">

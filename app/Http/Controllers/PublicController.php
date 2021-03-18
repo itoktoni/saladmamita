@@ -623,7 +623,7 @@ class PublicController extends Controller
             }
             
             if (request()->has('pilih')) {
-                return redirect()->route('langganan', ['code' => request()->get('sales_langganan_marketing_langganan_id'), 'area' => request()->get('sales_langganan_to_area'), 'date' => $date])->withInput();
+                return redirect()->route('langganan', ['code' => request()->get('sales_langganan_marketing_langganan_id'), 'area' => request()->get('sales_langganan_to_area'), 'date' => $date, 'branch' => request()->get('sales_langganan_from_id')])->withInput();
             }
 
             $validasi = [];
