@@ -357,7 +357,7 @@
         position: absolute;
         top: 90px;
         right: 0px;
-        width: 400px;
+        width: 500px;
         font-size: 10px;
     }
 

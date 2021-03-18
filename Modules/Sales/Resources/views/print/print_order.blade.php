@@ -360,7 +360,7 @@
         position: absolute;
         top: 88px;
         right: 0px;
-        width: 400px;
+        width: 500px;
         font-size: 10px;
     }
 
