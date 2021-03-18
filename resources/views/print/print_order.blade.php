@@ -356,7 +356,7 @@
         position: absolute;
         top: 90px;
         right: 0px;
-        width: 330px;
+        width: 400px;
         font-size: 10px;
     }
 
