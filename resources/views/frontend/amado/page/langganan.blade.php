@@ -115,7 +115,7 @@ $location = $area['area'] ?? [];
                                 <div class="row form-group">
                                     <div class="col-md-4">
                                         <select class="{{ $errors->has('sales_langganan_marketing_langganan_id') ? 'form-control form-control-sm is-invalid' : 'form-control form-control-sm' }}" name="sales_langganan_marketing_langganan_id" id="">
-                                            <option value="">-Select Paket</option>
+                                            <option value="">Select Paket</option>
                                             @foreach($langganan as $lang)
                                             <option {{ old('sales_langganan_marketing_langganan_id') ? 'selected' : '' }} value="{{ $lang->marketing_langganan_id }}">{{ $lang->marketing_langganan_name }} - Rp.{{ Helper::createRupiah($lang->marketing_langganan_price) }}</option>
                                             @endforeach
