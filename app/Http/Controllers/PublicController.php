@@ -708,7 +708,7 @@ class PublicController extends Controller
         $branch = Helper::createOption(new BranchRepository());
         $user = Auth::user() ?? [];
         $metode = Helper::createOption(new DeliveryRepository());
-        $langganan = Helper::createOption(new LanggananRepository());
+        $langganan = Helper::createOption(new LanggananRepository(),false,true);
         // $product = Helper::createOption(new ProductRepository(), false, true, true)->where('item_product_langganan', 1);
         $holiday = Helper::createOption(new HolidayRepository(), false, true, true)->where('item_product_langganan', 1);
 
