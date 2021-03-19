@@ -360,7 +360,7 @@
         position: absolute;
         top: 88px;
         right: 0px;
-        width: 500px;
+        width: 200px;
         font-size: 10px;
     }
 
@@ -379,7 +379,7 @@
     #address h4 {
         line-height: 12px;
         font-size: 9px;
-        margin-top: 30px;
+        margin-top: 10px;
     }
 
     #address p {
