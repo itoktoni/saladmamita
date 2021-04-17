@@ -88,8 +88,8 @@
                     <div class="row form-group">
                         <div class="col-md-12">
                             <div class="pull-right">
-                                <button type="submit" class="btn btn-primary btn-sm">Save
-                                    Data</button>
+                                <a class="btn btn-success btn-sm" href="{{ route('login') }}">Login</a>
+                                <button type="submit" class="btn btn-primary btn-sm">Register</button>
                             </div>
                         </div>
                     </div>

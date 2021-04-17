@@ -48,6 +48,57 @@ $location = $area['area'] ?? [];
                     <div class="col-md-12">
                         <div class="single_product_desc">
                             <div>
+
+                                <div class="row form-group">
+                                    <div class="col-md-4">
+                                        <select
+                                            class="{{ $errors->has('sales_langganan_marketing_langganan_id') ? 'form-control form-control-sm is-invalid' : 'form-control form-control-sm' }}"
+                                            name="sales_langganan_marketing_langganan_id" id="">
+                                            <option value="">Select Paket</option>
+                                            @foreach($langganan as $lang)
+                                            <option
+                                                {{ request()->get('code') == $lang->marketing_langganan_id ? 'selected' : '' }}
+                                                value="{{ $lang->marketing_langganan_id }}">
+                                                {{ $lang->marketing_langganan_name }} -
+                                                Rp.{{ Helper::createRupiah($lang->marketing_langganan_price) }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="input-group input-group-sm mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="btn btn-secondary" id="inputGroup-sizing-sm">
+                                                    Tgl Mulai
+                                                </span>
+                                            </div>
+                                            {!! Form::text('sales_langganan_date_order',
+                                            $model->sales_langganan_date_order ??
+                                            date('Y-m-d'), ['class' =>
+                                            $errors->has('sales_langganan_date_order') ? 'form-control form-control-sm
+                                            date
+                                            is-invalid' : 'form-control form-control-sm date']) !!}
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        {{ Form::select('sales_langganan_from_id', $branch ?? [], request()->get('branch') ?? '', ['class'=> $errors->has('sales_langganan_from_id') ? 'form-control form-control-sm is-invalid' : 'form-control form-control-sm']) }}
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+
+
+                                    <div class="col-md-12">
+                                        {!! Form::textarea('sales_langganan_notes_external', null, ['class' =>
+                                        'form-control form-control-sm',
+                                        'rows' => 3, 'placeholder' => 'Catatan Pengiriman']) !!}
+                                        {!! $errors->first('name', '<p class="text-danger">:message</p>')
+                                        !!}
+                                    </div>
+
+                                </div>
+
+                                <hr>
+
+                                @auth
                                 <div class="row form-group">
 
                                     <div class="col-md-4">
@@ -112,60 +163,19 @@ $location = $area['area'] ?? [];
                                             class="form-text text-danger">:message</small>') !!}
                                     </div>
                                 </div>
-                                <div class="row form-group">
-                                    <div class="col-md-4">
-                                        <select class="{{ $errors->has('sales_langganan_marketing_langganan_id') ? 'form-control form-control-sm is-invalid' : 'form-control form-control-sm' }}" name="sales_langganan_marketing_langganan_id" id="">
-                                            <option value="">Select Paket</option>
-                                            @foreach($langganan as $lang)
-                                            <option {{ request()->get('code') == $lang->marketing_langganan_id ? 'selected' : '' }} value="{{ $lang->marketing_langganan_id }}">{{ $lang->marketing_langganan_name }} - Rp.{{ Helper::createRupiah($lang->marketing_langganan_price) }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="input-group input-group-sm mb-3">
-                                            <div class="input-group-prepend">
-                                                <span class="btn btn-secondary" id="inputGroup-sizing-sm">
-                                                    Tgl Mulai
-                                                </span>
-                                            </div>
-                                            {!! Form::text('sales_langganan_date_order',
-                                            $model->sales_langganan_date_order ??
-                                            date('Y-m-d'), ['class' =>
-                                            $errors->has('sales_langganan_date_order') ? 'form-control form-control-sm
-                                            date
-                                            is-invalid' : 'form-control form-control-sm date']) !!}
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        {{ Form::select('sales_langganan_from_id', $branch ?? [], request()->get('branch') ?? '', ['class'=> $errors->has('sales_langganan_from_id') ? 'form-control form-control-sm is-invalid' : 'form-control form-control-sm']) }}
-                                    </div>
-                                </div>
-                                <div class="row form-group">
-
-
-                                    <div class="col-md-12">
-                                        {!! Form::textarea('sales_langganan_notes_external', null, ['class' =>
-                                        'form-control form-control-sm',
-                                        'rows' => 3, 'placeholder' => 'Catatan Pengiriman']) !!}
-                                        {!! $errors->first('name', '<p class="text-danger">:message</p>')
-                                        !!}
-                                    </div>
-
-                                </div>
-
-                                <hr>
+                                @endif
 
                                 <div class="row form-group">
                                     <div class="col-md-12">
                                         <p class="text-right">
                                             @guest
-                                            <a class="btn btn-warning btn-sm" href="{{ route('login') }}">Login</a>
-                                            @endguest
-
+                                            <a class="btn btn-primary" href="{{ route('register') }}">Berlangganan</a>
+                                            @else
                                             <button type="submit" name="pilih" value="pilih"
                                                 class="btn btn-primary btn-sm">
                                                 Pilih Variant
                                             </button>
+                                            @endif
                                         </p>
                                     </div>
                                 </div>
@@ -178,39 +188,26 @@ $location = $area['area'] ?? [];
                         <div class="container">
                             @if(!empty($langganan_data))
 
-                            <div class="container">
-                                <table class="table table-borded">
-                                    <thead>
-                                        <th>Penjelasan</th>
-                                        <th class="text-right">Durasi</th>
-                                        <th class="text-right">Harga Paket</th>
-                                    </thead>
-                                    <tr>
-                                        <td>{{ $langganan_data->marketing_langganan_description ?? '' }}</td>
-                                        <td class="text-right">{{ $langganan_data->marketing_langganan_day ?? '' }} Hari
-                                        </td>
-                                        <td class="text-right">
-                                            {{ $langganan_data->marketing_langganan_price ? Helper::createRupiah($langganan_data->marketing_langganan_price) : '' }}
-                                        </td>
-                                    </tr>
-                                </table>
-                            </div>
-
+                            @php
+                            $tanggal = request()->get('date');
+                            $hari = 0;
+                            @endphp
                             @for ($i = 0; $i < $langganan_data->marketing_langganan_day; $i++)
                                 @php
-                                $tanggal = request()->get('date');
-                                $data_product = $langganan_data->detail;
                                 $date = \Carbon\Carbon::createFromFormat('Y-m-d', $tanggal, 'Asia/Jakarta');
+                                $date = $date->addDays($i);
+                                $hari++;
+                                $data_product = $langganan_data->detail;
                                 @endphp
 
                                 <div class="container">
                                     <table class="table table-bordered">
                                         <thead>
-                                            <tr class="{{ $errors->has('hari.'.$i.'.qty') ? 'table-danger' : '' }}"
+                                            <tr class="{{ $errors->has('detail.'.$hari.'.langganan_date') ? 'table-danger' : '' }}"
                                                 style="background-color: whitesmoke;">
                                                 <td class="align-middle align-items-center">
-                                                    Hari ke {{ $i+1 }}
-                                                    {{ $errors->has('hari.'.$i.'.qty') ? '- Error : Qty Harus Diisi' : '' }}
+                                                    Hari ke {{ $hari }}
+                                                    {{ $errors->has('detail.'.$hari.'.langganan_date') ? '- Tanggal tidak boleh hari minggu' : '' }}
                                                 </td>
                                                 <td width="60%" class="align-middle align-items-center">
                                                     <div class="input-group input-group-sm">
@@ -220,10 +217,21 @@ $location = $area['area'] ?? [];
                                                             </span>
                                                         </div>
 
+                                                        @php
+
+                                                        if($date->format('D') == 'Sun'){
+                                                        $ym = $date->format('Y-m');
+                                                        $day = $date->format('d') + 1;
+                                                        $i++;
+                                                        $date = $ym.'-'.$day;
+                                                        }
+
+                                                        @endphp
+
                                                         <input type="text"
                                                             class="form-control form-control-sm text-right date"
-                                                            value="{{ $date->addDay($i)->format('Y-m-d') ?? date('Y-m-d') }}"
-                                                            name="detail[{{ $i }}][langganan_date]">
+                                                            value="{{ old('detail.'.$hari.'.langganan_date') ?? $date }}"
+                                                            name="detail[{{ $hari }}][langganan_date]">
 
                                                     </div>
                                                 </td>
@@ -240,26 +248,42 @@ $location = $area['area'] ?? [];
                                                     <span class="mb-3">{{ $item->item_product_name }}</span>
 
                                                     @if($item->variant($item->item_product_id)->count() > 0)
-                                                    : <select
-                                                        name="detail[{{ $i }}][product][{{ $loop->index }}][sales_order_detail_variant]"
+
+                                                    <select
+                                                        name="detail[{{ $hari }}][product][{{ $loop->index }}][sales_order_detail_variant]"
                                                         class="mt-5">
                                                         @foreach($item->variant($item->item_product_id) as $var)
-                                                        <option value="{{ $var->item_variant_id ?? '' }}">
-                                                            {{ $var->item_variant_name ?? '' }}</option>
+                                                        <option
+                                                            {{ $var->item_variant_id == old('detail.'.$hari.'.product.0.sales_order_detail_variant') ? 'selected' : '' }}
+                                                            value="{{ $var->item_variant_id ?? '' }}">
+                                                            {{ $var->item_variant_name ?? '' }}
+                                                        </option>
                                                         @endforeach
                                                     </select>
+
                                                     @endif
                                                 </td>
 
                                                 <td class="align-middle">
                                                     <input type="hidden"
-                                                        name="detail[{{ $i }}][product][{{ $loop->index }}][sales_order_detail_item_product_id]"
+                                                        name="detail[{{ $hari }}][product][{{ $loop->index }}][sales_order_detail_item_product_id]"
                                                         value="{{ $item->item_product_id }}">
 
+                                                    @if($item->variant($item->item_product_id)->count() > 0)
+
                                                     <textarea placeholder="Catatan Pesanan"
-                                                        name="detail[{{ $i }}][product][{{ $loop->index }}][sales_order_detail_notes]"
+                                                        name="detail[{{ $hari }}][product][{{ $loop->index }}][sales_order_detail_notes]"
                                                         class="form-control mt-2"
-                                                        rows="2">{{ old('detail.'.$i.'.product.'.$loop->index.'.sales_order_detail_notes') ?? '' }}</textarea>
+                                                        rows="2">{{ old('detail.'.$hari.'.product.0.sales_order_detail_notes') ?? '' }}</textarea>
+
+                                                    @else
+
+                                                    <textarea placeholder="Catatan Pesanan"
+                                                        name="detail[{{ $hari }}][product][{{ $loop->index }}][sales_order_detail_notes]"
+                                                        class="form-control mt-2"
+                                                        rows="2">{{ old('detail.'.$hari.'.product.1.sales_order_detail_notes') ?? '' }}</textarea>
+
+                                                    @endif
                                                 </td>
 
                                             </tr>
@@ -269,18 +293,75 @@ $location = $area['area'] ?? [];
                                     </table>
                                 </div>
 
-
                                 @endfor
                                 @endif
 
                                 @if(!empty($langganan_data))
-                                <div class="row form-group">
-                                    <div class="col-md-12">
-                                        <p class="text-right">
-                                            <button type="submit" class="btn btn-primary btn-sm">
-                                                Berlangganan
-                                            </button>
-                                        </p>
+
+                                <div class="container">
+                                    <table class="table table-borded">
+                                        <thead>
+                                            <th>Nama Paket</th>
+                                            <th class="text-right">Durasi</th>
+                                            <th class="text-right">Harga Paket</th>
+                                        </thead>
+                                        <tr>
+                                            <td>{{ $langganan_data->marketing_langganan_description ?? '' }}</td>
+                                            <td class="text-right">{{ $langganan_data->marketing_langganan_day ?? '' }}
+                                                Hari
+                                            </td>
+                                            <td class="text-right">
+                                                {{ $langganan_data->marketing_langganan_price ? Helper::createRupiah($langganan_data->marketing_langganan_price) : '' }}
+                                            </td>
+                                        </tr>
+                                    </table>
+
+                                </div>
+
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <div class="row">
+
+                                            <div class="col-md-4">
+                                                <label for="">Transfer Ke Rekening</label>
+                                                {{ Form::select('payment_bank', $bank, null, ['id' => 'location','class'=> $errors->has('payment_bank') ? 'form-control form-control-sm is-invalid' : 'form-control form-control-sm']) }}
+                                                {!! $errors->first('payment_bank', '<p class="help-block">:message</p>')
+                                                !!}
+                                            </div>
+
+                                            <div class="col-md-4">
+                                                <label for="">Upload Bukti Pembayaran</label>
+                                                <input type="file" name="files"
+                                                    class="form-control btn btn-{{ $errors->has('files') ? 'danger' : 'secondary' }} btn-sm btn-block">
+                                                {!! $errors->first('files', '<small
+                                                    class="form-text text-danger">:message</small>') !!}
+                                            </div>
+
+                                            <div class="col-md-4">
+                                                <textarea
+                                                    class="form-control {{ $errors->has('payment_notes') ? 'error' : ''}}"
+                                                    name="payment_notes" placeholder="Catatan Pembayaran" cols="30"
+                                                    rows="3">{{ old('payment_notes') ?? $order->rajaongkir_notes ?? '' }}</textarea>
+                                                {!! $errors->first('payment_notes', '<small
+                                                    class="form-text text-danger">:message</small>') !!}
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <input type="hidden" value="{{ $langganan_data->marketing_langganan_day ?? '' }}"
+                                    name="jumlah_hari">
+
+                                <div class="row">
+                                    <div class="container form-group">
+                                        <div class="col-md-12">
+                                            <p class="text-right">
+                                                <button type="submit" class="btn btn-primary btn-sm">
+                                                    Berlangganan
+                                                </button>
+                                            </p>
+                                        </div>
                                     </div>
                                 </div>
                                 @endif

@@ -26,6 +26,7 @@ class LanggananService extends MasterService
         $check = false;
         try {
             $autonumber = Helper::autoNumber(SubscribeFacades::getTable(), SubscribeFacades::getKeyName(), 'SB' . date('Ym'), config('website.autonumber'));
+            
             $request['sales_langganan_id'] = $autonumber;
             $request['sales_langganan_status'] = 1;
             $request['sales_langganan_token'] = Str::uuid();
@@ -49,6 +50,15 @@ class LanggananService extends MasterService
             $langganan_id = request()->get('sales_langganan_marketing_langganan_id');
             $langganan = LanggananFacades::showRepository($langganan_id);
             $harga = $langganan->marketing_langganan_price / $langganan->marketing_langganan_day;
+
+            $request['sales_langganan_payment_date'] = date('Y-m-d H:i:s');
+            $request['sales_langganan_payment_person'] = $name;
+            $request['sales_langganan_payment_phone'] = $phone;
+            $request['sales_langganan_payment_email'] = $email;
+            $request['sales_langganan_payment_notes'] = $request['payment_notes'];
+            $request['sales_langganan_payment_bank_to_id'] = $request['payment_bank'];
+            $request['sales_langganan_payment_file'] = $request['file'];
+            $request['sales_langganan_payment_value'] = $harga;
 
             if ($customer = CustomerFacades::where('crm_customer_contact_person', $name)->where('crm_customer_contact_phone', $phone)->first()) {
                 $customer_id = $customer->crm_customer_id;

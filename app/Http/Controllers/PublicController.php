@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
 use Intervention\Image\Facades\Image;
 use Ixudra\Curl\Facades\Curl;
 use Jackiedo\DotenvEditor\Facades\DotenvEditor;
@@ -587,48 +588,66 @@ class PublicController extends Controller
         if (request()->isMethod('POST')) {
             $request = request()->all();
             
-            if (request()->has('sales_langganan_to_area')) {
-                $area_id = request()->get('sales_langganan_to_area');
-                session()->put('area', Helper::getSingleArea($area_id, false, true));
-            }
-            
-            $rules = [
-                'sales_langganan_to_name' => 'required',
-                'sales_langganan_to_phone' => 'required',
-                'sales_langganan_to_email' => 'sometimes|email',
-                'sales_langganan_to_address' => 'required',
-                'sales_langganan_from_id' => 'required',
-                'sales_langganan_date_order' => 'required',
-                'sales_langganan_date_order' => 'required',
-                'sales_langganan_marketing_langganan_id' => 'required',
-                // 'sales_langganan_discount_code' => 'sometimes|exists:marketing_promo,marketing_promo_code',
-            ];
-            
-            $message = [
-                'sales_langganan_to_name.required' => 'Nama Customer Harus Diisi',
-                'sales_langganan_marketing_langganan_id.required' => 'Paket Langganan Harus Diisi',
-                'sales_langganan_to_phone.required' => 'No. Telp Harus Diisi',
-                'sales_langganan_to_address.required' => 'Alamat Harus Diisi',
-                // 'sales_langganan_to_email.required' => 'Email Harus Diisi',
-                'sales_langganan_to_email.email' => 'Email Tidak Valid',
-                'sales_langganan_from_id.required' => 'Lokasi Pickup Harus Diisi',
-                'sales_langganan_date_order.required' => 'Tanggal Pengiriman Harus Diisi',
-                'sales_langganan_marketing_langganan_id.required' => 'Paket Berlangganan Harus Diisi',
-                // 'sales_langganan_discount_code.exists' => 'Voucher Not Valid !',
-            ];
-            
-            $validate = Validator::make($request, $rules, $message);
-            if ($validate->fails()) {
-                return redirect()->back()->withErrors($validate)->withInput();
-            }
-            
             if (request()->has('pilih')) {
+                
                 return redirect()->route('langganan', ['code' => request()->get('sales_langganan_marketing_langganan_id'), 'area' => request()->get('sales_langganan_to_area'), 'date' => $date, 'branch' => request()->get('sales_langganan_from_id')])->withInput();
             }
+
+            $order_date = $request['sales_langganan_date_order'];
+            $jumlah_hari = $request['jumlah_hari'];
+            $list_date = [];
+            for($i=1;$i <= $jumlah_hari;$i++){
+                $carbon_date = date('D', strtotime($order_date. ' + '.$i.' days'));
+                if($carbon_date == 'Sun'){
+                    $list_date[] = date('Y-m-d', strtotime($order_date. ' + '.$i.' days'));
+                }
+            }            
 
             $validasi = [];
             if (isset($request['detail'])) {
 
+                if (request()->has('sales_langganan_to_area')) {
+                    $area_id = request()->get('sales_langganan_to_area');
+                    session()->put('area', Helper::getSingleArea($area_id, false, true));
+                }
+                
+                $rules = [
+                    'detail.*.langganan_date' => Rule::notIn($list_date),
+                    'sales_langganan_to_name' => 'required',
+                    'sales_langganan_to_phone' => 'required',
+                    'sales_langganan_to_email' => 'sometimes|email',
+                    'sales_langganan_to_address' => 'required',
+                    'sales_langganan_from_id' => 'required',
+                    'sales_langganan_date_order' => 'required',
+                    'sales_langganan_date_order' => 'required',
+                    'sales_langganan_marketing_langganan_id' => 'required',
+                    'files' => 'required|mimes:png,jpg,jpeg,pdf|max:4048',
+                    // 'sales_langganan_discount_code' => 'sometimes|exists:marketing_promo,marketing_promo_code',
+                ];
+                
+                $message = [
+                    'sales_langganan_to_name.required' => 'Nama Customer Harus Diisi',
+                    'sales_langganan_marketing_langganan_id.required' => 'Paket Langganan Harus Diisi',
+                    'sales_langganan_to_phone.required' => 'No. Telp Harus Diisi',
+                    'sales_langganan_to_address.required' => 'Alamat Harus Diisi',
+                    // 'sales_langganan_to_email.required' => 'Email Harus Diisi',
+                    'sales_langganan_to_email.email' => 'Email Tidak Valid',
+                    'sales_langganan_from_id.required' => 'Lokasi Pickup Harus Diisi',
+                    'sales_langganan_date_order.required' => 'Tanggal Pengiriman Harus Diisi',
+                    'sales_langganan_marketing_langganan_id.required' => 'Paket Berlangganan Harus Diisi',
+                    // 'sales_langganan_discount_code.exists' => 'Voucher Not Valid !',
+                    'files.required' => 'Bukti pembayaran harus diisi',
+                    'files.mimes' => 'format document harus png, jpeg, jpg, atau pdf',
+                    'files.max' => 'format document tidak lebih dari 4mb',
+                ];
+                
+                $validate = Validator::make($request, $rules, $message);
+                if ($validate->fails()) {
+                    // dd($request);
+                    // dd($validate->errors());
+                    return redirect()->back()->withErrors($validate)->withInput();
+                }
+                
                 $grand_total = $discount_total = 0;
                 $discount_name = null;
                 // foreach ($request['detail'] as $detail) {
@@ -689,6 +708,13 @@ class PublicController extends Controller
                 // if ($validate2->fails()) {
                 //     return redirect()->back()->withErrors($validate2)->withInput();
                 // }
+
+                $file = request()->file('files');
+                if (!empty($file)) //handle images
+                {
+                  $name = Helper::uploadFile($file, 'payment');
+                  $request['file'] = $name;
+                }
                 
                 $repo = new SubscribeRepository();
                 $check = $service->save($repo, $request);
@@ -711,12 +737,17 @@ class PublicController extends Controller
         $langganan = Helper::createOption(new LanggananRepository(),false,true);
         // $product = Helper::createOption(new ProductRepository(), false, true, true)->where('item_product_langganan', 1);
         $holiday = Helper::createOption(new HolidayRepository(), false, true, true)->where('item_product_langganan', 1);
+        $data_bank = Helper::createOption(new BankRepository(), false, true, true);
+        $bank = $data_bank->mapWithKeys(function($dbank){
+            return [$dbank->finance_bank_id => $dbank->finance_bank_name.' - '.$dbank->finance_bank_account_number.' ('.$dbank->finance_bank_account_name.')'];
+        }); 
 
         return View(Helper::setViewFrontend(__FUNCTION__))->with($this->share([
             'carts' => $carts,
             'list_province' => $list_province,
             'branch' => $branch,
             'user' => $user,
+            'bank' => $bank,
             'area' => $area,
             'metode' => $metode,
             'langganan' => $langganan,
@@ -816,9 +847,8 @@ class PublicController extends Controller
                     if (request()->has($file)) {
 
                         $file = request()->file($file);
-                        $name = Helper::uploadImage($file, Helper::getTemplate(__CLASS__));
+                        $name = Helper::uploadImage($file, 'payment');
 
-                        $update->item_product_image = $name;
                     }
                     
                     $request['sales_order_payment_person'] = $request['payment_person'];
@@ -845,15 +875,14 @@ class PublicController extends Controller
                     if (request()->has($file)) {
 
                         $file = request()->file($file);
-                        $name = Helper::uploadImage($file, Helper::getTemplate(__CLASS__));
+                        $name = Helper::uploadImage($file, 'payment');
 
-                        $update->item_product_image = $name;
                     }
 
                     $request['sales_langganan_payment_person'] = $request['payment_person'];
                     $request['sales_langganan_payment_bank_to_id'] = $request['payment_bank'];
                     $request['sales_langganan_payment_date'] = $request['payment_date'];
-                    $request['sales_order_payment_notes'] = $request['payment_notes'];
+                    $request['sales_langganan_payment_notes'] = $request['payment_notes'];
 
                     $request['sales_langganan_term_top'] = 'CASH';
                     $request['sales_langganan_payment_file'] = $name;

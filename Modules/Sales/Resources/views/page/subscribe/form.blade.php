@@ -156,7 +156,7 @@
             {!! Form::text('sales_langganan_payment_date', null, ['class'=>'form-control date']) !!}
             <span class="input-group-btn">
                 <a class="btn btn-danger" target="_blank" download=""
-                    href="{{ Helper::files('public/'.$model->sales_langganan_payment_file) }}">Download</a>
+                    href="{{ Helper::files('payment/'.$model->sales_langganan_payment_file) }}">Download</a>
             </span>
             {!! $errors->first('sales_langganan_payment_date', '<p class="help-block">:message</p>') !!}
         </div>
