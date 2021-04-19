@@ -556,7 +556,7 @@ class PublicController extends Controller
     }
     public function langganan(LanggananService $service)
     {
-        $area = $langganan_data = $carbon = [];
+        $location = $langganan_data = $carbon = [];
 
         if (request()->has('token')) {
             $token = request()->get('token');
@@ -575,9 +575,14 @@ class PublicController extends Controller
             $carbon = Carbon::createFromFormat('Y-m-d', $date);
         }
 
+        if (request()->has('sales_langganan_to_area')) {
+            $area_id = request()->get('sales_langganan_to_area');
+            $location = Helper::getSingleArea($area_id, false, true);
+        }
+
         if (request()->has('area')) {
             $area_id = request()->get('area');
-            $area = Helper::getSingleArea($area_id, false, true);
+            $location = Helper::getSingleArea($area_id, false, true);
         }
 
         if (request()->has('code')) {
@@ -588,28 +593,61 @@ class PublicController extends Controller
         if (request()->isMethod('POST')) {
             $request = request()->all();
             
+            $rules2 = [
+                'sales_langganan_to_name' => 'required',
+                'sales_langganan_to_phone' => 'required',
+                'sales_langganan_to_email' => 'sometimes|email',
+                'sales_langganan_to_address' => 'required',
+                'sales_langganan_from_id' => 'required',
+                'sales_langganan_date_order' => 'required',
+                'sales_langganan_marketing_langganan_id' => 'required',
+                'province' => 'required',
+                'city' => 'required',
+                'sales_langganan_to_area' => 'required',
+            ];
+
+            $message2 = [
+                'province.required' => 'Province Harus Diisi',
+                'city.required' => 'Kota Harus Diisi',
+                'sales_langganan_to_area.required' => 'Lokasi Harus Diisi',
+                'sales_langganan_to_name.required' => 'Nama Customer Harus Diisi',
+                'sales_langganan_to_phone.required' => 'No. Telp Harus Diisi',
+                'sales_langganan_to_address.required' => 'Alamat Harus Diisi',
+                'sales_langganan_to_email.email' => 'Email Tidak Valid',
+                'sales_langganan_from_id.required' => 'Lokasi Pickup Harus Diisi',
+                'sales_langganan_date_order.required' => 'Tanggal Pengiriman Harus Diisi',
+                'sales_langganan_marketing_langganan_id.required' => 'Paket Berlangganan Harus Diisi',
+            ]; 
+            // $validate_first = Validator::make($request, $rules2, $message2);
+            // if ($validate_first->fails()) {
+            //     // return redirect()->back()->withErrors($validate_first)->withInput([
+            //     //     'location' => $location,
+            //     //     'sales_langganan_marketing_langganan_id' => request()->get('sales_langganan_marketing_langganan_id')
+            //     // ]);
+            //     return redirect()->back()->withErrors($validate_first)->withInput();
+            // }
+            
             if (request()->has('pilih')) {
                 
                 return redirect()->route('langganan', ['code' => request()->get('sales_langganan_marketing_langganan_id'), 'area' => request()->get('sales_langganan_to_area'), 'date' => $date, 'branch' => request()->get('sales_langganan_from_id')])->withInput();
             }
 
+            
+            
             $order_date = $request['sales_langganan_date_order'];
+
+            $backdate = date('Y-m-d', strtotime($order_date. ' -1 month'));
             $jumlah_hari = $request['jumlah_hari'];
             $list_date = [];
-            for($i=1;$i <= $jumlah_hari;$i++){
-                $carbon_date = date('D', strtotime($order_date. ' + '.$i.' days'));
+            for($i=1;$i <= 90;$i++){
+                $carbon_date = date('D', strtotime($backdate. ' + '.$i.' days'));
                 if($carbon_date == 'Sun'){
-                    $list_date[] = date('Y-m-d', strtotime($order_date. ' + '.$i.' days'));
+                    $list_date[] = date('Y-m-d', strtotime($backdate. ' + '.$i.' days'));
                 }
-            }            
+            }  
 
             $validasi = [];
             if (isset($request['detail'])) {
-
-                if (request()->has('sales_langganan_to_area')) {
-                    $area_id = request()->get('sales_langganan_to_area');
-                    session()->put('area', Helper::getSingleArea($area_id, false, true));
-                }
                 
                 $rules = [
                     'detail.*.langganan_date' => Rule::notIn($list_date),
@@ -621,6 +659,9 @@ class PublicController extends Controller
                     'sales_langganan_date_order' => 'required',
                     'sales_langganan_date_order' => 'required',
                     'sales_langganan_marketing_langganan_id' => 'required',
+                    'province' => 'required',
+                    'city' => 'required',
+                    'sales_langganan_to_area' => 'required',
                     'files' => 'required|mimes:png,jpg,jpeg,pdf|max:4048',
                     // 'sales_langganan_discount_code' => 'sometimes|exists:marketing_promo,marketing_promo_code',
                 ];
@@ -639,75 +680,18 @@ class PublicController extends Controller
                     'files.required' => 'Bukti pembayaran harus diisi',
                     'files.mimes' => 'format document harus png, jpeg, jpg, atau pdf',
                     'files.max' => 'format document tidak lebih dari 4mb',
+                    'province.required' => 'Province Harus Diisi',
+                    'city.required' => 'Kota Harus Diisi',
+                    'sales_langganan_to_area.required' => 'Lokasi Harus Diisi',
                 ];
                 
                 $validate = Validator::make($request, $rules, $message);
                 if ($validate->fails()) {
-                    // dd($request);
-                    // dd($validate->errors());
                     return redirect()->back()->withErrors($validate)->withInput();
                 }
                 
                 $grand_total = $discount_total = 0;
                 $discount_name = null;
-                // foreach ($request['detail'] as $detail) {
-                //     $qty = $int = 0;
-                //     foreach ($detail['product'] as $product) {
-                //         if (!isset($product['variant'])) {
-                //             $quantity = intval($product['sales_order_detail_qty']);
-                //         } else {
-                //             $quantity = collect($product['variant'])->map(function ($item) {
-                //                 return intval($item['sales_order_detail_variant_qty']);
-                //             })->sum();
-                //         }
-                //         $qty = $qty + intval($quantity);
-                //     }
-                //     // $price = $product['sales_order_detail_price'];
-                //     // $total = ($qty * $price);
-                //     // $grand_total = $grand_total + $total;
-                //     // $int++;
-                //     $validasi[]['qty'] = $qty;
-                //     // $validasi[]['total'] = $qty;
-                // }
-
-                // $promo = new PromoRepository();
-                // $promo_code = request()->get('sales_langganan_discount_code');
-                // $data_promo = $promo->codeRepository(strtoupper($promo_code));
-
-                // if ($data_promo) {
-                //     $value = $grand_total;
-                //     $matrix = $data_promo->marketing_promo_matrix;
-                //     $discount_name = $data_promo->marketing_promo_name;
-                //     if ($matrix) {
-
-                //         // validate with minimal
-                //         $minimal = $data_promo->marketing_promo_minimal;
-                //         if ($minimal) {
-                //             if ($minimal > $value) {
-                //                 $validate->getMessageBag()->add('sales_langganan_discount_code', 'Minimal value ' . number_format($minimal) . ' !');
-                //                 return redirect()->back()->withErrors($validate);
-                //             }
-                //         }
-
-                //         $string = str_replace('@value', $value, $matrix);
-                //         $discount_total = $value;
-
-                //         try {
-                //             $discount_total = Helper::calculate($string);
-                //         } catch (\Throwable $th) {
-                //             $discount_total = $value;
-                //         }
-                //     }
-                // }
-
-                // $request['discount'] = $discount_total;
-                // $request['discount_name'] = $discount_name;
-
-                // $request['hari'] = $validasi;
-                // $validate2 = Validator::make($request, ['hari.*.qty' => 'not_in:0']);
-                // if ($validate2->fails()) {
-                //     return redirect()->back()->withErrors($validate2)->withInput();
-                // }
 
                 $file = request()->file('files');
                 if (!empty($file)) //handle images
@@ -725,8 +709,8 @@ class PublicController extends Controller
             }
         }
 
-        if (Auth::check()) {
-            $area = Helper::getSingleArea(auth()->user()->area, false, true);
+        if (Auth::check() && empty($location)) {
+            $location = Helper::getSingleArea(auth()->user()->area, false, true);
         }
 
         $carts = Cart::getContent();
@@ -748,7 +732,7 @@ class PublicController extends Controller
             'branch' => $branch,
             'user' => $user,
             'bank' => $bank,
-            'area' => $area,
+            'location' => $location,
             'metode' => $metode,
             'langganan' => $langganan,
             'langganan_data' => $langganan_data,

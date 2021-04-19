@@ -3,18 +3,23 @@
 @section('content')
 
 @php
-$area = session()->has('area') ? session()->get('area') : false;
-$city = $location = [];
+$city = ['' => '- Select Kota -'];
+$area = ['' => '- Select Lokasi -'];
+if(empty(old('location')) && empty($location)){
 
-if(!$area && auth()->check()){
-$area = Helper::getSingleArea(auth()->user()->area, false, true);
+    if(Auth::check()){
+
+        $location = Helper::getSingleArea(auth()->user()->area, false, true);
+    }
+}
+else{
+
+    $location = old('location') ?? $location;
+    $city = $location['city'] ??  ['' => '- Select Kota -'];
+    $area = $location['area'] ?? ['' => '- Select Lokasi -'];
 }
 
-if($area){
-$city = $area['city'] ?? [];
-$location = $area['area'] ?? [];
-}
-
+$subscribe = old('sales_langganan_marketing_langganan_id') ?? request()->get('code');
 @endphp
 
 <!-- Product Details Area Start -->
@@ -57,12 +62,14 @@ $location = $area['area'] ?? [];
                                             <option value="">Select Paket</option>
                                             @foreach($langganan as $lang)
                                             <option
-                                                {{ request()->get('code') == $lang->marketing_langganan_id ? 'selected' : '' }}
+                                                {{ $subscribe == $lang->marketing_langganan_id ? 'selected' : '' }}
                                                 value="{{ $lang->marketing_langganan_id }}">
                                                 {{ $lang->marketing_langganan_name }} -
                                                 Rp.{{ Helper::createRupiah($lang->marketing_langganan_price) }}</option>
                                             @endforeach
                                         </select>
+                                        {!! $errors->first('sales_langganan_marketing_langganan_id', '<small
+                                            class="form-text text-danger">:message</small>') !!}
                                     </div>
                                     <div class="col-md-4">
                                         <div class="input-group input-group-sm mb-3">
@@ -81,10 +88,11 @@ $location = $area['area'] ?? [];
                                     </div>
                                     <div class="col-md-4">
                                         {{ Form::select('sales_langganan_from_id', $branch ?? [], request()->get('branch') ?? '', ['class'=> $errors->has('sales_langganan_from_id') ? 'form-control form-control-sm is-invalid' : 'form-control form-control-sm']) }}
+                                        {!! $errors->first('sales_langganan_from_id', '<small
+                                            class="form-text text-danger">:message</small>') !!}
                                     </div>
                                 </div>
                                 <div class="row form-group">
-
 
                                     <div class="col-md-12">
                                         {!! Form::textarea('sales_langganan_notes_external', null, ['class' =>
@@ -150,15 +158,19 @@ $location = $area['area'] ?? [];
 
                                 <div class="row form-group">
                                     <div class="col-md-4">
-                                        {{ Form::select('province', $list_province, isset($area['province']) ? array_keys($area['province']) : null, ['id' => 'province', 'class'=> 'form-control form-control-sm']) }}
+                                        {{ Form::select('province', $list_province, isset($location['province']) ? array_keys($location['province']) : null, ['id' => 'province', 'class'=> $errors->has('province') ? 'form-control form-control-sm is-invalid' : 'form-control form-control-sm']) }}
+                                        {!! $errors->first('province', '<small
+                                            class="form-text text-danger">:message</small>') !!}
                                     </div>
                                     <div class="col-md-4">
-                                        {{ Form::select('city', $city ?? [], null, ['id' => 'city','class'=> 'form-control form-control-sm']) }}
+                                        {{ Form::select('city', $city ?? [], null, ['id' => 'city','class'=> $errors->has('city') ? 'form-control form-control-sm is-invalid' : 'form-control form-control-sm']) }}
+                                        {!! $errors->first('city', '<small
+                                            class="form-text text-danger">:message</small>') !!}
                                     </div>
                                     <div class="col-md-4">
                                         <input type="hidden" id="area_name" value="{{ old('area_name') ?? null }}"
                                             name="area_name">
-                                        {{ Form::select('sales_langganan_to_area', $location ?? [], null, ['id' => 'location','class'=> $errors->has('sales_langganan_to_area') ? 'form-control form-control-sm is-invalid' : 'form-control form-control-sm']) }}
+                                        {{ Form::select('sales_langganan_to_area', $area ?? [], null, ['id' => 'location','class'=> $errors->has('area') ? 'form-control form-control-sm is-invalid' : 'form-control form-control-sm']) }}
                                         {!! $errors->first('sales_langganan_to_area', '<small
                                             class="form-text text-danger">:message</small>') !!}
                                     </div>
@@ -220,17 +232,26 @@ $location = $area['area'] ?? [];
                                                         @php
 
                                                         if($date->format('D') == 'Sun'){
-                                                        $ym = $date->format('Y-m');
-                                                        $day = $date->format('d') + 1;
-                                                        $i++;
-                                                        $date = $ym.'-'.$day;
+                                                            $ym = $date->format('Y-m');
+                                                            $day = $date->format('d') + 1;
+                                                            $i++;
+                                                            $date = $ym.'-'.$day;
+                                                        }
+
+                                                        if($date instanceof Carbon\Carbon){
+                                                            $date = $date->format('Y-m-d');
+                                                        }
+                                                        $fix_date = old('detail.'.$hari.'.langganan_date') ?? $date;
+
+                                                        if($date != old('sales_langganan_date_order')){
+                                                            $fix_date = $date;
                                                         }
 
                                                         @endphp
 
                                                         <input type="text"
                                                             class="form-control form-control-sm text-right date"
-                                                            value="{{ old('detail.'.$hari.'.langganan_date') ?? $date }}"
+                                                            value="{{ $fix_date }}"
                                                             name="detail[{{ $hari }}][langganan_date]">
 
                                                     </div>
