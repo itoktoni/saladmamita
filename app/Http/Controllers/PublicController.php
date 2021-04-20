@@ -219,7 +219,7 @@ class PublicController extends Controller
     public function myaccount()
     {
         $order = new OrderRepository();
-        $data = $order->dataRepository()->select('*')->where('sales_order_to_phone', auth()->user()->phone)->orderBy('sales_order_date_order', 'DESC')->get();
+        $data = $order->dataRepository()->select('*')->where('sales_order_created_by', auth()->user()->username)->orderBy('sales_order_date_order', 'DESC')->get();
         return View(Helper::setViewFrontend(__FUNCTION__))->with($this->share([
             'status' => Helper::shareStatus($order->status),
             'order' => $data,
