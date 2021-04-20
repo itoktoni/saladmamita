@@ -237,21 +237,29 @@ $subscribe = old('sales_langganan_marketing_langganan_id') ?? request()->get('co
                                                             $i++;
                                                             $date = $ym.'-'.$day;
                                                         }
+                                                        
+                                                        $mask_date = $date;
 
                                                         if($date instanceof Carbon\Carbon){
                                                             $date = $date->format('Y-m-d');
+                                                            $mask_date = $mask_date->format('d F Y');
                                                         }
-                                                        $fix_date = old('detail.'.$hari.'.langganan_date') ?? $date;
-
-                                                        if($date != old('sales_langganan_date_order')){
-                                                            $fix_date = $date;
+                                                        else{
+                                                            $mask_date = date("d F Y", strtotime($date));
                                                         }
-
+                                                        
+                                                        //$fix_date = old('detail.'.$hari.'.langganan_date') ?? $date;
+                                                        //if($date != old('sales_langganan_date_order')){
+                                                            //$fix_date = $date;
+                                                        //}
+                                                        
                                                         @endphp
 
-                                                        <input type="text"
-                                                            class="form-control form-control-sm text-right date"
-                                                            value="{{ $fix_date }}"
+                                                        <input readonly class="form-control form-control-sm" type="text" value="{{ $mask_date }}">
+
+                                                        <input type="hidden"
+                                                            class="form-control form-control-sm text-right"
+                                                            value="{{ $date }}"
                                                             name="detail[{{ $hari }}][langganan_date]">
 
                                                     </div>
