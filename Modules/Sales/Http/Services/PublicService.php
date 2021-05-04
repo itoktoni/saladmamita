@@ -50,6 +50,18 @@ class PublicService extends MasterService
             $request['sales_order_sum_product'] = $sub_total;
             $request['sales_order_sum_discount'] = $total;
             $request['sales_order_sum_total'] = $total;
+            
+            $request['sales_order_payment_file'] = $request['file'] ?? null;
+
+            $request['sales_order_payment_date'] = date('Y-m-d H:i:s');
+            $request['sales_order_payment_person'] = $request['sales_order_to_name'];
+            $request['sales_order_payment_phone'] = $request['sales_order_to_phone'];
+            $request['sales_order_payment_email'] = $request['sales_order_to_email'];
+            $request['sales_order_payment_bank_to_id'] = $request['payment_bank'];
+            $request['sales_order_payment_file'] = $request['file'];
+            $request['sales_order_payment_value'] = $total;
+            $request['sales_order_term_top'] = 'CASH';
+
 
             $check = $repository->saveRepository($request);
 

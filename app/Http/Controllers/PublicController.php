@@ -502,6 +502,8 @@ class PublicController extends Controller
                 'sales_order_from_id' => 'required',
                 'sales_order_delivery_type' => 'required',
                 'sales_order_date_order' => 'required',
+                'sales_order_date_order' => 'required',
+                'files' => 'required|mimes:png,jpg,jpeg,pdf|max:4048',
             ];
 
             $message = [
@@ -514,7 +516,18 @@ class PublicController extends Controller
                 'sales_order_from_id.required' => 'Lokasi Pickup Harus Diisi',
                 'sales_order_delivery_type.required' => 'Metode Pengiriman Harus Diisi',
                 'sales_order_date_order.required' => 'Tanggal Pengiriman Harus Diisi',
+                'files.required' => 'Bukti Pembayaran Harus Diupload',
+                'files.mimes' => 'Upload File harus png, jpg, jpeg, atau pdf',
+                'files.max' => 'Upload File maksimal 4mb',
             ];
+            
+
+            $file = request()->file('files');
+            if (!empty($file)) //handle images
+            {
+                $name = Helper::uploadFile($file, 'payment');
+                $request['file'] = $name;
+            }
 
             $validate = Validator::make($request, $rules, $message);
             if ($validate->fails()) {
@@ -522,7 +535,6 @@ class PublicController extends Controller
                     'area' => $area,
                 ]);
             }
-
             $order = new OrderRepository();
             $check = $service->save($order, $request);
             if (!isset($check['status'])) {
@@ -544,12 +556,17 @@ class PublicController extends Controller
         $branch = Helper::createOption(new BranchRepository());
         $user = Auth::user() ?? [];
         $metode = Helper::createOption(new DeliveryRepository());
+        $data_bank = Helper::createOption(new BankRepository(), false, true, true);
+        $bank = $data_bank->mapWithKeys(function($dbank){
+            return [$dbank->finance_bank_id => $dbank->finance_bank_name.' - '.$dbank->finance_bank_account_number.' ('.$dbank->finance_bank_account_name.')'];
+        }); 
 
         return View(Helper::setViewFrontend(__FUNCTION__))->with($this->share([
             'carts' => $carts,
             'list_province' => $list_province,
             'branch' => $branch,
             'user' => $user,
+            'bank' => $bank,
             'area' => $area,
             'metode' => $metode,
         ]));

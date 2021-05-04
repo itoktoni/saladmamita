@@ -253,6 +253,34 @@ $location = $area['area'] ?? [];
                                             !!}
                                         </div>
                                     </div>
+
+                                    <hr>
+                                    <div class="row form-group">
+                                        <div class="col-md-12">
+                                            <label>Transfer Ke Rekening</label>
+                                            {{ Form::select('payment_bank', $bank, null, ['id' => 'location','class'=> $errors->has('payment_bank') ? 'form-control form-control-sm is-invalid' : 'form-control form-control-sm']) }}
+                                            {!! $errors->first('payment_bank', '<p class="help-block">:message</p>')!!}
+                                        </div>
+                                    </div>
+                                    <div class="row form-group">
+                                        <div class="col-md-12">
+                                            <label>Upload Bukti Pembayaran</label>
+                                            <input type="file" name="files"
+                                                    class="form-control btn btn-{{ $errors->has('files') ? 'danger' : 'secondary' }} btn-sm btn-block">
+                                                {!! $errors->first('files', '<small
+                                                    class="form-text text-danger">:message</small>') !!}
+                                        </div>
+                                    </div>
+                                    <div class="row form-group">
+                                        <div class="col-md-12">
+                                            {!! Form::textarea('sales_order_payment_notes', null, ['class' =>
+                                            'form-control form-control-sm',
+                                            'rows' => 2, 'placeholder' => 'Catatan Pembayaran']) !!}
+                                            {!! $errors->first('sales_order_payment_notes', '<p class="text-danger">:message</p>')
+                                            !!}
+                                        </div>
+                                    </div>
+
                                     <div class="row form-group">
                                         <div class="col-md-12">
                                             <p class="text-right">

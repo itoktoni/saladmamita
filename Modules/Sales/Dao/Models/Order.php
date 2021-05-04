@@ -105,6 +105,10 @@ class Order extends Model
         'sales_order_to_phone' => [true => 'Phone'],
         'sales_order_delivery_name' => [false => 'Phone'],
         'sales_order_status' => [true => 'Status'],
+        'sales_order_payment_date' => [false => 'Status'],
+        'sales_order_payment_bank_to_id' => [false => 'Status'],
+        'sales_order_payment_person' => [false => 'Status'],
+        'sales_order_payment_notes' => [false => 'Status'],
     ];
 
     protected $dates = [
@@ -114,7 +118,7 @@ class Order extends Model
 
     protected $casts = [
         'sales_order_date_order' => 'datetime:Y-m-d',
-        'sales_order_payment_date' => 'datetime:Y-m-d',
+        'sales_order_payment_date' => 'datetime:Y-m-d H:i:s',
     ];
 
     public $status = [
@@ -220,12 +224,12 @@ class Order extends Model
             if(request()->has('sales_order_date_order')){
                 $model->sales_order_date_order = $model->sales_order_date_order->format('Y-m-d H:i:s');
             }
-            if(request()->has('sales_order_payment_date') && !empty(request()->get('sales_order_payment_date'))){
-                $model->sales_order_payment_date = $model->sales_order_payment_date->format('Y-m-d H:i:s');
-            }
-            else{
-                $model->sales_order_payment_date = null;
-            }
+            // if(request()->has('sales_order_payment_date') && !empty(request()->get('sales_order_payment_date'))){
+            //     $model->sales_order_payment_date = $model->sales_order_payment_date->format('Y-m-d H:i:s');
+            // }
+            // else{
+            //     $model->sales_order_payment_date = null;
+            // }
         });
     }
 }
